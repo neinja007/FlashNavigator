@@ -160,7 +160,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 								ATTENTION: Only use images from{' '}
 								<Link
 									className='text-blue-500 underline'
-									href={`https://duckduckgo.com/?q=${shortcut.name || 'search for something!'}&atb=v376-1&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
+									href={`https://duckduckgo.com/?q="${shortcut.name || 'search for something!'}"&atb=v376-1&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
 									target='_blank'
 								>
 									duckduckgo
