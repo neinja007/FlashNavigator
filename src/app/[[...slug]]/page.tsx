@@ -124,7 +124,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 				<>
 					<div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={() => setData('')} />
 					<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
-						<textarea readOnly value={data} className='rounded-t-lg w-full h-full bg-gray-800 p-2' />
+						<textarea readOnly value={data} className='rounded-t-lg w-full h-96 bg-gray-800 p-2' />
 						<button
 							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
 							onClick={() => navigator.clipboard.writeText(data)}
@@ -141,7 +141,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 						<textarea
 							value={importData}
 							onChange={(e) => setImportData(e.target.value)}
-							className='rounded-t-lg w-full h-full bg-gray-800 p-2'
+							className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
 						/>
 						<button
 							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
