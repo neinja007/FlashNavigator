@@ -230,13 +230,32 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 							<p>
 								ATTENTION: Only use images from{' '}
 								<Link
-									className='text-blue-500 underline'
+									className='text-blue-400 underline'
 									href={`https://duckduckgo.com/?q="${shortcut.name || 'search for something!'}"&atb=v376-1&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
 									target='_blank'
 								>
 									duckduckgo
 								</Link>
-								. Images from other sources will not be displayed.
+								. Images from other sources will not be displayed.{' '}
+								{!shortcut.group && (
+									<>
+										Alternatively, you can{' '}
+										<button
+											className='text-blue-400 underline'
+											onClick={() =>
+												setShortcut({
+													...shortcut,
+													img: `https://external-content.duckduckgo.com/iu/?u=${
+														shortcut.href.startsWith('http') ? shortcut.href : 'http://' + shortcut.href
+													}/favicon.ico`
+												})
+											}
+										>
+											use the site&apos;s favicon by clicking here
+										</button>
+										.
+									</>
+								)}
 							</p>
 							<input
 								id={id}
