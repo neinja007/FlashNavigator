@@ -11,15 +11,6 @@ type Shortcut = {
 	img: string;
 };
 
-function isValidURL(string: string) {
-	try {
-		const url = new URL(string);
-		return true;
-	} catch (_) {
-		return false;
-	}
-}
-
 export default function Home({ params }: { params: { slug?: string[] } }) {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
