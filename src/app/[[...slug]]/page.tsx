@@ -16,6 +16,10 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
 	const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
 
+	const [data, setData] = useState('');
+	const [importDataModal, setImportDataModal] = useState(false);
+	const [importData, setImportData] = useState('');
+
 	const groupUrl =
 		params.slug && params.slug.length > 0 ? params.slug.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
 
@@ -63,20 +67,45 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 					⚡<span className='text-yellow-300'>Flash</span>
 					<span>Navigator</span>
 				</Link>
-				<div className='mt-32'>
-					<p className='pb-5'>
-						{['', ...[...(params.slug || [])]].map(
-							(group, i) =>
-								typeof group === 'string' && (
-									<Fragment key={i}>
-										<Link href={'/'} className='px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'>
-											{group === '' ? 'Home' : group.replace('_', ' ')}
-										</Link>
-										{params.slug && params.slug.length !== i && '>'}
-									</Fragment>
-								)
-						)}
-					</p>
+				<div className='mt-8'>
+					<div className='flex justify-between pb-5'>
+						<div>
+							{['', ...[...(params.slug || [])]].map(
+								(group, i) =>
+									typeof group === 'string' && (
+										<Fragment key={i}>
+											<Link href={'/'} className='px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'>
+												{group === '' ? 'Home' : group.replace('_', ' ')}
+											</Link>
+											{params.slug && params.slug.length !== i && '>'}
+										</Fragment>
+									)
+							)}
+						</div>
+						<div className='space-x-3'>
+							<button
+								className='text-yellow-400 hover:underline'
+								onClick={() =>
+									setData(
+										JSON.stringify(
+											Object.keys(JSON.parse(JSON.stringify(localStorage))).reduce(
+												(acc: { [key: string]: string }, cur) => {
+													if (cur.startsWith('shortcut-')) acc[cur] = JSON.parse(JSON.stringify(localStorage))[cur];
+													return acc;
+												},
+												{}
+											)
+										)
+									)
+								}
+							>
+								Export Data to JSON
+							</button>
+							<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
+								Import Data from JSON
+							</button>
+						</div>
+					</div>
 					<div className='grid grid-cols-7 gap-5 rounded-lg px-3 py-3'>
 						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
 							<Shortcut
@@ -91,6 +120,48 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 					</div>
 				</div>
 			</div>
+			{data && (
+				<>
+					<div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={() => setData('')} />
+					<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
+						<textarea readOnly value={data} className='rounded-t-lg w-full h-full bg-gray-800 p-2' />
+						<button
+							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
+							onClick={() => navigator.clipboard.writeText(data)}
+						>
+							{'Copy Data'}
+						</button>
+					</div>
+				</>
+			)}
+			{importDataModal && (
+				<>
+					<div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={() => setImportDataModal(false)} />
+					<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
+						<textarea
+							value={importData}
+							onChange={(e) => setImportData(e.target.value)}
+							className='rounded-t-lg w-full h-full bg-gray-800 p-2'
+						/>
+						<button
+							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
+							onClick={() => {
+								try {
+									const data = JSON.parse(importData);
+									Object.keys(data).forEach((key) => {
+										localStorage.setItem(key, data[key]);
+									});
+									window.location.reload();
+								} catch {
+									alert('Invalid JSON data');
+								}
+							}}
+						>
+							{'Import Data (might overwrite existing data)'}
+						</button>
+					</div>
+				</>
+			)}
 			{shortcut && typeof shortcutId === 'number' && (
 				<>
 					<div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={() => setShortcutId(null)} />
