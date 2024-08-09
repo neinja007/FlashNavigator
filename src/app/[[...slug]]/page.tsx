@@ -15,6 +15,11 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
 	const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
+	const [hide, setHide] = useState(false);
+
+	useEffect(() => {
+		setHide(localStorage.getItem('hide') === 'true');
+	}, [hide]);
 
 	const [data, setData] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
@@ -84,6 +89,15 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 						</div>
 						<div className='space-x-3'>
 							<button
+								className='text-blue-500 underline'
+								onClick={() => {
+									localStorage.setItem('hide', hide ? 'false' : 'true');
+									setHide(!hide);
+								}}
+							>
+								{hide ? 'show' : 'hide'} empty slots
+							</button>
+							<button
 								className='text-yellow-400 hover:underline'
 								onClick={() =>
 									setData(
@@ -109,6 +123,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 					<div className='grid grid-cols-7 gap-5 rounded-lg px-3 py-3'>
 						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
 							<Shortcut
+								hideIfEmpty={hide}
 								key={i}
 								name={shortcuts?.[i]?.name}
 								group={shortcuts?.[i]?.group}
