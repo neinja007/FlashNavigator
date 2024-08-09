@@ -245,8 +245,10 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 											onClick={() =>
 												setShortcut({
 													...shortcut,
-													img: `https://external-content.duckduckgo.com/iu/?u=${
-														shortcut.href.startsWith('http') ? shortcut.href : 'http://' + shortcut.href
+													img: `https://external-content.duckduckgo.com/iu/?u=http://${
+														shortcut.href.startsWith('http://') || shortcut.href.startsWith('https://')
+															? shortcut.href.split('/')[2]
+															: shortcut.href.split('/')[0]
 													}/favicon.ico`
 												})
 											}
