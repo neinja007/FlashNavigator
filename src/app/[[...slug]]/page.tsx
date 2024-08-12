@@ -36,7 +36,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 
 	useEffect(() => {
 		const shortcuts = [];
-		for (let i = 1; i <= 14; i++) {
+		for (let i = 1; i <= 16; i++) {
 			shortcuts.push({
 				name: localStorage.getItem(`shortcut-${groupUrl}${i}-name`) || '',
 				group: localStorage.getItem(`shortcut-${groupUrl}${i}-group`) === 'true',
