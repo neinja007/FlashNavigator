@@ -72,14 +72,14 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 	const id = useId();
 
 	return (
-		<div className='hidden xl:block text-white'>
+		<div className='block text-white container'>
 			<div className='text-center'>
 				<Link href={'/'} className='text-4xl font-bold italic'>
 					⚡<span className='text-yellow-300'>Flash</span>
 					<span>Navigator</span>
 				</Link>
 				<div className='mt-8'>
-					<div className='flex justify-between pb-5'>
+					<div className='sm:flex justify-between pb-5'>
 						<div>
 							{['', ...[...(params.slug || [])]].map(
 								(group, i) =>
