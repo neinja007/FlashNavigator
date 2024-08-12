@@ -126,8 +126,8 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 							</button>
 						</div>
 					</div>
-					<div className='grid grid-cols-7 gap-5 rounded-lg px-3 py-3'>
-						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13].map((i) => (
+					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
+						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i) => (
 							<Shortcut
 								hideIfEmpty={hide}
 								key={i}
@@ -150,11 +150,16 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 						</p>
 						<br />
 						<div className='text-blue-400 underline ml-3 space-y-3'>
-							<Link href={'https://addons.mozilla.org/en-GB/firefox/addon/new-tab-override'} className='block mb-3'>
+							<Link
+								href={'https://addons.mozilla.org/en-GB/firefox/addon/new-tab-override'}
+								target='_blank'
+								className='block mb-3'
+							>
 								Extension For Firefox
 							</Link>
 							<Link
 								href={'https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna'}
+								target='_blank'
 								className='block mb-3'
 							>
 								Extension For Google
