@@ -3,8 +3,9 @@
 import Shortcut from '@/components/shortcut';
 import Link from 'next/link';
 import { Fragment, useEffect, useId, useState } from 'react';
+import { getNestedShortcuts, getShortcutsObject, refreshStorage } from '../utils/utils';
 
-type Shortcut = {
+export type Shortcut = {
 	name: string;
 	group: boolean;
 	href: string;
