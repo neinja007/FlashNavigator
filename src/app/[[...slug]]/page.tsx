@@ -32,6 +32,13 @@ export default function Home() {
 	const [data, setData] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [importData, setImportData] = useState('');
+	const [localStorageSize, setLocalStorageSize] = useState<number>();
+
+	useEffect(() => {
+		setLocalStorageSize(localStorage.length);
+	}, []);
+
+	const [searchBar, setSearchBar] = useState('');
 
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
 
@@ -122,7 +129,10 @@ export default function Home() {
 								Export Data to JSON
 							</button>
 							<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
-								Import Data from JSON
+								Import Data
+							</button>
+							<button className='text-red-500 hover:underline' onClick={() => refreshStorage(localStorage)}>
+								Refresh Storage (Size: {localStorageSize || 0})
 							</button>
 						</div>
 					</div>
