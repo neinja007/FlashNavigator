@@ -1,5 +1,5 @@
 import { ShortcutType } from '@/app/[[...slug]]/page';
-import Shortcut from './Shortcut';
+import Shortcut from '@/components/Shortcut';
 import { Dispatch, SetStateAction } from 'react';
 
 type ShortcutQueryResultsProps = {
