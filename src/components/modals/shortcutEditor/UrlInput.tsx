@@ -1,8 +1,8 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 
 type UrlInputProps = {
-	shortcut: Shortcut;
-	setShortcut: (shortcut: Shortcut) => void;
+	shortcut: ShortcutType;
+	setShortcut: (shortcut: ShortcutType) => void;
 };
 
 const UrlInput = ({ setShortcut, shortcut }: UrlInputProps) => {

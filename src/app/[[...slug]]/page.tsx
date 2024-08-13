@@ -1,5 +1,4 @@
 'use client';
-import Shortcut from '@/components/Shortcut';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
@@ -11,8 +10,9 @@ import ImportDataModal from '@/components/modals/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import { getNestedShortcuts } from '../utils/getNestedShortcuts';
 import ShortcutEditor from '@/components/modals/ShortcutEditor';
+import Shortcut from '@/components/Shortcut';
 
-export type Shortcut = {
+export type ShortcutType = {
 	name: string;
 	group: boolean;
 	href: string;
@@ -21,8 +21,8 @@ export type Shortcut = {
 
 export default function Home() {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
-	const [shortcut, setShortcut] = useState<Shortcut | null>();
-	const [shortcuts, setShortcuts] = useState<{ [key: string]: Shortcut }>({});
+	const [shortcut, setShortcut] = useState<ShortcutType | null>();
+	const [shortcuts, setShortcuts] = useState<{ [key: string]: ShortcutType }>({});
 	const [groups, setGroups] = useState<string[]>([]);
 
 	const [extensionPropmt, setExtensionPrompt] = useState(true);

@@ -1,8 +1,8 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 import { useRouter } from 'next/navigation';
 
 type SearchBarProps = {
-	shortcuts: { [key: string]: Shortcut };
+	shortcuts: { [key: string]: ShortcutType };
 	searchBarQuery: string;
 	setSearchBarQuery: (query: string) => void;
 };

@@ -1,9 +1,9 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 import { useId } from 'react';
 
 type GroupCheckboxProps = {
-	shortcut: Shortcut;
-	setShortcut: (shortcut: Shortcut) => void;
+	shortcut: ShortcutType;
+	setShortcut: (shortcut: ShortcutType) => void;
 };
 
 const GroupCheckbox = ({ setShortcut, shortcut }: GroupCheckboxProps) => {

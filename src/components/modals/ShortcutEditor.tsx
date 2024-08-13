@@ -1,4 +1,4 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 import DeleteButton from './shortcutEditor/DeleteButton';
 import NameInput from './shortcutEditor/NameInput';
@@ -11,8 +11,8 @@ type ShortcutEditorProps = {
 	setShortcutId: (id: number | null) => void;
 	groupPrefix: string;
 	shortcutId: number;
-	shortcut: Shortcut;
-	setShortcut: (shortcut: Shortcut) => void;
+	shortcut: ShortcutType;
+	setShortcut: (shortcut: ShortcutType) => void;
 };
 
 const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setShortcut }: ShortcutEditorProps) => {

@@ -1,4 +1,4 @@
-import { Shortcut as ShortcutType } from '@/app/[[...slug]]/page';
+import { ShortcutType as ShortcutType } from '@/app/[[...slug]]/page';
 import Shortcut from './Shortcut';
 import { Dispatch, SetStateAction } from 'react';
 

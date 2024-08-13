@@ -1,8 +1,8 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 
 type NameInputProps = {
-	shortcut: Shortcut;
-	setShortcut: (shortcut: Shortcut) => void;
+	shortcut: ShortcutType;
+	setShortcut: (shortcut: ShortcutType) => void;
 };
 
 const NameInput = ({ setShortcut, shortcut }: NameInputProps) => {

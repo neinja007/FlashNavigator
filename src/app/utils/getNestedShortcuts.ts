@@ -1,10 +1,10 @@
-import { Shortcut } from '../[[...slug]]/page';
+import { ShortcutType } from '../[[...slug]]/page';
 import { getShortcutsObject } from './getShortcutsObject';
 
-export const getNestedShortcuts = (): { [key: string]: Shortcut } => {
+export const getNestedShortcuts = (): { [key: string]: ShortcutType } => {
 	const shortcutsObject = getShortcutsObject();
 	console.log(shortcutsObject);
-	const nestedShortcuts: { [key: string]: Shortcut } = {};
+	const nestedShortcuts: { [key: string]: ShortcutType } = {};
 	Object.keys(shortcutsObject).forEach(
 		(cur) => {
 			const index = cur
@@ -19,7 +19,7 @@ export const getNestedShortcuts = (): { [key: string]: Shortcut } => {
 				img: shortcutsObject[index + '-img']
 			};
 		},
-		{} as { [key: string]: Shortcut }
+		{} as { [key: string]: ShortcutType }
 	);
 	return nestedShortcuts;
 };

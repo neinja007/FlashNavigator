@@ -1,9 +1,9 @@
-import { Shortcut } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/[[...slug]]/page';
 import Link from 'next/link';
 
 type ImageUrlInputProps = {
-	shortcut: Shortcut;
-	setShortcut: (shortcut: Shortcut) => void;
+	shortcut: ShortcutType;
+	setShortcut: (shortcut: ShortcutType) => void;
 };
 
 const ImageUrlInput = ({ setShortcut, shortcut }: ImageUrlInputProps) => {
