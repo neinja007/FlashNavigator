@@ -71,7 +71,7 @@ export default function Home() {
 	const id = useId();
 
 	return (
-		<div className='block text-white container'>
+		<div className='block text-white container my-auto'>
 			<div className='text-center'>
 				<Link href={'/'} className='text-4xl font-bold italic'>
 					⚡<span className='text-yellow-300'>Flash</span>
@@ -114,7 +114,7 @@ export default function Home() {
 								className='text-yellow-400 hover:underline'
 								onClick={() => setData(JSON.stringify(getShortcutsObject(localStorage)))}
 							>
-								Export Data to JSON
+								Export Data
 							</button>
 							<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
 								Import Data
@@ -267,14 +267,14 @@ export default function Home() {
 									Delete
 								</button>
 							</div>
-							<b>Edit Shortcut {shortcutId + 1}</b>
+							<b>Edit Shortcut {shortcutId}</b>
 							<input
 								autoFocus
 								className='w-full px-2 py-1 border border-black rounded-lg bg-transparent'
 								placeholder='Name'
 								value={shortcut.name}
 								onChange={(e) => {
-									setShortcut({ ...shortcut, name: e.target.value });
+									setShortcut({ ...shortcut, name: e.target.value.replace('_', ' ') });
 								}}
 							/>
 							{
