@@ -40,17 +40,18 @@ export default function Home() {
 
 	const [searchBar, setSearchBar] = useState('');
 
-	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
+	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
 
 	useEffect(() => {
 		setShortcuts(getNestedShortcuts(localStorage));
+		setLocalStorageSize(localStorage.length);
 	}, [groupPrefix, shortcutId]);
 
 	useEffect(() => {
 		setShortcut(
 			typeof shortcutId === 'number'
 				? {
-						name: (localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-name`) || '').replace('_', ' '),
+						name: (localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-name`) || '').replaceAll('_', ' '),
 						group: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-group`) === 'true',
 						img: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-img`) || '',
 						href: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-href`) || ''
@@ -94,7 +95,7 @@ export default function Home() {
 										onClick={() => setGroups((prev) => prev.slice(0, prev.length - (2 - i)))}
 										className='max-w-[150px] truncate px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'
 									>
-										{group || 'Home'}
+										{group.replaceAll('_', ' ') || 'Home'}
 									</button>
 									{i !== Math.min(2, groups.length) && '>'}
 								</Fragment>
@@ -119,7 +120,13 @@ export default function Home() {
 							<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
 								Import Data
 							</button>
-							<button className='text-red-500 hover:underline' onClick={() => refreshStorage(localStorage)}>
+							<button
+								className='text-red-500 hover:underline'
+								onClick={() => {
+									refreshStorage(localStorage);
+									setLocalStorageSize(localStorage.length);
+								}}
+							>
 								Refresh Storage (Size: {localStorageSize || 0})
 							</button>
 						</div>
@@ -128,12 +135,11 @@ export default function Home() {
 						{searchBar
 							? Object.values(shortcuts).map(
 									(shortcut, i) =>
-										shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) &&
-										(shortcut.href || shortcut.group) && (
+										shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) && (
 											<Shortcut
 												key={i}
 												hideIfEmpty={hide}
-												name={shortcut.name.replace('_', ' ')}
+												name={shortcut.name.replaceAll('_', ' ')}
 												group={shortcut.group}
 												img={shortcut.img}
 												href={shortcut.href}
@@ -146,7 +152,7 @@ export default function Home() {
 									<Shortcut
 										key={i}
 										hideIfEmpty={hide}
-										name={shortcuts['shortcut-' + groupPrefix + i]?.name.replace('_', ' ')}
+										name={shortcuts['shortcut-' + groupPrefix + i]?.name.replaceAll('_', ' ')}
 										group={shortcuts['shortcut-' + groupPrefix + i]?.group}
 										img={shortcuts['shortcut-' + groupPrefix + i]?.img}
 										href={shortcuts['shortcut-' + groupPrefix + i]?.href}
@@ -274,7 +280,7 @@ export default function Home() {
 								placeholder='Name'
 								value={shortcut.name}
 								onChange={(e) => {
-									setShortcut({ ...shortcut, name: e.target.value.replace('_', ' ') });
+									setShortcut({ ...shortcut, name: e.target.value.replaceAll('_', ' ') });
 								}}
 							/>
 							{

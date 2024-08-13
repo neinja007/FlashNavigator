@@ -9,7 +9,7 @@ export const getShortcutsObject = (storage: Storage): { [key: string]: string } 
 		const prefix = `shortcut-${i}`;
 		if (!shortcutsObject[`${prefix}-name`]) continue;
 		if (shortcutsObject[`${prefix}-group`] === 'true') {
-			newGroups.push(shortcutsObject[`${prefix}-name`].replace(' ', '_'));
+			newGroups.push(shortcutsObject[`${prefix}-name`].replaceAll(' ', '_'));
 		}
 		for (let type of ['img', 'group', 'href', 'name']) {
 			if (!shortcutsObject[`${prefix}-${type}`]) continue;
@@ -25,7 +25,7 @@ export const getShortcutsObject = (storage: Storage): { [key: string]: string } 
 			console.log(prefix, shortcutsObject[`${prefix}-name`]);
 			if (!shortcutsObject[`${prefix}-name`]) continue;
 			if (shortcutsObject[`${prefix}-group`] === 'true') {
-				newGroups.push(newGroups[0] + '-' + shortcutsObject[`${prefix}-name`].replace(' ', '_'));
+				newGroups.push(newGroups[0] + '-' + shortcutsObject[`${prefix}-name`].replaceAll(' ', '_'));
 				console.log('newGroups', newGroups);
 			}
 			for (let type of ['img', 'group', 'href', 'name']) {
@@ -52,7 +52,7 @@ export const getNestedShortcuts = (storage: Storage): { [key: string]: Shortcut 
 				.join('-');
 
 			nestedShortcuts[index] = {
-				name: shortcutsObject[index + '-name'].replace('_', ' '),
+				name: shortcutsObject[index + '-name'].replaceAll('_', ' '),
 				group: shortcutsObject[index + '-group'] === 'true',
 				href: shortcutsObject[index + '-href'],
 				img: shortcutsObject[index + '-img']
@@ -78,7 +78,7 @@ export function refreshStorage(storage: Storage) {
 			.split('-')
 			.slice(0, cur.split('-').length - 1)
 			.join('-');
-		storage.setItem(`${index}-name`, shortcutsObject[index + '-name'].replace('_', ' ') || '');
+		storage.setItem(`${index}-name`, shortcutsObject[index + '-name'].replaceAll('_', ' ') || '');
 		storage.setItem(`${index}-group`, shortcutsObject[index + '-group'] || 'false');
 		storage.setItem(`${index}-href`, shortcutsObject[index + '-href'] || '');
 		storage.setItem(`${index}-img`, shortcutsObject[index + '-img'] || '');
