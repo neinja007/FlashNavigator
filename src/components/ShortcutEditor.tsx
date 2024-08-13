@@ -1,11 +1,11 @@
 import { ShortcutType } from '@/app/[[...slug]]/page';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
-import SubmitButton from '@/components/modals/shortcutEditor/SubmitButton';
-import DeleteButton from '@/components/modals/shortcutEditor/DeleteButton';
-import NameInput from '@/components/modals/shortcutEditor/NameInput';
-import UrlInput from '@/components/modals/shortcutEditor/UrlInput';
-import GroupCheckbox from '@/components/modals/shortcutEditor/GroupCheckbox';
-import ImageUrlInput from './shortcutEditor/imageUrlInput';
+import SubmitButton from '@/components/SubmitButton';
+import DeleteButton from '@/components/DeleteButton';
+import NameInput from '@/components/NameInput';
+import UrlInput from '@/components/UrlInput';
+import GroupCheckbox from '@/components/GroupCheckbox';
+import ImageUrlInput from './imageUrlInput';
 
 type ShortcutEditorProps = {
 	setShortcutId: (id: number | null) => void;

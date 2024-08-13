@@ -4,11 +4,11 @@ import { useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
 import ManageData from '@/components/ManageData';
 import SearchBar from '@/components/SearchBar';
-import ExtensionPromptModal from '@/components/modals/ExtensionPromptModal';
-import ExportDataModal from '@/components/modals/ExportDataModal';
-import ImportDataModal from '@/components/modals/ImportDataModal';
+import ExtensionPromptModal from '@/components/ExtensionPromptModal';
+import ExportDataModal from '@/components/ExportDataModal';
+import ImportDataModal from '@/components/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
-import ShortcutEditor from '@/components/modals/ShortcutEditor';
+import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
