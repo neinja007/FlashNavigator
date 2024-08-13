@@ -1,4 +1,6 @@
 'use client';
+import { addHTTPProtocolToUrl } from '@/app/utils/addHTTPProtocolToUrl';
+import { convertUrlToExternalImageUrl } from '@/app/utils/convertUrlToExternalImageUrl';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -10,15 +12,6 @@ type ShortcutProps = {
 	img: string | undefined;
 	setGroups: Dispatch<SetStateAction<string[]>>;
 };
-
-function isValidURL(string: string) {
-	try {
-		const url = new URL(string);
-		return true;
-	} catch (_) {
-		return false;
-	}
-}
 
 const Shortcut = ({ name, group, href, img, setShortcutId, setGroups }: ShortcutProps) => {
 	return (
@@ -32,18 +25,20 @@ const Shortcut = ({ name, group, href, img, setShortcutId, setGroups }: Shortcut
 				name && (href || group)
 					? group
 						? () => setGroups((prev) => [...prev, name.replace(' ', '_')])
-						: () => {
-								window.location.href = href ? (/^https?:\/\//i.test(href) ? href : 'http://' + href) : '';
-							}
+						: href
+							? () => {
+									window.location.href = addHTTPProtocolToUrl(href);
+								}
+							: setShortcutId
 					: setShortcutId
 			}
 		>
 			<div className='relative mx-auto w-full h-16 sm:h-full overflow-hidden rounded-t-lg mb-3'>
-				{img && img.startsWith('https://external-content.duckduckgo.com') && isValidURL(img) ? (
+				{img ? (
 					<Image
 						alt='The Icon has Failed to Load'
 						className='m-auto max-w-16 max-h-16 h-16 sm:h-auto sm:max-w-32 sm:max-h-32'
-						src={img}
+						src={convertUrlToExternalImageUrl(img)}
 						fill
 						sizes='100px'
 					/>
