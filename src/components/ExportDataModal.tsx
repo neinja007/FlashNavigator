@@ -1,4 +1,4 @@
-import ModalBackgroundFrame from './modals/ModalBackgroundFrame';
+import ModalBackgroundFrame from './ModalBackgroundFrame';
 
 type ExportDataModalProps = {
 	data: string;
