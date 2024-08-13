@@ -4,6 +4,7 @@ import Shortcut from '@/components/shortcut';
 import Link from 'next/link';
 import { Fragment, useEffect, useId, useState } from 'react';
 import { getNestedShortcuts, getShortcutsObject, refreshStorage } from '../utils/utils';
+import { useRouter } from 'next/navigation';
 
 export type Shortcut = {
 	name: string;
@@ -16,7 +17,6 @@ export default function Home() {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
 	const [shortcuts, setShortcuts] = useState<{ [key: string]: Shortcut }>({});
-	const [hide, setHide] = useState(false);
 	const [groups, setGroups] = useState<string[]>([]);
 
 	const [extensionPropmt, setExtensionPrompt] = useState(true);
@@ -24,10 +24,6 @@ export default function Home() {
 	useEffect(() => {
 		setExtensionPrompt(localStorage.getItem('extensionPrompt') === 'true');
 	}, []);
-
-	useEffect(() => {
-		setHide(localStorage.getItem('hide') === 'true');
-	}, [hide]);
 
 	const [data, setData] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
@@ -71,6 +67,8 @@ export default function Home() {
 
 	const id = useId();
 
+	const router = useRouter();
+
 	return (
 		<div className='block text-white container my-auto'>
 			<div className='text-center'>
@@ -79,13 +77,32 @@ export default function Home() {
 					<span>Navigator</span>
 				</Link>
 				<br />
-				<input
-					type='text'
-					className={'p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'}
-					autoFocus
-					value={searchBar}
-					onChange={(e) => setSearchBar(e.target.value)}
-				/>
+				<form
+					onSubmit={(e) => {
+						e.preventDefault();
+						const primaryResult = Object.values(shortcuts).find(
+							(shortcut) =>
+								shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) ||
+								(shortcut.href && shortcut.href.toLowerCase().includes(searchBar.toLowerCase()))
+						);
+						if (primaryResult) {
+							router.push(
+								/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href
+							);
+						} else {
+							router.push(`https://duckduckgo.com/?t=ffab&q=${searchBar}&atb=v376-1&ia=web`);
+						}
+					}}
+				>
+					<input
+						type='text'
+						className={'p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'}
+						autoFocus
+						value={searchBar}
+						onChange={(e) => setSearchBar(e.target.value)}
+						onSubmit={() => setSearchBar('')}
+					/>
+				</form>
 				<div className='mt-8'>
 					<div className='sm:flex justify-between pb-5'>
 						<div>
@@ -102,15 +119,6 @@ export default function Home() {
 							))}
 						</div>
 						<div className='space-x-3'>
-							<button
-								className='text-blue-500 underline'
-								onClick={() => {
-									localStorage.setItem('hide', hide ? 'false' : 'true');
-									setHide(!hide);
-								}}
-							>
-								{hide ? 'show' : 'hide'} empty slots
-							</button>
 							<button
 								className='text-yellow-400 hover:underline'
 								onClick={() => setData(JSON.stringify(getShortcutsObject(localStorage)))}
@@ -135,10 +143,10 @@ export default function Home() {
 						{searchBar
 							? Object.values(shortcuts).map(
 									(shortcut, i) =>
-										shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) && (
+										(shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) ||
+											(shortcut.href && shortcut.href.toLowerCase().includes(searchBar.toLowerCase()))) && (
 											<Shortcut
 												key={i}
-												hideIfEmpty={hide}
 												name={shortcut.name.replaceAll('_', ' ')}
 												group={shortcut.group}
 												img={shortcut.img}
@@ -151,7 +159,6 @@ export default function Home() {
 							: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((i) => (
 									<Shortcut
 										key={i}
-										hideIfEmpty={hide}
 										name={shortcuts['shortcut-' + groupPrefix + i]?.name.replaceAll('_', ' ')}
 										group={shortcuts['shortcut-' + groupPrefix + i]?.group}
 										img={shortcuts['shortcut-' + groupPrefix + i]?.img}
@@ -212,7 +219,12 @@ export default function Home() {
 				<>
 					<div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={() => setData('')} />
 					<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
-						<textarea readOnly value={data} className='rounded-t-lg w-full h-96 bg-gray-800 p-2' />
+						<textarea
+							readOnly
+							value={data}
+							className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
+							style={{ wordBreak: 'break-all' }}
+						/>
 						<button
 							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
 							onClick={() => navigator.clipboard.writeText(data)}
@@ -230,6 +242,7 @@ export default function Home() {
 							value={importData}
 							onChange={(e) => setImportData(e.target.value)}
 							className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
+							style={{ wordBreak: 'break-all' }}
 						/>
 						<button
 							className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
