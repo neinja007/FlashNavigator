@@ -15,7 +15,7 @@ export type Shortcut = {
 export default function Home() {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
-	const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
+	const [shortcuts, setShortcuts] = useState<{ [key: string]: Shortcut }>({});
 	const [hide, setHide] = useState(false);
 	const [groups, setGroups] = useState<string[]>([]);
 
@@ -36,17 +36,8 @@ export default function Home() {
 	const groupUrl = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
 
 	useEffect(() => {
-		const shortcuts = [];
-		for (let i = 1; i <= 16; i++) {
-			shortcuts.push({
-				name: localStorage.getItem(`shortcut-${groupUrl}${i}-name`) || '',
-				group: localStorage.getItem(`shortcut-${groupUrl}${i}-group`) === 'true',
-				href: localStorage.getItem(`shortcut-${groupUrl}${i}-href`) || '',
-				img: localStorage.getItem(`shortcut-${groupUrl}${i}-img`) || ''
-			});
-		}
-		setShortcuts(shortcuts);
-	}, [groupUrl, shortcutId]);
+		setShortcuts(getNestedShortcuts(localStorage));
+	}, [groupPrefix, shortcutId]);
 
 	useEffect(() => {
 		setShortcut(
@@ -79,6 +70,14 @@ export default function Home() {
 					⚡<span className='text-yellow-300'>Flash</span>
 					<span>Navigator</span>
 				</Link>
+				<br />
+				<input
+					type='text'
+					className={'p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'}
+					autoFocus
+					value={searchBar}
+					onChange={(e) => setSearchBar(e.target.value)}
+				/>
 				<div className='mt-8'>
 					<div className='sm:flex justify-between pb-5'>
 						<div>
@@ -128,18 +127,35 @@ export default function Home() {
 						</div>
 					</div>
 					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
-						{[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((i) => (
-							<Shortcut
-								hideIfEmpty={hide}
-								key={i}
-								name={shortcuts?.[i]?.name}
-								group={shortcuts?.[i]?.group}
-								img={shortcuts?.[i]?.img}
-								href={shortcuts?.[i]?.href}
-								setShortcutId={() => setShortcutId(i)}
-								setGroups={setGroups}
-							/>
-						))}
+						{searchBar
+							? Object.values(shortcuts).map(
+									(shortcut, i) =>
+										shortcut.name.toLowerCase().includes(searchBar.toLowerCase()) &&
+										(shortcut.href || shortcut.group) && (
+											<Shortcut
+												key={i}
+												hideIfEmpty={hide}
+												name={shortcut.name.replace('_', ' ')}
+												group={shortcut.group}
+												img={shortcut.img}
+												href={shortcut.href}
+												setShortcutId={() => setShortcutId(i)}
+												setGroups={setGroups}
+											/>
+										)
+								)
+							: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((i) => (
+									<Shortcut
+										key={i}
+										hideIfEmpty={hide}
+										name={shortcuts['shortcut-' + groupPrefix + i]?.name.replace('_', ' ')}
+										group={shortcuts['shortcut-' + groupPrefix + i]?.group}
+										img={shortcuts['shortcut-' + groupPrefix + i]?.img}
+										href={shortcuts['shortcut-' + groupPrefix + i]?.href}
+										setShortcutId={() => setShortcutId(i)}
+										setGroups={setGroups}
+									/>
+								))}
 					</div>
 				</div>
 			</div>
