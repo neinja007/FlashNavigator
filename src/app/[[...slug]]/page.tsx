@@ -112,19 +112,7 @@ export default function Home() {
 							</button>
 							<button
 								className='text-yellow-400 hover:underline'
-								onClick={() =>
-									setData(
-										JSON.stringify(
-											Object.keys(JSON.parse(JSON.stringify(localStorage))).reduce(
-												(acc: { [key: string]: string }, cur) => {
-													if (cur.startsWith('shortcut-')) acc[cur] = JSON.parse(JSON.stringify(localStorage))[cur];
-													return acc;
-												},
-												{}
-											)
-										)
-									)
-								}
+								onClick={() => setData(JSON.stringify(getShortcutsObject(localStorage)))}
 							>
 								Export Data to JSON
 							</button>
