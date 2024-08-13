@@ -29,7 +29,7 @@ const Shortcut = ({ name, group, href, img, setShortcutId, setGroups }: Shortcut
 				setShortcutId();
 			}}
 			onClick={
-				name
+				name && (href || group)
 					? group
 						? () => setGroups((prev) => [...prev, name.replace(' ', '_')])
 						: () => {
