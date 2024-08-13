@@ -5,7 +5,7 @@ import DeleteButton from '@/components/DeleteButton';
 import NameInput from '@/components/NameInput';
 import UrlInput from '@/components/UrlInput';
 import GroupCheckbox from '@/components/GroupCheckbox';
-import ImageUrlInput from './imageUrlInput';
+import ImageUrlInput from './ImageUrlInput';
 
 type ShortcutEditorProps = {
 	setShortcutId: (id: number | null) => void;
