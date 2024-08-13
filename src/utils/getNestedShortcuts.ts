@@ -1,4 +1,4 @@
-import { ShortcutType } from '../[[...slug]]/page';
+import { ShortcutType } from '../app/[[...slug]]/page';
 import { getShortcutsObject } from './getShortcutsObject';
 
 export const getNestedShortcuts = (): { [key: string]: ShortcutType } => {

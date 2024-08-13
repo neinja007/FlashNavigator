@@ -1,5 +1,5 @@
-import { getShortcutsObject } from '@/app/utils/getShortcutsObject';
-import { refreshStorage } from '@/app/utils/refreshStorage';
+import { getShortcutsObject } from '@/utils/getShortcutsObject';
+import { refreshStorage } from '@/utils/refreshStorage';
 import { Dispatch, SetStateAction } from 'react';
 
 type ManageDataProps = {

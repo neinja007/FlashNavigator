@@ -1,4 +1,4 @@
-import { getShortcutsObject } from './getShortcutsObject';
+import { getShortcutsObject } from '@/utils/getShortcutsObject';
 
 export const refreshStorage = () => {
 	const shortcutsObject = getShortcutsObject();

@@ -1,6 +1,6 @@
 'use client';
-import { addHTTPProtocolToUrl } from '@/app/utils/addHTTPProtocolToUrl';
-import { convertUrlToExternalImageUrl } from '@/app/utils/convertUrlToExternalImageUrl';
+import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
+import { convertUrlToExternalImageUrl } from '@/utils/convertUrlToExternalImageUrl';
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
 
