@@ -104,41 +104,43 @@ export default function Home() {
 					/>
 				</form>
 				<div className='mt-8'>
-					<div className='sm:flex justify-between pb-5'>
-						<div>
-							{['', ...groups].slice(Math.max(groups.length - 2, 0)).map((group, i) => (
-								<Fragment key={i}>
-									<button
-										onClick={() => setGroups((prev) => prev.slice(0, prev.length - (2 - i)))}
-										className='max-w-[150px] truncate px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'
-									>
-										{group.replaceAll('_', ' ') || 'Home'}
-									</button>
-									{i !== Math.min(2, groups.length) && '>'}
-								</Fragment>
-							))}
+					{!searchBar && (
+						<div className='sm:flex justify-between pb-5'>
+							<div>
+								{['', ...groups].slice(Math.max(groups.length - 2, 0)).map((group, i) => (
+									<Fragment key={i}>
+										<button
+											onClick={() => setGroups((prev) => prev.slice(0, prev.length - (2 - i)))}
+											className='max-w-[150px] truncate px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'
+										>
+											{group.replaceAll('_', ' ') || 'Home'}
+										</button>
+										{i !== Math.min(2, groups.length) && '>'}
+									</Fragment>
+								))}
+							</div>
+							<div className='space-x-3'>
+								<button
+									className='text-yellow-400 hover:underline'
+									onClick={() => setData(JSON.stringify(getShortcutsObject(localStorage)))}
+								>
+									Export Data
+								</button>
+								<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
+									Import Data
+								</button>
+								<button
+									className='text-red-500 hover:underline'
+									onClick={() => {
+										refreshStorage(localStorage);
+										setLocalStorageSize(localStorage.length);
+									}}
+								>
+									Refresh Storage (Size: {localStorageSize || 0})
+								</button>
+							</div>
 						</div>
-						<div className='space-x-3'>
-							<button
-								className='text-yellow-400 hover:underline'
-								onClick={() => setData(JSON.stringify(getShortcutsObject(localStorage)))}
-							>
-								Export Data
-							</button>
-							<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
-								Import Data
-							</button>
-							<button
-								className='text-red-500 hover:underline'
-								onClick={() => {
-									refreshStorage(localStorage);
-									setLocalStorageSize(localStorage.length);
-								}}
-							>
-								Refresh Storage (Size: {localStorageSize || 0})
-							</button>
-						</div>
-					</div>
+					)}
 					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
 						{searchBar
 							? Object.values(shortcuts).map(
