@@ -8,9 +8,9 @@ import ExtensionPromptModal from '@/components/modals/ExtensionPromptModal';
 import ExportDataModal from '@/components/modals/ExportDataModal';
 import ImportDataModal from '@/components/modals/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
-import { getNestedShortcuts } from '../../utils/getNestedShortcuts';
 import ShortcutEditor from '@/components/modals/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
+import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
 export type ShortcutType = {
 	name: string;

@@ -1,4 +1,3 @@
-'use client';
 import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
 import { convertUrlToExternalImageUrl } from '@/utils/convertUrlToExternalImageUrl';
 import Image from 'next/image';
