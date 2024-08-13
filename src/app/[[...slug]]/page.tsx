@@ -33,7 +33,7 @@ export default function Home() {
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [importData, setImportData] = useState('');
 
-	const groupUrl = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
+	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
 
 	useEffect(() => {
 		setShortcuts(getNestedShortcuts(localStorage));
@@ -43,23 +43,23 @@ export default function Home() {
 		setShortcut(
 			typeof shortcutId === 'number'
 				? {
-						name: localStorage.getItem(`shortcut-${groupUrl}${shortcutId + 1}-name`) || '',
-						group: localStorage.getItem(`shortcut-${groupUrl}${shortcutId + 1}-group`) === 'true',
-						img: localStorage.getItem(`shortcut-${groupUrl}${shortcutId + 1}-img`) || '',
-						href: localStorage.getItem(`shortcut-${groupUrl}${shortcutId + 1}-href`) || ''
+						name: (localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-name`) || '').replace('_', ' '),
+						group: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-group`) === 'true',
+						img: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-img`) || '',
+						href: localStorage.getItem(`shortcut-${groupPrefix}${shortcutId}-href`) || ''
 					}
 				: null
 		);
-	}, [groupUrl, shortcutId]);
+	}, [groupPrefix, shortcutId]);
 
 	useEffect(() => {
 		if (shortcut && typeof shortcutId === 'number') {
-			localStorage.setItem(`shortcut-${groupUrl}${shortcutId + 1}-name`, shortcut.name);
-			localStorage.setItem(`shortcut-${groupUrl}${shortcutId + 1}-group`, shortcut.group.toString());
-			localStorage.setItem(`shortcut-${groupUrl}${shortcutId + 1}-href`, shortcut.href);
-			localStorage.setItem(`shortcut-${groupUrl}${shortcutId + 1}-img`, shortcut.img);
+			localStorage.setItem(`shortcut-${groupPrefix}${shortcutId}-name`, shortcut.name);
+			localStorage.setItem(`shortcut-${groupPrefix}${shortcutId}-group`, shortcut.group.toString());
+			localStorage.setItem(`shortcut-${groupPrefix}${shortcutId}-href`, shortcut.href);
+			localStorage.setItem(`shortcut-${groupPrefix}${shortcutId}-img`, shortcut.img);
 		}
-	}, [groupUrl, shortcut, shortcutId]);
+	}, [groupPrefix, shortcut, shortcutId]);
 
 	const id = useId();
 
@@ -259,10 +259,10 @@ export default function Home() {
 									type='button'
 									className='text-red-500 underline'
 									onClick={() => {
-										localStorage.removeItem(`shortcut-${groupUrl}${shortcutId + 1}-name`);
-										localStorage.removeItem(`shortcut-${groupUrl}${shortcutId + 1}-group`);
-										localStorage.removeItem(`shortcut-${groupUrl}${shortcutId + 1}-href`);
-										localStorage.removeItem(`shortcut-${groupUrl}${shortcutId + 1}-img`);
+										localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-name`);
+										localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-group`);
+										localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-href`);
+										localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-img`);
 										setShortcutId(null);
 									}}
 								>
