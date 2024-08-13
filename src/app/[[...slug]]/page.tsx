@@ -19,7 +19,7 @@ export type ShortcutType = {
 	img: string;
 };
 
-export default function Home() {
+export default function Root() {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<ShortcutType | null>();
 	const [shortcuts, setShortcuts] = useState<{ [key: string]: ShortcutType }>({});
