@@ -16,8 +16,8 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={montserrat.className + ' pt-16 flex justify-center'}>
-				<div className='max-w-[1240px] w-full flex justify-center'>{children}</div>
+			<body className={montserrat.className + ' flex justify-center'}>
+				<div className='max-w-[1240px] w-full flex justify-center pt-16 min-h-screen'>{children}</div>
 			</body>
 		</html>
 	);
