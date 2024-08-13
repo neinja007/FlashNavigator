@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import { usePathname, useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 type ShortcutProps = {
 	setShortcutId: () => void;
@@ -9,6 +9,7 @@ type ShortcutProps = {
 	href: string | undefined;
 	img: string | undefined;
 	hideIfEmpty?: boolean;
+	setGroups: Dispatch<SetStateAction<string[]>>;
 };
 
 function isValidURL(string: string) {
@@ -20,11 +21,7 @@ function isValidURL(string: string) {
 	}
 }
 
-const Shortcut = ({ name, group, href, img, setShortcutId, hideIfEmpty }: ShortcutProps) => {
-	const pathname = usePathname();
-
-	const router = useRouter();
-
+const Shortcut = ({ name, group, href, img, setShortcutId, hideIfEmpty, setGroups }: ShortcutProps) => {
 	return (
 		(!hideIfEmpty || name) && (
 			<div
@@ -36,7 +33,7 @@ const Shortcut = ({ name, group, href, img, setShortcutId, hideIfEmpty }: Shortc
 				onClick={
 					name
 						? group
-							? () => router.push(pathname + name.replace(' ', '_'))
+							? () => setGroups((prev) => [...prev, name.replace(' ', '_')])
 							: () => {
 									window.location.href = href ? (/^https?:\/\//i.test(href) ? href : 'http://' + href) : '';
 								}

@@ -11,11 +11,12 @@ type Shortcut = {
 	img: string;
 };
 
-export default function Home({ params }: { params: { slug?: string[] } }) {
+export default function Home() {
 	const [shortcutId, setShortcutId] = useState<number | null>(null);
 	const [shortcut, setShortcut] = useState<Shortcut | null>();
 	const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
 	const [hide, setHide] = useState(false);
+	const [groups, setGroups] = useState<string[]>([]);
 
 	const [extensionPropmt, setExtensionPrompt] = useState(true);
 
@@ -31,8 +32,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [importData, setImportData] = useState('');
 
-	const groupUrl =
-		params.slug && params.slug.length > 0 ? params.slug.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
+	const groupUrl = groups.length > 0 ? groups.map((slug) => slug.replace(' ', '_')).join('-') + '-' : '';
 
 	useEffect(() => {
 		const shortcuts = [];
@@ -81,17 +81,17 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 				<div className='mt-8'>
 					<div className='sm:flex justify-between pb-5'>
 						<div>
-							{['', ...[...(params.slug || [])]].map(
-								(group, i) =>
-									typeof group === 'string' && (
-										<Fragment key={i}>
-											<Link href={'/'} className='px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'>
-												{group === '' ? 'Home' : group.replace('_', ' ')}
-											</Link>
-											{params.slug && params.slug.length !== i && '>'}
-										</Fragment>
-									)
-							)}
+							{['', ...groups].map((group, i) => (
+								<Fragment key={i}>
+									<button
+										onClick={() => setGroups((prev) => prev.slice(0, i))}
+										className='px-2 py-1 mx-2 rounded-lg bg-blue-800 text-white'
+									>
+										{group || 'Home'}
+									</button>
+									{groups.length !== i && '>'}
+								</Fragment>
+							))}
 						</div>
 						<div className='space-x-3'>
 							<button
@@ -136,6 +136,7 @@ export default function Home({ params }: { params: { slug?: string[] } }) {
 								img={shortcuts?.[i]?.img}
 								href={shortcuts?.[i]?.href}
 								setShortcutId={() => setShortcutId(i)}
+								setGroups={setGroups}
 							/>
 						))}
 					</div>
