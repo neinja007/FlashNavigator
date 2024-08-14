@@ -10,6 +10,13 @@ type ShortcutQueryResultsProps = {
 	setShortcutId: (id: number) => void;
 };
 
+const calculateScore = (shortcut: ShortcutType, searchBarQuery: string) => {
+	const startsWithScore = shortcut.name.toLowerCase().startsWith(searchBarQuery.toLowerCase()) ? 5 : 10;
+	const nameScore = shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ? 5 : 10;
+	const hrefScore = shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()) ? 5 : 10;
+	return startsWithScore - nameScore - hrefScore;
+};
+
 const ShortcutQueryResults = ({
 	shortcuts,
 	searchBarQuery,
@@ -17,20 +24,23 @@ const ShortcutQueryResults = ({
 	setShortcutId,
 	resetSearchBarQuery
 }: ShortcutQueryResultsProps) => {
-	return Object.values(shortcuts).map(
-		(shortcut, i) =>
-			(shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
-				(shortcut.href && shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()))) && (
-				<Shortcut
-					queryResult
-					resetSearchBarQuery={resetSearchBarQuery}
-					key={i}
-					shortcut={shortcut}
-					setShortcutId={() => setShortcutId(i)}
-					setGroups={setGroups}
-				/>
-			)
-	);
+	return Object.values(shortcuts)
+		.filter(
+			(shortcut) =>
+				shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
+				shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase())
+		)
+		.sort((a, b) => calculateScore(a, searchBarQuery) - calculateScore(b, searchBarQuery))
+		.map((shortcut, i) => (
+			<Shortcut
+				queryResult
+				resetSearchBarQuery={resetSearchBarQuery}
+				key={i}
+				shortcut={shortcut}
+				setShortcutId={() => setShortcutId(i)}
+				setGroups={setGroups}
+			/>
+		));
 };
 
 export default ShortcutQueryResults;
