@@ -32,11 +32,16 @@ const ExtensionPromptModal = ({ setExtensionPrompt }: ExtensionPromptModalProps)
 				</div>
 				<br />
 				<p>
-					After installing, use this URL as the new tab URL: <br />
+					<b>Step 1</b>: use this URL as the new tab URL: <br />
 					<b className='text-blue-400 underline'>flash-navigator.vercel.app</b>{' '}
 					<button onClick={() => navigator.clipboard.writeText('https://flash-navigator.vercel.app')}>
 						[copy link]
 					</button>
+				</p>
+				<br />
+				<p>
+					<b>Step 2</b>: If possible, activate the &quot;Set focus on the web page instead of the address bar&quot;
+					option in the extension settings.
 				</p>
 				<br />
 				<button
