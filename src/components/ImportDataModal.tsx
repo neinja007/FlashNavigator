@@ -1,4 +1,5 @@
 import ModalBackgroundFrame from './ModalBackgroundFrame';
+import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 
 type ImportDataModalProps = {
 	importData: string;
@@ -31,6 +32,7 @@ const ImportDataModal = ({
 					onClick={() => {
 						try {
 							const data = JSON.parse(importData);
+							deleteShortcutStorage();
 							Object.keys(data).forEach((key) => {
 								localStorage.setItem(key, data[key]);
 							});
@@ -40,7 +42,7 @@ const ImportDataModal = ({
 						}
 					}}
 				>
-					{'Import Data (might overwrite existing data)'}
+					Import Data <span className='text-red-500 font-medium'>(will overwrite existing data)</span>
 				</button>
 			</div>
 		</>
