@@ -42,7 +42,7 @@ const ImportDataModal = ({
 						}
 					}}
 				>
-					Import Data <span className='text-red-500 font-medium'>(will overwrite existing data)</span>
+					Import Data <span className='text-red-400 font-medium'>(will overwrite existing data)</span>
 				</button>
 			</div>
 		</>
