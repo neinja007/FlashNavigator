@@ -1,26 +1,37 @@
-import { ShortcutType } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/page';
 import { useRouter } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
 type SearchBarProps = {
-	shortcuts: { [key: string]: ShortcutType };
+	shortcuts: { [key: string]: ShortcutType } | undefined;
 	searchBarQuery: string;
 	setSearchBarQuery: (query: string) => void;
+	setGroups: Dispatch<SetStateAction<string[]>>;
 };
 
-const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery }: SearchBarProps) => {
+const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: SearchBarProps) => {
 	const router = useRouter();
 
 	return (
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				const primaryResult = Object.values(shortcuts).find(
-					(shortcut) =>
-						shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
-						(shortcut.href && shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()))
-				);
+				const primaryResult =
+					shortcuts &&
+					Object.values(shortcuts).find(
+						(shortcut) =>
+							shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
+							(shortcut.href && shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()))
+					);
 				if (primaryResult) {
-					router.push(/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href);
+					if (primaryResult.href) {
+						router.push(/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href);
+					} else {
+						if (primaryResult.group) {
+							setSearchBarQuery('');
+							setGroups([...primaryResult.path, primaryResult.name]);
+						}
+					}
 				} else {
 					router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
 				}
