@@ -1,4 +1,4 @@
-import { ShortcutType } from '@/app/[[...slug]]/page';
+import { ShortcutType } from '@/app/page';
 
 type NameInputProps = {
 	shortcut: ShortcutType;
