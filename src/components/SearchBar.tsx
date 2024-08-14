@@ -1,4 +1,5 @@
 import { ShortcutType } from '@/app/page';
+import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -33,7 +34,11 @@ const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: 
 						}
 					}
 				} else {
-					router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
+					if (searchBarQuery.includes('http') || searchBarQuery.includes('.')) {
+						router.push(addHTTPProtocolToUrl(searchBarQuery));
+					} else {
+						router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
+					}
 				}
 			}}
 		>
