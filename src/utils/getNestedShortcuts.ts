@@ -12,10 +12,10 @@ export const getNestedShortcuts = (): { [key: string]: ShortcutType } => {
 				.join('-');
 
 			nestedShortcuts[index] = {
-				name: shortcutsObject[index + '-name'].replaceAll('_', ' '),
+				name: shortcutsObject[index + '-name'].replaceAll('_', ' ') || '',
 				group: shortcutsObject[index + '-group'] === 'true',
-				href: shortcutsObject[index + '-href'],
-				img: shortcutsObject[index + '-img'],
+				href: shortcutsObject[index + '-href'] || '',
+				img: shortcutsObject[index + '-img'] || '',
 				path: index.split('-').slice(1, index.split('-').length - 1)
 			};
 		},
