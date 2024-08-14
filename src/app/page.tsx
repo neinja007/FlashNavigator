@@ -9,7 +9,7 @@ import ExportDataModal from '@/components/ExportDataModal';
 import ImportDataModal from '@/components/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
-import { useStorageState } from './hooks/useStorageState';
+import { useStorageState } from '../hooks/useStorageState';
 import Shortcut from '@/components/Shortcut';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
