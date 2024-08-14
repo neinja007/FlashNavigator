@@ -32,10 +32,10 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 					} else if (shortcut.href) {
 						window.location.href = addHTTPProtocolToUrl(shortcut.href);
 					} else {
-						setShortcutId();
+						!queryResult && setShortcutId();
 					}
 				} else {
-					setShortcutId();
+					!queryResult && setShortcutId();
 				}
 			}}
 		>
