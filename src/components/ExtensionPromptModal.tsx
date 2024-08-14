@@ -2,7 +2,7 @@ import Link from 'next/link';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 
 type ExtensionPromptModalProps = {
-	setExtensionPrompt: (extensionPrompt: boolean) => void;
+	setExtensionPrompt: (extensionPrompt: string) => void;
 };
 
 const ExtensionPromptModal = ({ setExtensionPrompt }: ExtensionPromptModalProps) => {
@@ -42,8 +42,7 @@ const ExtensionPromptModal = ({ setExtensionPrompt }: ExtensionPromptModalProps)
 				<button
 					className='px-2 bg-blue-500 active:bg-blue-600 rounded-lg w-full py-1'
 					onClick={() => {
-						localStorage.setItem('extensionPrompt', 'true');
-						setExtensionPrompt(true);
+						setExtensionPrompt('true');
 					}}
 				>
 					{'Done'}
