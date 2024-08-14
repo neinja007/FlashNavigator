@@ -3,7 +3,6 @@ import { getShortcutsObject } from './getShortcutsObject';
 
 export const getNestedShortcuts = (): { [key: string]: ShortcutType } => {
 	const shortcutsObject = getShortcutsObject();
-	console.log(shortcutsObject);
 	const nestedShortcuts: { [key: string]: ShortcutType } = {};
 	Object.keys(shortcutsObject).forEach(
 		(cur) => {
@@ -16,7 +15,8 @@ export const getNestedShortcuts = (): { [key: string]: ShortcutType } => {
 				name: shortcutsObject[index + '-name'].replaceAll('_', ' '),
 				group: shortcutsObject[index + '-group'] === 'true',
 				href: shortcutsObject[index + '-href'],
-				img: shortcutsObject[index + '-img']
+				img: shortcutsObject[index + '-img'],
+				path: index.split('-').slice(1, index.split('-').length - 1)
 			};
 		},
 		{} as { [key: string]: ShortcutType }
