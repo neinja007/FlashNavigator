@@ -12,7 +12,9 @@ export const useStorageState = (
 		if (storedState) {
 			setState(storedState);
 		} else {
-			localStorage.setItem(name, initialStorageValue || initialValue || '');
+			const value = initialStorageValue || initialValue || '';
+			localStorage.setItem(name, value);
+			setState(value);
 		}
 	}, [initialStorageValue, initialValue, name]);
 
