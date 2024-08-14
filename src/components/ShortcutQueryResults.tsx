@@ -14,7 +14,7 @@ const calculateScore = (shortcut: ShortcutType, searchBarQuery: string) => {
 	const startsWithScore = shortcut.name.toLowerCase().startsWith(searchBarQuery.toLowerCase()) ? 5 : 10;
 	const nameScore = shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ? 5 : 10;
 	const hrefScore = shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()) ? 5 : 10;
-	return -startsWithScore - nameScore - hrefScore;
+	return -(startsWithScore + nameScore + hrefScore);
 };
 
 const ShortcutQueryResults = ({
