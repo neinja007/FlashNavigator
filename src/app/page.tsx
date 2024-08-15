@@ -11,6 +11,7 @@ import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
 import { useStorageState } from '../hooks/useStorageState';
 import Shortcut from '@/components/Shortcut';
+import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
 export type ShortcutType = {
 	name: string;
@@ -35,6 +36,7 @@ export default function Root() {
 	const [localStorageSize, setLocalStorageSize] = useState<number>(0);
 	useEffect(() => {
 		setLocalStorageSize(localStorage.length);
+		setShortcuts(getNestedShortcuts());
 	}, []);
 
 	const [searchBarQuery, setSearchBarQuery] = useState('');
