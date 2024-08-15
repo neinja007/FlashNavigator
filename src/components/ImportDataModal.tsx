@@ -1,3 +1,4 @@
+import { refreshStorage } from '@/utils/refreshStorage';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 
@@ -36,6 +37,7 @@ const ImportDataModal = ({
 							Object.keys(data).forEach((key) => {
 								localStorage.setItem(key, data[key]);
 							});
+							refreshStorage();
 							window.location.reload();
 						} catch {
 							alert('Invalid JSON data');
