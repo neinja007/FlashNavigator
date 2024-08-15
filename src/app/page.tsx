@@ -11,7 +11,6 @@ import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
 import { useStorageState } from '../hooks/useStorageState';
 import Shortcut from '@/components/Shortcut';
-import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
 export type ShortcutType = {
 	name: string;
@@ -41,11 +40,6 @@ export default function Root() {
 	const [searchBarQuery, setSearchBarQuery] = useState('');
 
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
-
-	useEffect(() => {
-		setShortcuts(getNestedShortcuts());
-		setLocalStorageSize(localStorage.length);
-	}, [groupPrefix, activeShortcutId]);
 
 	useEffect(() => {
 		setActiveShortcut(
@@ -138,6 +132,8 @@ export default function Root() {
 			)}
 			{activeShortcut && typeof activeShortcutId === 'number' && (
 				<ShortcutEditor
+					setShortcuts={setShortcuts}
+					setLocalStorageSize={setLocalStorageSize}
 					groupPrefix={groupPrefix}
 					shortcutId={activeShortcutId}
 					shortcut={activeShortcut}
