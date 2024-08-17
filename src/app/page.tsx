@@ -127,7 +127,6 @@ export default function Root() {
 			{activeShortcut && typeof activeShortcutId === 'number' && (
 				<ShortcutEditor
 					setShortcuts={setShortcuts}
-					setLocalStorageSize={setLocalStorageSize}
 					groupPrefix={groupPrefix}
 					shortcutId={activeShortcutId}
 					shortcut={activeShortcut}

@@ -15,7 +15,6 @@ type ShortcutEditorProps = {
 	shortcut: ShortcutType;
 	setShortcut: (shortcut: ShortcutType) => void;
 	setShortcuts: (shortcuts: { [key: string]: ShortcutType }) => void;
-	setLocalStorageSize: (size: number) => void;
 };
 
 const ShortcutEditor = ({
@@ -24,12 +23,10 @@ const ShortcutEditor = ({
 	shortcutId,
 	shortcut,
 	setShortcut,
-	setLocalStorageSize,
 	setShortcuts
 }: ShortcutEditorProps) => {
 	const onSubmit = () => {
 		setShortcuts(getNestedShortcuts());
-		setLocalStorageSize(localStorage.length);
 		setShortcutId(null);
 	};
 
