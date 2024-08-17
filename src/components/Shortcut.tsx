@@ -52,13 +52,15 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 					<span className='text-6xl sm:text-9xl select-none'>?</span>
 				)}
 			</div>
-			{shortcut.name ? (
-				<b className='line-clamp-2'>
-					{shortcut.group ? '📁' : '🔗'} {shortcut.name}
-				</b>
-			) : (
-				<span className='text-blue-300 underline cursor-pointer'>Edit Shortcut</span>
-			)}
+			<div className='h-12'>
+				{shortcut.name ? (
+					<b className={'line-clamp-2 ' + (shortcut.group ? 'text-yellow-400' : 'text-blue-400')}>
+						{shortcut.group ? '📁' : '🔗'} {shortcut.name}
+					</b>
+				) : (
+					<span className='text-blue-300 underline cursor-pointer'>Edit Shortcut</span>
+				)}
+			</div>
 		</div>
 	);
 };
