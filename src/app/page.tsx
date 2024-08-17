@@ -9,9 +9,9 @@ import ExportDataModal from '@/components/ExportDataModal';
 import ImportDataModal from '@/components/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
-import { useStorageState } from '../hooks/useStorageState';
 import Shortcut from '@/components/Shortcut';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
+import { refreshStorage } from '@/utils/refreshStorage';
 
 export type ShortcutType = {
 	name: string;
@@ -27,24 +27,18 @@ export default function Root() {
 	const [shortcuts, setShortcuts] = useState<{ [key: string]: ShortcutType }>();
 	const [groups, setGroups] = useState<string[]>([]);
 
-	const [extensionPropmt, setExtensionPrompt] = useStorageState('extensionPrompt', 'true', 'false');
-
 	const [dataToExport, setDataToExport] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [dataToImport, setDataToImport] = useState('');
-
-	const [localStorageSize, setLocalStorageSize] = useState<number>(0);
-	useEffect(() => {
-		setLocalStorageSize(localStorage.length);
-	}, []);
 
 	const [searchBarQuery, setSearchBarQuery] = useState('');
 
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
 
+	useEffect(refreshStorage, []);
+
 	useEffect(() => {
 		setShortcuts(getNestedShortcuts());
-		setLocalStorageSize(localStorage.length);
 	}, [groupPrefix, activeShortcutId]);
 
 	useEffect(() => {
@@ -88,12 +82,7 @@ export default function Root() {
 					{!searchBarQuery && (
 						<div className='sm:flex justify-between pb-5'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
-							<ManageData
-								localStorageSize={localStorageSize}
-								setData={setDataToExport}
-								setImportDataModal={setImportDataModal}
-								setLocalStorageSize={setLocalStorageSize}
-							/>
+							<ManageData setData={setDataToExport} setImportDataModal={setImportDataModal} />
 						</div>
 					)}
 					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
@@ -126,11 +115,10 @@ export default function Root() {
 					</div>
 				</div>
 			</div>
-			{extensionPropmt === 'false' && <ExtensionPromptModal setExtensionPrompt={setExtensionPrompt} />}
+			<ExtensionPromptModal />
 			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
 			{importDataModal && (
 				<ImportDataModal
-					setLocalStorageSize={setLocalStorageSize}
 					importData={dataToImport}
 					setImportData={setDataToImport}
 					setImportDataModal={setImportDataModal}

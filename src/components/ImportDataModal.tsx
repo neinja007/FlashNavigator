@@ -5,25 +5,16 @@ type ImportDataModalProps = {
 	importData: string;
 	setImportDataModal: (importDataModal: boolean) => void;
 	setImportData: (importData: string) => void;
-	setLocalStorageSize: (localStorageSize: number) => void;
 };
 
-const ImportDataModal = ({
-	importData,
-	setImportData,
-	setImportDataModal,
-	setLocalStorageSize
-}: ImportDataModalProps) => {
+const ImportDataModal = ({ importData, setImportData, setImportDataModal }: ImportDataModalProps) => {
 	return (
 		<>
 			<ModalBackgroundFrame action={() => setImportDataModal(false)} />
 			<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
 				<textarea
 					value={importData}
-					onChange={(e) => {
-						setImportData(e.target.value);
-						setLocalStorageSize(localStorage.length);
-					}}
+					onChange={(e) => setImportData(e.target.value)}
 					className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
 					style={{ wordBreak: 'break-all' }}
 				/>
