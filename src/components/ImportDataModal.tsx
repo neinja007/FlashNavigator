@@ -25,7 +25,7 @@ const ImportDataModal = ({ importData, setImportData, setImportDataModal }: Impo
 							const data = JSON.parse(importData);
 							deleteShortcutStorage();
 							Object.keys(data).forEach((key) => {
-								localStorage.setItem(key, data[key]);
+								localStorage.setItem(key.startsWith('shortcut-') ? key : 'shortcut-' + key, data[key]);
 							});
 							window.location.reload();
 						} catch {
