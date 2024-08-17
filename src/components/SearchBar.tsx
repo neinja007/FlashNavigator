@@ -1,5 +1,6 @@
 import { ShortcutType } from '@/app/page';
 import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
+import { orderShortcutsByRelevance } from '@/utils/calculateShortcutRelevanceScore';
 import { useRouter } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
 
@@ -17,13 +18,7 @@ const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: 
 		<form
 			onSubmit={(e) => {
 				e.preventDefault();
-				const primaryResult =
-					shortcuts &&
-					Object.values(shortcuts).find(
-						(shortcut) =>
-							shortcut.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
-							(shortcut.href && shortcut.href.toLowerCase().includes(searchBarQuery.toLowerCase()))
-					);
+				const primaryResult = shortcuts && orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery)[0];
 				if (primaryResult) {
 					if (primaryResult.href) {
 						router.push(/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href);
@@ -44,7 +39,8 @@ const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: 
 		>
 			<input
 				type='text'
-				className={'p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'}
+				placeholder='FlashSearch'
+				className='p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'
 				autoFocus
 				value={searchBarQuery}
 				onChange={(e) => setSearchBarQuery(e.target.value)}

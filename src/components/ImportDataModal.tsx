@@ -1,3 +1,4 @@
+import { refreshStorage } from '@/utils/refreshStorage';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 
@@ -27,6 +28,7 @@ const ImportDataModal = ({ importData, setImportData, setImportDataModal }: Impo
 							Object.keys(data).forEach((key) => {
 								localStorage.setItem(key.startsWith('shortcut-') ? key : 'shortcut-' + key, data[key]);
 							});
+							refreshStorage();
 							window.location.reload();
 						} catch {
 							alert('Invalid JSON data');

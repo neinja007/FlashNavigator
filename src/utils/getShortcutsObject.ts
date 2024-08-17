@@ -18,11 +18,9 @@ export const getShortcutsObject = (stripShortcutPrefix?: boolean): { [key: strin
 	while (newGroups.length > 0) {
 		for (let i = 1; i < 17; i++) {
 			const prefix = `shortcut-${newGroups[0] + '-'}${i}`;
-			console.log(prefix, shortcutsObject[`${prefix}-name`]);
 			if (!shortcutsObject[`${prefix}-name`]) continue;
 			if (shortcutsObject[`${prefix}-group`] === 'true') {
 				newGroups.push(newGroups[0] + '-' + shortcutsObject[`${prefix}-name`].replaceAll(' ', '_'));
-				console.log('newGroups', newGroups);
 			}
 			for (let type of ['img', 'group', 'href', 'name']) {
 				if (!shortcutsObject[`${prefix}-${type}`]) continue;

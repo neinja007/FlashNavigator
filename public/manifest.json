@@ -5,7 +5,7 @@
 	"description": "Flashy Navigation for the Web",
 	"display": "standalone",
 	"background_color": "#000000",
-	"theme_color": "#ffffff",
+	"theme_color": "#000000",
 	"orientation": "portrait",
 	"icons": [
 		{
