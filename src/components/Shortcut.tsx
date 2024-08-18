@@ -14,9 +14,9 @@ type ShortcutProps = {
 };
 
 const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearchBarQuery }: ShortcutProps) => {
-	const [hideIcons] = useStorageState('settings-hide_shortcut_icons');
-	const [hideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts');
-	const [imageQuality] = useStorageState('settings-image_quality');
+	const [hideIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
+	const [hideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
+	const [imageQuality] = useStorageState('settings-image_quality', '75');
 
 	return (
 		(hideEmptyShortcuts === 'false' || shortcut.name || shortcut.href || shortcut.img) && (
