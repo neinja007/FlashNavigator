@@ -5,8 +5,6 @@ import Breadcrums from '@/components/Breadcrums';
 import ManageData from '@/components/ManageData';
 import SearchBar from '@/components/SearchBar';
 import ExtensionPromptModal from '@/components/ExtensionPromptModal';
-import ExportDataModal from '@/components/ExportDataModal';
-import ImportDataModal from '@/components/ImportDataModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
@@ -26,10 +24,6 @@ export default function Root() {
 	const [activeShortcut, setActiveShortcut] = useState<ShortcutType | null>();
 	const [shortcuts, setShortcuts] = useState<{ [key: string]: ShortcutType }>();
 	const [groups, setGroups] = useState<string[]>([]);
-
-	const [dataToExport, setDataToExport] = useState('');
-	const [importDataModal, setImportDataModal] = useState(false);
-	const [dataToImport, setDataToImport] = useState('');
 
 	const [searchBarQuery, setSearchBarQuery] = useState('');
 
@@ -82,7 +76,7 @@ export default function Root() {
 					{!searchBarQuery && (
 						<div className='sm:flex justify-between pb-5'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
-							<ManageData setData={setDataToExport} setImportDataModal={setImportDataModal} />
+							<ManageData />
 						</div>
 					)}
 					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
@@ -116,14 +110,6 @@ export default function Root() {
 				</div>
 			</div>
 			<ExtensionPromptModal />
-			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
-			{importDataModal && (
-				<ImportDataModal
-					importData={dataToImport}
-					setImportData={setDataToImport}
-					setImportDataModal={setImportDataModal}
-				/>
-			)}
 			{activeShortcut && typeof activeShortcutId === 'number' && (
 				<ShortcutEditor
 					setShortcuts={setShortcuts}
