@@ -1,21 +1,22 @@
 import { refreshStorage } from '@/utils/refreshStorage';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
+import { useState } from 'react';
 
 type ImportDataModalProps = {
-	importData: string;
 	setImportDataModal: (importDataModal: boolean) => void;
-	setImportData: (importData: string) => void;
 };
 
-const ImportDataModal = ({ importData, setImportData, setImportDataModal }: ImportDataModalProps) => {
+const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
+	const [dataToImport, setDataToImport] = useState('');
+
 	return (
 		<>
 			<ModalBackgroundFrame action={() => setImportDataModal(false)} />
-			<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
+			<div className='fixed z-50 bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
 				<textarea
-					value={importData}
-					onChange={(e) => setImportData(e.target.value)}
+					value={dataToImport}
+					onChange={(e) => setDataToImport(e.target.value)}
 					className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
 					style={{ wordBreak: 'break-all' }}
 				/>

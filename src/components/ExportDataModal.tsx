@@ -9,7 +9,7 @@ const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
 	return (
 		<>
 			<ModalBackgroundFrame action={() => setData('')} />
-			<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
+			<div className='fixed z-50 bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit'>
 				<textarea
 					readOnly
 					value={data}
