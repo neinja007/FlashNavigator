@@ -2,7 +2,7 @@ type SubmitButtonProps = {};
 
 const SubmitButton = ({}: SubmitButtonProps) => {
 	return (
-		<button type='submit' className='text-blue-500 underline'>
+		<button type='submit' className='text-blue-400 underline'>
 			Submit
 		</button>
 	);
