@@ -24,7 +24,7 @@ const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
 						className='px-2 bg-blue-500 active:bg-blue-600 rounded-bl-lg w-full py-1'
 						onClick={() => navigator.clipboard.writeText(data)}
 					>
-						Copy Data ({shortcutCount} shortcuts)
+						Copy {shortcutCount} shortcuts
 					</button>
 					<button className='px-2 bg-red-500 active:bg-red-600 rounded-br-lg w-full py-1' onClick={() => setData('')}>
 						Close
