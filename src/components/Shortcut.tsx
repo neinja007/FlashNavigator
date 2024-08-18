@@ -16,6 +16,7 @@ type ShortcutProps = {
 const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearchBarQuery }: ShortcutProps) => {
 	const [hideIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
 	const [hideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
+	const [shortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'false');
 	const [imageQuality] = useStorageState('settings-image_quality', '75');
 
 	return (
@@ -61,7 +62,12 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 				</div>
 				<div className='h-12'>
 					{shortcut.name ? (
-						<b className={'line-clamp-2 ' + (shortcut.group ? 'text-yellow-400' : 'text-blue-400')}>
+						<b
+							className={
+								'line-clamp-2 ' +
+								(shortcutTypeColor === 'true' ? (shortcut.group ? 'text-yellow-400' : 'text-blue-400') : 'text-white')
+							}
+						>
 							{hideIcons === 'false' && (shortcut.group ? '📁' : '🔗')} {shortcut.name}
 						</b>
 					) : (

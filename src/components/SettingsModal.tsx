@@ -11,6 +11,7 @@ const SettingsModal = ({ setSettings }: SettingsModalProps) => {
 	const [hideShortcutIcons, setHideShortcutIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
 	const [hideEmptyShortcuts, setHideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
 	const [imageQuality, setImageQuality] = useStorageState('settings-image_quality', '75');
+	const [shortcutTypeColor, setShortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'true');
 
 	return (
 		<>
@@ -51,6 +52,16 @@ const SettingsModal = ({ setSettings }: SettingsModalProps) => {
 							className='mr-2'
 						/>
 						<label htmlFor='hide_empty_shortcuts'>Hide Empty Shortcuts</label>
+					</div>
+					<div>
+						<input
+							type='checkbox'
+							id='shortcut_type_color'
+							checked={shortcutTypeColor === 'true'}
+							onChange={(e) => setShortcutTypeColor(e.target.checked.toString())}
+							className='mr-2'
+						/>
+						<label htmlFor='shortcut_type_color'>Different colors for Folders and Links</label>
 					</div>
 					<div>
 						<label htmlFor='image_quality'>Image Quality (the higher, the slower the images load):</label>
