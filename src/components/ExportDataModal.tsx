@@ -16,12 +16,17 @@ const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
 					className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
 					style={{ wordBreak: 'break-all' }}
 				/>
-				<button
-					className='px-2 bg-blue-500 active:bg-blue-600 rounded-b-lg w-full py-1'
-					onClick={() => navigator.clipboard.writeText(data)}
-				>
-					{'Copy Data'}
-				</button>
+				<div className='flex -mt-1'>
+					<button
+						className='px-2 bg-blue-500 active:bg-blue-600 rounded-bl-lg w-full py-1'
+						onClick={() => navigator.clipboard.writeText(data)}
+					>
+						Copy Data
+					</button>
+					<button className='px-2 bg-red-500 active:bg-red-600 rounded-br-lg w-full py-1' onClick={() => setData('')}>
+						Close
+					</button>
+				</div>
 			</div>
 		</>
 	);
