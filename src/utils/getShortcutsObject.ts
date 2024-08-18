@@ -12,7 +12,16 @@ export const getShortcutsObject = (stripShortcutPrefix?: boolean): { [key: strin
 		}
 		for (let type of ['img', 'group', 'href', 'name']) {
 			if (!rawShortcuts[`${prefix}-${type}`]) continue;
-			shortcuts[`${finalPrefix}-${type}`] = rawShortcuts[`${prefix}-${type}`];
+			const value =
+				type === 'img'
+					? rawShortcuts[`${prefix}-${type}`]
+							.replaceAll('https://external-content.duckduckgo.com/iu/?u=', '')
+							.replaceAll('https://', '')
+							.replaceAll('http://', '')
+							.replaceAll('https%3A%2F%2F', '')
+							.replaceAll('http%3A%2F%2F', '')
+					: rawShortcuts[`${prefix}-${type}`];
+			shortcuts[`${finalPrefix}-${type}`] = value;
 		}
 	}
 
