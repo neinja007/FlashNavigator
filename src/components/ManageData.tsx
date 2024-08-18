@@ -1,27 +1,34 @@
 import { getShortcutsObject } from '@/utils/getShortcutsObject';
-import { Dispatch, SetStateAction } from 'react';
+import { useState } from 'react';
+import ExportDataModal from './ExportDataModal';
+import ImportDataModal from './ImportDataModal';
+import SettingsModal from './SettingsModal';
 
-type ManageDataProps = {
-	setData: Dispatch<SetStateAction<string>>;
-	setImportDataModal: Dispatch<SetStateAction<boolean>>;
-};
+const ManageData = () => {
+	const [dataToExport, setDataToExport] = useState('');
+	const [importDataModal, setImportDataModal] = useState(false);
+	const [settings, setSettings] = useState(false);
 
-const ManageData = ({ setData, setImportDataModal }: ManageDataProps) => {
 	return (
-		<div className='space-x-3'>
+		<>
+			<div className='space-x-3'>
 				<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
 					Settings
 				</button>
-			<button
-				className='text-yellow-400 hover:underline'
-				onClick={() => setData(JSON.stringify(getShortcutsObject(true)))}
-			>
-				Export Data
-			</button>
-			<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
-				Import Data
-			</button>
-		</div>
+				<button
+					className='text-yellow-400 hover:underline'
+					onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
+				>
+					Export Data
+				</button>
+				<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
+					Import Data
+				</button>
+			</div>
+			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
+			{importDataModal && <ImportDataModal setImportDataModal={setImportDataModal} />}
+			{settings && <SettingsModal setSettings={setSettings} />}
+		</>
 	);
 };
 
