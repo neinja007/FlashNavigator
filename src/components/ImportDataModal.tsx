@@ -2,6 +2,7 @@ import { refreshStorage } from '@/utils/refreshStorage';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 import { useState } from 'react';
+import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 
 type ImportDataModalProps = {
 	setImportDataModal: (importDataModal: boolean) => void;
@@ -9,6 +10,20 @@ type ImportDataModalProps = {
 
 const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 	const [dataToImport, setDataToImport] = useState('');
+
+	let shortcutCount;
+
+	try {
+		shortcutCount = Object.keys(JSON.parse(dataToImport)).reduce((acc: string[], cur: string) => {
+			const splitCur = cur.split('-');
+			const index = cur.startsWith('shortcut-') ? 1 : 0;
+			return splitCur[index] && acc.find((item) => item === splitCur[index]) ? acc : [...acc, splitCur[index]];
+		}, []).length;
+	} catch {
+		shortcutCount = 0;
+	}
+
+	const currentShortcutCount = Object.keys(getNestedShortcuts()).length;
 
 	return (
 		<>
@@ -37,7 +52,7 @@ const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 							}
 						}}
 					>
-						Import Data <span className='text-red-400 font-medium'>(overwrites existing data)</span>
+						Import {shortcutCount} shortcuts (current: {currentShortcutCount})
 					</button>
 					<button
 						className='px-2 bg-red-500 active:bg-red-600 rounded-br-lg w-1/2 py-1'
