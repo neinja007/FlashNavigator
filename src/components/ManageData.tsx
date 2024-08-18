@@ -19,10 +19,10 @@ const ManageData = () => {
 					className='text-yellow-400 hover:underline'
 					onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
 				>
-					Export Data
+					Export Shortcuts
 				</button>
 				<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
-					Import Data
+					Import Shortcuts
 				</button>
 			</div>
 			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
