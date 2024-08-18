@@ -9,6 +9,9 @@ type ManageDataProps = {
 const ManageData = ({ setData, setImportDataModal }: ManageDataProps) => {
 	return (
 		<div className='space-x-3'>
+				<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
+					Settings
+				</button>
 			<button
 				className='text-yellow-400 hover:underline'
 				onClick={() => setData(JSON.stringify(getShortcutsObject(true)))}
