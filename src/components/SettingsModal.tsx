@@ -14,9 +14,20 @@ const SettingsModal = ({ setSettings }: SettingsModalProps) => {
 
 	return (
 		<>
-			<ModalBackgroundFrame action={() => setSettings(false)} />
+			<ModalBackgroundFrame
+				action={() => {
+					setSettings(false);
+					window.location.reload();
+				}}
+			/>
 			<div className='fixed z-50 bg-gray-700 shadow-lg rounded-xl text-left p-5 inset-0 mx-auto my-auto w-[700px] h-fit block'>
-				<form className='space-y-5' onSubmit={() => setSettings(false)}>
+				<form
+					className='space-y-5'
+					onSubmit={() => {
+						setSettings(false);
+						window.location.reload();
+					}}
+				>
 					<div className='float-end space-x-3'>
 						<SubmitButton />
 					</div>
