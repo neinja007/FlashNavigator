@@ -79,7 +79,7 @@ export default function Root() {
 							<ManageData />
 						</div>
 					)}
-					<div className='grid grid-cols-4 xl:grid-cols-8 gap-5 rounded-lg px-3 py-3 text-xs sm:text-base'>
+					<div className='flex flex-wrap justify-center rounded-lg text-xs sm:text-base'>
 						{searchBarQuery && shortcuts ? (
 							<ShortcutQueryResults
 								resetSearchBarQuery={() => setSearchBarQuery('')}

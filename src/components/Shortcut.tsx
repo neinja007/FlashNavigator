@@ -22,7 +22,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 	return (
 		(hideEmptyShortcuts === 'false' || shortcut.name || shortcut.href || shortcut.img) && (
 			<div
-				className='mb-12 rounded-lg h-fit sm:aspect-square cursor-pointer pb-2 hover:bg-gray-700'
+				className='mb-3 rounded-lg w-1/4 md:w-1/6 xl:w-1/8 h-fit aspect-square cursor-pointer pb-2 hover:bg-gray-700'
 				onContextMenu={(e) => {
 					if (queryResult) return;
 					e.preventDefault();
@@ -46,11 +46,11 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 					}
 				}}
 			>
-				<div className='relative mx-auto h-full w-full overflow-hidden rounded-t-lg mb-3'>
+				<div className='relative mx-auto h-full w-full overflow-hidden rounded-t-lg'>
 					{shortcut.img ? (
 						<Image
 							alt='The Icon has Failed to Load'
-							className='m-auto w-full h-full sm:h-auto sm:max-w-32 sm:max-h-32'
+							className='m-auto w-full h-fit max-w-20 max-h-20 sm:max-w-24 sm:max-h-24 lg:max-w-32 lg:max-h-32'
 							src={convertUrlToExternalImageUrl(shortcut.img)}
 							fill
 							sizes={((parseInt(imageQuality || '75') || 75) * 3).toString() + 'px'}
