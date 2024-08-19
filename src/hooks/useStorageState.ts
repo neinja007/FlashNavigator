@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 
 export const useStorageState = (
 	name: string,
-	initialValue?: string,
+	initialValue: string,
 	initialStorageValue?: string
-): [string | undefined, (arg: string) => void] => {
-	const [state, setState] = useState<string | undefined>(initialValue);
+): [string, (arg: string) => void] => {
+	const [state, setState] = useState<string>(initialValue);
 
 	useEffect(() => {
 		const storedState = localStorage.getItem(name);
@@ -23,5 +23,5 @@ export const useStorageState = (
 		localStorage.setItem(name, newState);
 	};
 
-	return [state, updateState];
+	return [state || initialStorageValue || initialValue || '', updateState];
 };
