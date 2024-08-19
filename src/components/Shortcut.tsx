@@ -46,11 +46,11 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 					}
 				}}
 			>
-				<div className='relative mx-auto w-full h-16 sm:h-full overflow-hidden rounded-t-lg mb-3'>
+				<div className='relative mx-auto h-full w-full overflow-hidden rounded-t-lg mb-3'>
 					{shortcut.img ? (
 						<Image
 							alt='The Icon has Failed to Load'
-							className='m-auto max-w-16 max-h-16 h-16 sm:h-auto sm:max-w-32 sm:max-h-32'
+							className='m-auto w-full h-full sm:h-auto sm:max-w-32 sm:max-h-32'
 							src={convertUrlToExternalImageUrl(shortcut.img)}
 							fill
 							sizes={((parseInt(imageQuality || '75') || 75) * 3).toString() + 'px'}
