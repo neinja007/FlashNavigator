@@ -1,34 +1,35 @@
 import { Dispatch, SetStateAction } from 'react';
 import ModalBackgroundFrame from './ModalBackgroundFrame';
-import { useStorageState } from '@/hooks/useStorageState';
 import SubmitButton from './SubmitButton';
 
 type SettingsModalProps = {
 	setSettings: Dispatch<SetStateAction<boolean>>;
+	hideEmptyShortcuts: string;
+	hideShortcutIcons: string;
+	imageQuality: string;
+	shortcutTypeColor: string;
+	setHideEmptyShortcuts: (hideEmptyShortcuts: string) => void;
+	setHideShortcutIcons: (hideShortcutIcons: string) => void;
+	setImageQuality: (imageQuality: string) => void;
+	setShortcutTypeColor: (shortcutTypeColor: string) => void;
 };
 
-const SettingsModal = ({ setSettings }: SettingsModalProps) => {
-	const [hideShortcutIcons, setHideShortcutIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
-	const [hideEmptyShortcuts, setHideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
-	const [imageQuality, setImageQuality] = useStorageState('settings-image_quality', '75');
-	const [shortcutTypeColor, setShortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'true');
-
+const SettingsModal = ({
+	setSettings,
+	hideEmptyShortcuts,
+	hideShortcutIcons,
+	imageQuality,
+	setHideEmptyShortcuts,
+	setHideShortcutIcons,
+	setImageQuality,
+	setShortcutTypeColor,
+	shortcutTypeColor
+}: SettingsModalProps) => {
 	return (
 		<>
-			<ModalBackgroundFrame
-				action={() => {
-					setSettings(false);
-					window.location.reload();
-				}}
-			/>
+			<ModalBackgroundFrame action={() => setSettings(false)} />
 			<div className='fixed z-50 bg-gray-700 shadow-lg rounded-xl text-left p-5 inset-0 mx-auto my-auto w-[700px] h-fit block'>
-				<form
-					className='space-y-5'
-					onSubmit={() => {
-						setSettings(false);
-						window.location.reload();
-					}}
-				>
+				<form className='space-y-5' onSubmit={() => setSettings(false)}>
 					<div className='float-end space-x-3'>
 						<SubmitButton />
 					</div>

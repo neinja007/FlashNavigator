@@ -4,7 +4,27 @@ import ExportDataModal from './ExportDataModal';
 import ImportDataModal from './ImportDataModal';
 import SettingsModal from './SettingsModal';
 
-const ManageData = () => {
+type ManageDataProps = {
+	hideEmptyShortcuts: string;
+	hideShortcutIcons: string;
+	imageQuality: string;
+	shortcutTypeColor: string;
+	setHideEmptyShortcuts: (hideEmptyShortcuts: string) => void;
+	setHideShortcutIcons: (hideShortcutIcons: string) => void;
+	setImageQuality: (imageQuality: string) => void;
+	setShortcutTypeColor: (shortcutTypeColor: string) => void;
+};
+
+const ManageData = ({
+	hideEmptyShortcuts,
+	hideShortcutIcons,
+	imageQuality,
+	shortcutTypeColor,
+	setHideEmptyShortcuts,
+	setHideShortcutIcons,
+	setImageQuality,
+	setShortcutTypeColor
+}: ManageDataProps) => {
 	const [dataToExport, setDataToExport] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [settings, setSettings] = useState(false);
@@ -27,7 +47,19 @@ const ManageData = () => {
 			</div>
 			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
 			{importDataModal && <ImportDataModal setImportDataModal={setImportDataModal} />}
-			{settings && <SettingsModal setSettings={setSettings} />}
+			{settings && (
+				<SettingsModal
+					setSettings={setSettings}
+					hideEmptyShortcuts={hideEmptyShortcuts}
+					hideShortcutIcons={hideShortcutIcons}
+					imageQuality={imageQuality}
+					setHideEmptyShortcuts={setHideEmptyShortcuts}
+					setHideShortcutIcons={setHideShortcutIcons}
+					setImageQuality={setImageQuality}
+					setShortcutTypeColor={setShortcutTypeColor}
+					shortcutTypeColor={shortcutTypeColor}
+				/>
+			)}
 		</>
 	);
 };
