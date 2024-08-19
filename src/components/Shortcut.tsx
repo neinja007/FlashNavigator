@@ -1,5 +1,4 @@
 import { ShortcutType } from '@/app/page';
-import { useStorageState } from '@/hooks/useStorageState';
 import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
 import { convertUrlToExternalImageUrl } from '@/utils/convertUrlToExternalImageUrl';
 import Image from 'next/image';
@@ -11,14 +10,23 @@ type ShortcutProps = {
 	setGroups: Dispatch<SetStateAction<string[]>>;
 	queryResult?: boolean;
 	resetSearchBarQuery?: () => void;
+	hideShortcutIcons?: string;
+	hideEmptyShortcuts?: string;
+	shortcutTypeColor?: string;
+	imageQuality?: string;
 };
 
-const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearchBarQuery }: ShortcutProps) => {
-	const [hideIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
-	const [hideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
-	const [shortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'false');
-	const [imageQuality] = useStorageState('settings-image_quality', '75');
-
+const Shortcut = ({
+	setShortcutId,
+	setGroups,
+	queryResult,
+	shortcut,
+	resetSearchBarQuery,
+	hideEmptyShortcuts,
+	hideShortcutIcons,
+	imageQuality,
+	shortcutTypeColor
+}: ShortcutProps) => {
 	return (
 		(hideEmptyShortcuts === 'false' || shortcut.name || shortcut.href || shortcut.img) && (
 			<div
@@ -68,7 +76,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 								(shortcutTypeColor === 'true' ? (shortcut.group ? 'text-yellow-400' : 'text-blue-400') : 'text-white')
 							}
 						>
-							{hideIcons === 'false' && (shortcut.group ? '📁' : '🔗')} {shortcut.name}
+							{hideShortcutIcons === 'false' && (shortcut.group ? '📁' : '🔗')} {shortcut.name}
 						</b>
 					) : (
 						<span className='text-blue-300 underline cursor-pointer'>Edit Shortcut</span>
