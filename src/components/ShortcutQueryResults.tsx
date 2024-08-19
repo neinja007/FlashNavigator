@@ -9,6 +9,9 @@ type ShortcutQueryResultsProps = {
 	resetSearchBarQuery: () => void;
 	setGroups: Dispatch<SetStateAction<string[]>>;
 	setShortcutId: (id: number) => void;
+	hideShortcutIcons?: string;
+	shortcutTypeColor?: string;
+	imageQuality?: string;
 };
 
 const ShortcutQueryResults = ({
@@ -16,7 +19,10 @@ const ShortcutQueryResults = ({
 	searchBarQuery,
 	setGroups,
 	setShortcutId,
-	resetSearchBarQuery
+	resetSearchBarQuery,
+	hideShortcutIcons,
+	imageQuality,
+	shortcutTypeColor
 }: ShortcutQueryResultsProps) => {
 	return orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery).map((shortcut, i) => (
 		<Shortcut
@@ -26,6 +32,9 @@ const ShortcutQueryResults = ({
 			shortcut={shortcut}
 			setShortcutId={() => setShortcutId(i)}
 			setGroups={setGroups}
+			hideShortcutIcons={hideShortcutIcons}
+			imageQuality={imageQuality}
+			shortcutTypeColor={shortcutTypeColor}
 		/>
 	));
 };
