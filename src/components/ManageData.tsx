@@ -3,6 +3,8 @@ import { useState } from 'react';
 import ExportDataModal from './ExportDataModal';
 import ImportDataModal from './ImportDataModal';
 import SettingsModal from './SettingsModal';
+import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
+import Link from 'next/link';
 
 type ManageDataProps = {
 	hideEmptyShortcuts: string;
@@ -32,6 +34,16 @@ const ManageData = ({
 	return (
 		<>
 			<div className='space-x-3'>
+				<SignedIn>
+					<div className='text-red-500 *:hover:underline inline'>
+						<SignOutButton>Sign out</SignOutButton>
+					</div>
+				</SignedIn>
+				<SignedOut>
+					<Link href={'/sign-in'} className='text-green-500 hover:underline inline'>
+						Sign in
+					</Link>
+				</SignedOut>
 				<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
 					Settings
 				</button>
