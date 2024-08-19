@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
 			</head>
 			<body className={montserrat.className + ' flex justify-center'}>
 				<div className='max-w-[1240px] w-full flex justify-center pt-16 min-h-screen'>{children}</div>
+				<Analytics />
 			</body>
 		</html>
 	);
