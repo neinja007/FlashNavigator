@@ -10,6 +10,7 @@ import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 import { refreshStorage } from '@/utils/refreshStorage';
+import { useStorageState } from '@/hooks/useStorageState';
 
 export type ShortcutType = {
 	name: string;
@@ -58,6 +59,11 @@ export default function Root() {
 		}
 	}, [groupPrefix, activeShortcut, activeShortcutId]);
 
+	const [hideShortcutIcons, setHideShortcutIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
+	const [hideEmptyShortcuts, setHideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
+	const [imageQuality, setImageQuality] = useStorageState('settings-image_quality', '75');
+	const [shortcutTypeColor, setShortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'true');
+
 	return (
 		<div className='block text-white container my-auto'>
 			<div className='text-center'>
@@ -76,7 +82,16 @@ export default function Root() {
 					{!searchBarQuery && (
 						<div className='sm:flex justify-between pb-5'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
-							<ManageData />
+							<ManageData
+								hideEmptyShortcuts={hideEmptyShortcuts}
+								hideShortcutIcons={hideShortcutIcons}
+								imageQuality={imageQuality}
+								setHideEmptyShortcuts={setHideEmptyShortcuts}
+								setHideShortcutIcons={setHideShortcutIcons}
+								setImageQuality={setImageQuality}
+								setShortcutTypeColor={setShortcutTypeColor}
+								shortcutTypeColor={shortcutTypeColor}
+							/>
 						</div>
 					)}
 					<div className='flex flex-wrap justify-center rounded-lg text-xs sm:text-base'>
@@ -87,6 +102,9 @@ export default function Root() {
 								searchBarQuery={searchBarQuery}
 								setGroups={setGroups}
 								setShortcutId={setActiveShortcutId}
+								hideShortcutIcons={hideShortcutIcons}
+								imageQuality={imageQuality}
+								shortcutTypeColor={shortcutTypeColor}
 							/>
 						) : (
 							[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((i) => (
@@ -103,6 +121,10 @@ export default function Root() {
 									}
 									setShortcutId={() => setActiveShortcutId(i)}
 									setGroups={setGroups}
+									hideShortcutIcons={hideShortcutIcons}
+									imageQuality={imageQuality}
+									shortcutTypeColor={shortcutTypeColor}
+									hideEmptyShortcuts={hideEmptyShortcuts}
 								/>
 							))
 						)}
