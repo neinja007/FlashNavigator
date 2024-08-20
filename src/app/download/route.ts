@@ -13,9 +13,11 @@ export async function GET() {
 		return Response.error();
 	}
 
-	const blobData = await fetch(blob.url)
+	const blobData = await fetch(blob.url, { cache: 'no-store' })
 		.then((res) => res.text())
 		.catch(() => console.error("Couldn't fetch blob data"));
 
-	return Response.json({ ...blob, data: blobData });
+	const data = { ...blob, data: blobData };
+
+	return Response.json(data);
 }
