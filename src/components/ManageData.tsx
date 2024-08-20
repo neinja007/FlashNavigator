@@ -21,35 +21,35 @@ const ManageData = () => {
 				{showDataControls === 'true' && (
 					<>
 						<button
-							className='text-yellow-400 hover:underline'
+							className='text-yellow-400 transition-all hover:text-xl'
 							onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
 						>
 							Export Shortcuts
 						</button>
-						<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
+						<button className='text-white transition-all hover:text-xl' onClick={() => setImportDataModal(true)}>
 							Import Shortcuts
 						</button>
-						<button className='text-blue-500 hover:underline' onClick={() => setSyncSettingsModal(true)}>
+						<button className='text-blue-500 transition-all hover:text-xl' onClick={() => setSyncSettingsModal(true)}>
 							Sync Shortcuts
 						</button>
-						<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
+						<button className='text-neutral-400 transition-all hover:text-xl' onClick={() => setSettings(true)}>
 							Settings
 						</button>
 					</>
 				)}
 				<button
-					className='text-purple-500 hover:underline'
+					className='text-purple-500 transition-all hover:text-xl'
 					onClick={() => setShowDataControls(showDataControls === 'false' ? 'true' : 'false')}
 				>
 					{showDataControls === 'true' ? 'Collapse' : 'Expand'} Menu
 				</button>
 				<SignedIn>
-					<div className='inline text-red-500 *:hover:underline'>
+					<div className='*: inline text-red-500 transition-all hover:text-xl'>
 						<SignOutButton>Sign out</SignOutButton>
 					</div>
 				</SignedIn>
 				<SignedOut>
-					<Link href={'/sign-in'} className='inline text-green-500 hover:underline'>
+					<Link href={'/sign-in'} className='inline text-green-500 transition-all hover:text-xl'>
 						Sign in
 					</Link>
 				</SignedOut>
