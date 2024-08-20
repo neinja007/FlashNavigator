@@ -19,7 +19,6 @@ const SearchBar = ({ searchBarQuery, setSearchBarQuery, onSubmit, nextResult }: 
 				}}
 				onKeyDown={(e) => {
 					if (e.key === 'Tab') {
-						console.log(e.key);
 						e.preventDefault();
 						nextResult();
 					}

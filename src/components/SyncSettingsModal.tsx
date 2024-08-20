@@ -48,10 +48,6 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 	const localEntries = Object.entries(getShortcutsObject(true));
 	const serverEntries = downloadState === 'success' && JSON.parse(uploadedShortcuts);
 
-	for (let [key, value] of localEntries) {
-		downloadState === 'success' && value !== serverEntries[key] && console.log(value, serverEntries[key]);
-	}
-
 	const inSync = localEntries.every(([key, value]) => serverEntries[key] === value);
 
 	return (
