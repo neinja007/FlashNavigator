@@ -17,7 +17,7 @@
   "singleQuote": true,
   "tabWidth": 2,
   "trailingComma": "none",
-  "useTabs": false,
+  "useTabs": true,
   "embeddedLanguageFormatting": "auto",
   "vueIndentScriptAndStyle": false,
   "parser": "typescript"
