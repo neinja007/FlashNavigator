@@ -29,7 +29,7 @@ const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: 
 						}
 					}
 				} else {
-					if (searchBarQuery.includes('http') || searchBarQuery.includes('.')) {
+					if (searchBarQuery.includes('http') || (searchBarQuery.includes('.') && !searchBarQuery.includes(' '))) {
 						router.push(addHTTPProtocolToUrl(searchBarQuery));
 					} else {
 						router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
