@@ -21,8 +21,8 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 		(!settings.hideEmptyShortcuts || shortcut.name || shortcut.href || shortcut.img) && (
 			<div
 				className={
-					'mb-3 aspect-square h-fit w-1/4 cursor-pointer rounded-lg pb-2 hover:bg-gray-700 md:w-1/6 xl:w-1/8' +
-					(active ? ' bg-gray-700' : '')
+					'h-auto w-[calc(12.5%-12px)] cursor-pointer rounded-lg border bg-neutral-950 pb-2 transition-colors hover:border-gray-400' +
+					(active ? ' border-gray-3 00' : ' border-gray-700')
 				}
 				onContextMenu={(e) => {
 					if (queryResult) return;
@@ -47,11 +47,11 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 					}
 				}}
 			>
-				<div className='relative mx-auto h-full w-full overflow-hidden rounded-t-lg'>
+				<div className='relative mx-auto aspect-square w-full overflow-hidden rounded-t-lg'>
 					{shortcut.img ? (
 						<Image
 							alt='The Icon has Failed to Load'
-							className='m-auto h-fit max-h-20 w-full max-w-20 sm:max-h-24 sm:max-w-24 lg:max-h-32 lg:max-w-32'
+							className='m-auto h-full max-h-20 w-full max-w-20 sm:max-h-24 sm:max-w-24 lg:max-h-28 lg:max-w-28'
 							src={convertUrlToExternalImageUrl(shortcut.img)}
 							fill
 							sizes={(settings.imageQuality * 3).toString() + 'px'}
@@ -61,7 +61,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 						<span className='select-none text-6xl sm:text-9xl'>?</span>
 					)}
 				</div>
-				<div className='h-12'>
+				<div className='flex h-12 flex-col justify-center'>
 					{shortcut.name ? (
 						<b
 							className={
