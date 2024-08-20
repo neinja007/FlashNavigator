@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
 import ManageData from '@/components/ManageData';
@@ -85,10 +84,13 @@ export default function Root() {
 	return (
 		<div className='container my-auto block text-white'>
 			<div className='text-center'>
-				<Link href={'/'} className='text-4xl font-bold italic'>
+				<button
+					onClick={() => setSearchBarQuery('')}
+					className='text-4xl font-bold italic transition-all hover:text-5xl hover:text-sky-500'
+				>
 					⚡<span className='text-yellow-300'>Flash</span>
 					<span>Navigator</span>
-				</Link>
+				</button>
 				<br />
 				<SearchBar
 					searchBarQuery={searchBarQuery}
