@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
 import ManageData from '@/components/ManageData';
 import SearchBar from '@/components/SearchBar';
@@ -8,9 +8,8 @@ import ExtensionPromptModal from '@/components/ExtensionPromptModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
-import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 import { refreshStorage } from '@/utils/refreshStorage';
-import { useStorageState } from '@/hooks/useStorageState';
+import { DataContext } from '@/context/DataContext';
 
 export type ShortcutType = {
 	name: string;
@@ -21,20 +20,17 @@ export type ShortcutType = {
 };
 
 export default function Root() {
+	const [searchBarQuery, setSearchBarQuery] = useState('');
+
+	const { shortcuts } = useContext(DataContext);
+
 	const [activeShortcutId, setActiveShortcutId] = useState<number | null>(null);
 	const [activeShortcut, setActiveShortcut] = useState<ShortcutType | null>();
-	const [shortcuts, setShortcuts] = useState<{ [key: string]: ShortcutType }>();
 	const [groups, setGroups] = useState<string[]>([]);
-
-	const [searchBarQuery, setSearchBarQuery] = useState('');
 
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
 
 	useEffect(refreshStorage, []);
-
-	useEffect(() => {
-		setShortcuts(getNestedShortcuts());
-	}, [groupPrefix, activeShortcutId]);
 
 	useEffect(() => {
 		setActiveShortcut(
@@ -50,22 +46,8 @@ export default function Root() {
 		);
 	}, [groupPrefix, activeShortcutId]);
 
-	useEffect(() => {
-		if (activeShortcut && typeof activeShortcutId === 'number') {
-			localStorage.setItem(`shortcut-${groupPrefix}${activeShortcutId}-name`, activeShortcut.name);
-			localStorage.setItem(`shortcut-${groupPrefix}${activeShortcutId}-group`, activeShortcut.group.toString());
-			localStorage.setItem(`shortcut-${groupPrefix}${activeShortcutId}-href`, activeShortcut.href);
-			localStorage.setItem(`shortcut-${groupPrefix}${activeShortcutId}-img`, activeShortcut.img);
-		}
-	}, [groupPrefix, activeShortcut, activeShortcutId]);
-
-	const [hideShortcutIcons, setHideShortcutIcons] = useStorageState('settings-hide_shortcut_icons', 'false');
-	const [hideEmptyShortcuts, setHideEmptyShortcuts] = useStorageState('settings-hide_empty_shortcuts', 'false');
-	const [imageQuality, setImageQuality] = useStorageState('settings-image_quality', '75');
-	const [shortcutTypeColor, setShortcutTypeColor] = useStorageState('settings-shortcut_type_color', 'true');
-
 	return (
-		<div className='block text-white container my-auto'>
+		<div className='container my-auto block text-white'>
 			<div className='text-center'>
 				<Link href={'/'} className='text-4xl font-bold italic'>
 					⚡<span className='text-yellow-300'>Flash</span>
@@ -80,7 +62,7 @@ export default function Root() {
 				/>
 				<div className='mt-8'>
 					{!searchBarQuery && (
-						<div className='sm:flex justify-between pb-5'>
+						<div className='justify-between pb-5 sm:flex'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
 							<ManageData />
 						</div>
