@@ -13,7 +13,7 @@ const Modal = ({ children, action, padding }: ModalProps) => {
 			<ModalBackgroundFrame action={action} />
 			<div
 				className={
-					'fixed z-50 bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit text-left' +
+					'fixed inset-0 z-50 mx-auto my-auto h-fit w-full max-w-[700px] rounded-xl bg-gray-700 text-left shadow-lg' +
 					(padding ? ' p-5' : '')
 				}
 			>
