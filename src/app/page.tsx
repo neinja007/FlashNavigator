@@ -82,16 +82,7 @@ export default function Root() {
 					{!searchBarQuery && (
 						<div className='sm:flex justify-between pb-5'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
-							<ManageData
-								hideEmptyShortcuts={hideEmptyShortcuts}
-								hideShortcutIcons={hideShortcutIcons}
-								imageQuality={imageQuality}
-								setHideEmptyShortcuts={setHideEmptyShortcuts}
-								setHideShortcutIcons={setHideShortcutIcons}
-								setImageQuality={setImageQuality}
-								setShortcutTypeColor={setShortcutTypeColor}
-								shortcutTypeColor={shortcutTypeColor}
-							/>
+							<ManageData />
 						</div>
 					)}
 					<div className='flex flex-wrap justify-center rounded-lg text-xs sm:text-base'>
@@ -102,9 +93,6 @@ export default function Root() {
 								searchBarQuery={searchBarQuery}
 								setGroups={setGroups}
 								setShortcutId={setActiveShortcutId}
-								hideShortcutIcons={hideShortcutIcons}
-								imageQuality={imageQuality}
-								shortcutTypeColor={shortcutTypeColor}
 							/>
 						) : (
 							[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((i) => (
@@ -121,10 +109,6 @@ export default function Root() {
 									}
 									setShortcutId={() => setActiveShortcutId(i)}
 									setGroups={setGroups}
-									hideShortcutIcons={hideShortcutIcons}
-									imageQuality={imageQuality}
-									shortcutTypeColor={shortcutTypeColor}
-									hideEmptyShortcuts={hideEmptyShortcuts}
 								/>
 							))
 						)}
@@ -134,7 +118,6 @@ export default function Root() {
 			<ExtensionPromptModal />
 			{activeShortcut && typeof activeShortcutId === 'number' && (
 				<ShortcutEditor
-					setShortcuts={setShortcuts}
 					groupPrefix={groupPrefix}
 					shortcutId={activeShortcutId}
 					shortcut={activeShortcut}
