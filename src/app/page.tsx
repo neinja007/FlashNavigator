@@ -1,4 +1,5 @@
 'use client';
+
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
@@ -10,6 +11,9 @@ import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
 import { refreshStorage } from '@/utils/refreshStorage';
 import { DataContext } from '@/context/DataContext';
+import { orderShortcutsByRelevance } from '@/utils/calculateShortcutRelevanceScore';
+import { useRouter } from 'next/navigation';
+import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
 
 export type ShortcutType = {
 	name: string;
@@ -20,6 +24,8 @@ export type ShortcutType = {
 };
 
 export default function Root() {
+	const router = useRouter();
+
 	const [searchBarQuery, setSearchBarQuery] = useState('');
 
 	const { shortcuts } = useContext(DataContext);
@@ -31,6 +37,40 @@ export default function Root() {
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
 
 	useEffect(refreshStorage, []);
+
+	const [searchResults, setSearchResults] = useState<ShortcutType[] | []>([]);
+	const [searchResultsIndex, setSearchResultsIndex] = useState<number>(0);
+
+	useEffect(() => {
+		if (searchBarQuery) {
+			setSearchResults(orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery));
+			setSearchResultsIndex(0);
+		} else {
+			setSearchResults([]);
+			setSearchResultsIndex(0);
+		}
+	}, [searchBarQuery, shortcuts]);
+
+	const openResult: (e: React.FormEvent<HTMLFormElement>) => void = (e) => {
+		e.preventDefault();
+		const primaryResult = searchResults[searchResultsIndex];
+		if (primaryResult) {
+			if (primaryResult.href) {
+				router.push(/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href);
+			} else {
+				if (primaryResult.group) {
+					setSearchBarQuery('');
+					setGroups([...primaryResult.path, primaryResult.name]);
+				}
+			}
+		} else {
+			if (searchBarQuery.includes('http') || (searchBarQuery.includes('.') && !searchBarQuery.includes(' '))) {
+				router.push(addHTTPProtocolToUrl(searchBarQuery));
+			} else {
+				router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
+			}
+		}
+	};
 
 	useEffect(() => {
 		setActiveShortcut(
@@ -55,10 +95,10 @@ export default function Root() {
 				</Link>
 				<br />
 				<SearchBar
-					shortcuts={shortcuts}
 					searchBarQuery={searchBarQuery}
 					setSearchBarQuery={setSearchBarQuery}
-					setGroups={setGroups}
+					onSubmit={openResult}
+					nextResult={() => setSearchResultsIndex((prev) => (prev + 1) % searchResults.length)}
 				/>
 				<div className='mt-8'>
 					{!searchBarQuery && (
@@ -70,11 +110,9 @@ export default function Root() {
 					<div className='flex flex-wrap justify-center rounded-lg text-xs sm:text-base'>
 						{searchBarQuery && shortcuts ? (
 							<ShortcutQueryResults
-								resetSearchBarQuery={() => setSearchBarQuery('')}
-								shortcuts={shortcuts}
-								searchBarQuery={searchBarQuery}
+								searchResults={searchResults}
 								setGroups={setGroups}
-								setShortcutId={setActiveShortcutId}
+								searchResultsIndex={searchResultsIndex}
 							/>
 						) : (
 							[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((i) => (
