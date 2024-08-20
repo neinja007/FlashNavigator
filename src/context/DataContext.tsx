@@ -43,28 +43,22 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		refreshSettings();
 	}, []);
 
-	useEffect(() => {
-		localStorage.setItem('settings-hide_shortcut_icons', settings.hideShortcutIcons.toString());
-		localStorage.setItem('settings-hide_empty_shortcuts', settings.hideEmptyShortcuts.toString());
-		localStorage.setItem('settings-image_quality', settings.imageQuality.toString());
-		localStorage.setItem('settings-shortcut_type_color', settings.shortcutTypeColor.toString());
-	}, [settings]);
-
 	const refreshShortcuts = () => {
 		setShortcuts(getNestedShortcuts());
 	};
 
 	const refreshSettings = () => {
 		setSettings({
-			hideShortcutIcons: localStorage.getItem('settings-hide_shortcut_icons') === 'true',
-			hideEmptyShortcuts: localStorage.getItem('settings-hide_empty_shortcuts') === 'true',
-			imageQuality: parseInt(localStorage.getItem('settings-image_quality') || '75') || 75,
-			shortcutTypeColor: localStorage.getItem('settings-shortcut_type_color') === 'true'
+			hideShortcutIcons: localStorage.getItem('settings-hideShortcutIcons') === 'true',
+			hideEmptyShortcuts: localStorage.getItem('settings-hideEmptyShortcuts') === 'true',
+			imageQuality: parseInt(localStorage.getItem('settings-imageQuality') || '75') || 75,
+			shortcutTypeColor: localStorage.getItem('settings-shortcutTypeColor') === 'true'
 		});
 	};
 
 	const updateSettings = (key: keyof SettingsType, value: any) => {
-		setSettings((prev) => ({ ...prev, [key]: value }));
+		localStorage.setItem('settings-' + key, value.toString());
+		refreshSettings();
 	};
 
 	const updateShortcuts = (key: string, shortcut: ShortcutType | null) => {
