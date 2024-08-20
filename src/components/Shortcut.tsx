@@ -2,6 +2,7 @@ import { ShortcutType } from '@/app/page';
 import { DataContext } from '@/context/DataContext';
 import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
 import { convertUrlToExternalImageUrl } from '@/utils/convertUrlToExternalImageUrl';
+import clsx from 'clsx';
 import Image from 'next/image';
 import { Dispatch, SetStateAction, useContext } from 'react';
 
@@ -20,10 +21,15 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 	return (
 		(!settings.hideEmptyShortcuts || shortcut.name || shortcut.href || shortcut.img) && (
 			<div
-				className={
-					'h-fit w-[calc(33.33%-12px)] cursor-pointer rounded-lg border bg-neutral-950 pb-2 shadow-md transition-colors hover:border-blue-400 hover:shadow-blue-400 sm:w-[calc(25%-12px)] md:w-[calc(16.66%-12px)] xl:w-[calc(12.5%-12px)]' +
-					(active ? ' border-blue-300 shadow-blue-400' : ' border-gray-700 shadow-gray-700')
-				}
+				className={clsx(
+					'h-fit w-[calc(33.33%-12px)] cursor-pointer rounded-lg border pb-2 shadow-md transition-colors hover:border-blue-400 hover:shadow-blue-400 sm:w-[calc(25%-12px)] md:w-[calc(16.66%-12px)] xl:w-[calc(12.5%-12px)]',
+					active ? 'border-blue-300 shadow-blue-400' : 'border-gray-700 shadow-gray-700',
+					settings.shortcutTypeColor && shortcut.name
+						? shortcut.group
+							? 'bg-green-950'
+							: 'bg-blue-950'
+						: 'bg-neutral-950'
+				)}
 				onContextMenu={(e) => {
 					if (queryResult) return;
 					e.preventDefault();
@@ -63,12 +69,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 				</div>
 				<div className='flex h-12 flex-col justify-center'>
 					{shortcut.name ? (
-						<b
-							className={
-								'line-clamp-2 ' +
-								(settings.shortcutTypeColor ? (shortcut.group ? 'text-yellow-400' : 'text-blue-400') : 'text-white')
-							}
-						>
+						<b className={'line-clamp-2'}>
 							{!settings.hideShortcutIcons && (shortcut.group ? '📁' : '🔗')} {shortcut.name}
 						</b>
 					) : (
