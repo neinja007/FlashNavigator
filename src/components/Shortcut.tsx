@@ -21,8 +21,8 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 		(!settings.hideEmptyShortcuts || shortcut.name || shortcut.href || shortcut.img) && (
 			<div
 				className={
-					'h-auto w-[calc(12.5%-12px)] cursor-pointer rounded-lg border bg-neutral-950 pb-2 transition-colors hover:border-gray-400' +
-					(active ? ' border-gray-3 00' : ' border-gray-700')
+					'h-fit w-[calc(33.33%-12px)] cursor-pointer rounded-lg border bg-neutral-950 pb-2 shadow-md transition-colors hover:border-blue-400 hover:shadow-blue-400 sm:w-[calc(25%-12px)] md:w-[calc(16.66%-12px)] xl:w-[calc(12.5%-12px)]' +
+					(active ? ' border-blue-300 shadow-blue-400' : ' border-gray-700 shadow-gray-700')
 				}
 				onContextMenu={(e) => {
 					if (queryResult) return;
