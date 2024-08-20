@@ -30,10 +30,33 @@ const ManageData = ({
 	const [dataToExport, setDataToExport] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [settings, setSettings] = useState(false);
+	const [showDataControls, setShowDataControls] = useState(false);
 
 	return (
 		<>
-			<div className='space-x-3'>
+			<div className='block space-x-3 text-right'>
+				{showDataControls && (
+					<>
+						<button
+							className='text-yellow-400 hover:underline'
+							onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
+						>
+							Export Shortcuts
+						</button>
+						<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
+							Import Shortcuts
+						</button>
+						<button className='text-blue-500 hover:underline' onClick={() => setImportDataModal(true)}>
+							Sync Settings
+						</button>
+					</>
+				)}
+				<button className='text-purple-500 hover:underline' onClick={() => setShowDataControls((prev) => !prev)}>
+					Manage Data
+				</button>
+				<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
+					Settings
+				</button>
 				<SignedIn>
 					<div className='text-red-500 *:hover:underline inline'>
 						<SignOutButton>Sign out</SignOutButton>
@@ -44,18 +67,6 @@ const ManageData = ({
 						Sign in
 					</Link>
 				</SignedOut>
-				<button className='text-neutral-400 hover:underline' onClick={() => setSettings(true)}>
-					Settings
-				</button>
-				<button
-					className='text-yellow-400 hover:underline'
-					onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
-				>
-					Export Shortcuts
-				</button>
-				<button className='text-white hover:underline' onClick={() => setImportDataModal(true)}>
-					Import Shortcuts
-				</button>
 			</div>
 			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
 			{importDataModal && <ImportDataModal setImportDataModal={setImportDataModal} />}
