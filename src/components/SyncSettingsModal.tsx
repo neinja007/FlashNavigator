@@ -46,6 +46,15 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 		});
 	};
 
+	const localEntries = Object.entries(getShortcutsObject(true));
+	const serverEntries = downloadState === 'success' && JSON.parse(uploadedShortcuts);
+
+	for (let [key, value] of localEntries) {
+		downloadState === 'success' && value !== serverEntries[key] && console.log(value, serverEntries[key]);
+	}
+
+	const inSync = localEntries.every(([key, value]) => serverEntries[key] === value);
+
 	return (
 		<Modal action={() => setSyncSettingsModal(false)} padding>
 			<SignedOut>
@@ -100,6 +109,15 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						{uploadState === 'error' && <p className='text-red-400'>Upload failed.</p>}
 						{uploadState === 'success' && <p className='text-green-400'>Upload successful.</p>}
 					</div>
+				</div>
+				<div className='mt-3 text-center'>
+					{downloadState === 'success' ? (
+						inSync ? (
+							<b className='text-green-500'>Server and client (you) are in sync.</b>
+						) : (
+							<b className='text-orange-500'>Server and client (you) are not in sync.</b>
+						)
+					) : null}
 				</div>
 			</SignedIn>
 		</Modal>
