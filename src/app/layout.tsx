@@ -9,7 +9,7 @@ const montserrat = Montserrat({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'FlashNavigator',
-	description: 'Flash your Links quicker than the speed of light allows.'
+	description: 'Flash to your Links quicker than the speed of light allows.'
 };
 
 export default function RootLayout({
