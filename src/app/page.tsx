@@ -1,5 +1,4 @@
 'use client';
-
 import Link from 'next/link';
 import { useContext, useEffect, useState } from 'react';
 import Breadcrums from '@/components/Breadcrums';
@@ -9,7 +8,6 @@ import ExtensionPromptModal from '@/components/ExtensionPromptModal';
 import ShortcutQueryResults from '@/components/ShortcutQueryResults';
 import ShortcutEditor from '@/components/ShortcutEditor';
 import Shortcut from '@/components/Shortcut';
-import { refreshStorage } from '@/utils/refreshStorage';
 import { DataContext } from '@/context/DataContext';
 import { orderShortcutsByRelevance } from '@/utils/calculateShortcutRelevanceScore';
 import { useRouter } from 'next/navigation';
@@ -35,8 +33,6 @@ export default function Root() {
 	const [groups, setGroups] = useState<string[]>([]);
 
 	const groupPrefix = groups.length > 0 ? groups.map((slug) => slug.replaceAll(' ', '_')).join('-') + '-' : '';
-
-	useEffect(refreshStorage, []);
 
 	const [searchResults, setSearchResults] = useState<ShortcutType[] | []>([]);
 	const [searchResultsIndex, setSearchResultsIndex] = useState<number>(0);
