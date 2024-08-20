@@ -40,7 +40,11 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 
 	const upload = () => {
 		setUploadState('loading');
-		fetch('/upload', { method: 'PUT', body: JSON.stringify({ data: getShortcutsObject(true) }) }).then((res) => {
+		fetch('/upload', {
+			method: 'PUT',
+			body: JSON.stringify({ data: getShortcutsObject(true) }),
+			cache: 'no-store'
+		}).then((res) => {
 			setUploadState(res.ok ? 'success' : 'error');
 		});
 	};
