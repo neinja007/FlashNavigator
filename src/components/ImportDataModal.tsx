@@ -15,9 +15,8 @@ const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 
 	try {
 		shortcutCount = Object.keys(JSON.parse(dataToImport)).reduce((acc: string[], cur: string) => {
-			const splitCur = cur.split('-');
-			const index = cur.startsWith('shortcut-') ? 1 : 0;
-			return splitCur[index] && acc.find((item) => item === splitCur[index]) ? acc : [...acc, splitCur[index]];
+			const shortcut = cur.slice(0, cur.lastIndexOf('-'));
+			return shortcut && acc.find((item) => item === shortcut) ? acc : [...acc, shortcut];
 		}, []).length;
 	} catch {
 		shortcutCount = 0;
