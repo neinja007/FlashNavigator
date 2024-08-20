@@ -1,49 +1,29 @@
-import { ShortcutType } from '@/app/page';
-import { addHTTPProtocolToUrl } from '@/utils/addHTTPProtocolToUrl';
-import { orderShortcutsByRelevance } from '@/utils/calculateShortcutRelevanceScore';
-import { useRouter } from 'next/navigation';
-import { Dispatch, SetStateAction } from 'react';
-
 type SearchBarProps = {
-	shortcuts: { [key: string]: ShortcutType } | undefined;
 	searchBarQuery: string;
 	setSearchBarQuery: (query: string) => void;
-	setGroups: Dispatch<SetStateAction<string[]>>;
+	onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+	nextResult: () => void;
 };
 
-const SearchBar = ({ shortcuts, searchBarQuery, setSearchBarQuery, setGroups }: SearchBarProps) => {
-	const router = useRouter();
-
+const SearchBar = ({ searchBarQuery, setSearchBarQuery, onSubmit, nextResult }: SearchBarProps) => {
 	return (
-		<form
-			onSubmit={(e) => {
-				e.preventDefault();
-				const primaryResult = shortcuts && orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery)[0];
-				if (primaryResult) {
-					if (primaryResult.href) {
-						router.push(/^https?:\/\//i.test(primaryResult.href) ? primaryResult.href : 'http://' + primaryResult.href);
-					} else {
-						if (primaryResult.group) {
-							setSearchBarQuery('');
-							setGroups([...primaryResult.path, primaryResult.name]);
-						}
-					}
-				} else {
-					if (searchBarQuery.includes('http') || (searchBarQuery.includes('.') && !searchBarQuery.includes(' '))) {
-						router.push(addHTTPProtocolToUrl(searchBarQuery));
-					} else {
-						router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
-					}
-				}
-			}}
-		>
+		<form onSubmit={onSubmit}>
 			<input
 				type='text'
 				placeholder='FlashSearch'
-				className='p-3 px-5 max-w-[500px] text-xl w-full border bg-transparent rounded-full mt-4'
+				className='mt-4 w-full max-w-[500px] rounded-full border bg-transparent p-3 px-5 text-xl'
 				autoFocus
 				value={searchBarQuery}
-				onChange={(e) => setSearchBarQuery(e.target.value)}
+				onChange={(e) => {
+					setSearchBarQuery(e.target.value);
+				}}
+				onKeyDown={(e) => {
+					if (e.key === 'Tab') {
+						console.log(e.key);
+						e.preventDefault();
+						nextResult();
+					}
+				}}
 				onSubmit={() => setSearchBarQuery('')}
 			/>
 		</form>
