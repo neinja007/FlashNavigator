@@ -15,17 +15,17 @@ const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
 			<textarea
 				readOnly
 				value={data}
-				className='rounded-t-lg w-full h-96 bg-gray-800 p-2'
+				className='h-96 w-full rounded-t-lg bg-gray-800 p-2'
 				style={{ wordBreak: 'break-all' }}
 			/>
-			<div className='flex -mt-1'>
+			<div className='-mt-1 flex'>
 				<button
-					className='px-2 bg-blue-500 active:bg-blue-600 rounded-bl-lg w-full py-1'
+					className='w-full rounded-bl-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
 					onClick={() => navigator.clipboard.writeText(data)}
 				>
 					Copy {shortcutCount} shortcuts
 				</button>
-				<button className='px-2 bg-red-500 active:bg-red-600 rounded-br-lg w-full py-1' onClick={() => setData('')}>
+				<button className='w-full rounded-br-lg bg-red-500 px-2 py-1 active:bg-red-600' onClick={() => setData('')}>
 					Close
 				</button>
 			</div>

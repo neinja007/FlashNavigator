@@ -9,23 +9,23 @@ const ExtensionPromptModal = () => {
 		extensionPropmt === 'false' && (
 			<>
 				<ModalBackgroundFrame />
-				<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto p-5 w-[700px] h-fit text-xl'>
+				<div className='fixed inset-0 mx-auto my-auto h-fit w-[700px] rounded-xl bg-gray-700 p-5 text-xl shadow-lg'>
 					<p>
 						Please install an extension <b>to redirect new tabs to this page</b>:{' '}
 					</p>
 					<br />
-					<div className='text-blue-400 underline ml-3 space-y-3'>
+					<div className='ml-3 space-y-3 text-blue-400 underline'>
 						<Link
 							href={'https://addons.mozilla.org/en-GB/firefox/addon/new-tab-override'}
 							target='_blank'
-							className='block mb-3'
+							className='mb-3 block'
 						>
 							Extension For Firefox
 						</Link>
 						<Link
 							href={'https://chromewebstore.google.com/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna'}
 							target='_blank'
-							className='block mb-3'
+							className='mb-3 block'
 						>
 							Extension For Google
 						</Link>
@@ -45,7 +45,7 @@ const ExtensionPromptModal = () => {
 					</p>
 					<br />
 					<button
-						className='px-2 bg-blue-500 active:bg-blue-600 rounded-lg w-full py-1'
+						className='w-full rounded-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
 						onClick={() => {
 							setExtensionPrompt('true');
 						}}

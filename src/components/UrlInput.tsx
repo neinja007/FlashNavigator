@@ -9,7 +9,7 @@ const UrlInput = ({ setShortcut, shortcut }: UrlInputProps) => {
 	return (
 		<input
 			className={
-				'w-full px-2 py-1 border border-black rounded-lg bg-transparent disabled:bg-red-950 disabled:placeholder:text-white disabled:border-red-900'
+				'w-full rounded-lg border border-black bg-transparent px-2 py-1 disabled:border-red-900 disabled:bg-red-950 disabled:placeholder:text-white'
 			}
 			placeholder='URL'
 			value={shortcut.href}
