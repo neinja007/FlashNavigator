@@ -4,39 +4,30 @@ import { orderShortcutsByRelevance } from '@/utils/calculateShortcutRelevanceSco
 import { Dispatch, SetStateAction } from 'react';
 
 type ShortcutQueryResultsProps = {
-	shortcuts: { [key: string]: ShortcutType };
-	searchBarQuery: string;
-	resetSearchBarQuery: () => void;
-	setGroups: Dispatch<SetStateAction<string[]>>;
-	setShortcutId: (id: number) => void;
-	hideShortcutIcons?: string;
-	shortcutTypeColor?: string;
-	imageQuality?: string;
+  shortcuts: { [key: string]: ShortcutType };
+  searchBarQuery: string;
+  resetSearchBarQuery: () => void;
+  setGroups: Dispatch<SetStateAction<string[]>>;
+  setShortcutId: (id: number) => void;
 };
 
 const ShortcutQueryResults = ({
-	shortcuts,
-	searchBarQuery,
-	setGroups,
-	setShortcutId,
-	resetSearchBarQuery,
-	hideShortcutIcons,
-	imageQuality,
-	shortcutTypeColor
+  shortcuts,
+  searchBarQuery,
+  setGroups,
+  setShortcutId,
+  resetSearchBarQuery
 }: ShortcutQueryResultsProps) => {
-	return orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery).map((shortcut, i) => (
-		<Shortcut
-			queryResult
-			resetSearchBarQuery={resetSearchBarQuery}
-			key={i}
-			shortcut={shortcut}
-			setShortcutId={() => setShortcutId(i)}
-			setGroups={setGroups}
-			hideShortcutIcons={hideShortcutIcons}
-			imageQuality={imageQuality}
-			shortcutTypeColor={shortcutTypeColor}
-		/>
-	));
+  return orderShortcutsByRelevance(Object.values(shortcuts), searchBarQuery).map((shortcut, i) => (
+    <Shortcut
+      queryResult
+      resetSearchBarQuery={resetSearchBarQuery}
+      key={i}
+      shortcut={shortcut}
+      setShortcutId={() => setShortcutId(i)}
+      setGroups={setGroups}
+    />
+  ));
 };
 
 export default ShortcutQueryResults;
