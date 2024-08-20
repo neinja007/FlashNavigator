@@ -98,7 +98,7 @@ export default function Root() {
 				/>
 				<div className='mt-8'>
 					{!searchBarQuery && (
-						<div className='justify-between pb-5 sm:flex'>
+						<div className='h-16 items-end justify-between pb-5 sm:flex'>
 							<Breadcrums groups={groups} setGroups={setGroups} />
 							<ManageData />
 						</div>
