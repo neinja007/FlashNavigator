@@ -83,7 +83,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						</div>
 						<div className='flex justify-between gap-3 sm:flex-col'>
 							<button
-								className='flex w-full justify-between gap-x-2 rounded bg-blue-500 px-2 disabled:opacity-50'
+								className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
 								disabled={uploadState === 'loading'}
 								onClick={upload}
 							>
@@ -94,7 +94,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 								<ChevronsUp className='sm:hidden' />
 							</button>
 							<button
-								className='flex w-full justify-between gap-x-2 rounded bg-blue-500 px-2 disabled:opacity-50'
+								className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
 								disabled={uploadState === 'loading' || !uploadedShortcuts || downloadState === 'loading'}
 								onClick={() => overwriteShortcuts(uploadedShortcuts)}
 							>
