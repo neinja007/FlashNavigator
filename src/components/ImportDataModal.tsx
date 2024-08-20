@@ -21,7 +21,7 @@ const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 			<textarea
 				value={dataToImport}
 				onChange={(e) => setDataToImport(e.target.value)}
-				className='h-96 w-full rounded-t-lg bg-gray-800 p-2'
+				className='h-96 w-full rounded-t-lg bg-transparent p-2'
 				style={{ wordBreak: 'break-all' }}
 			/>
 			<div className='-mt-1 flex'>
