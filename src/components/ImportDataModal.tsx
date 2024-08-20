@@ -1,8 +1,8 @@
-import { refreshStorage } from '@/utils/refreshStorage';
-import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 import { useState } from 'react';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 import Modal from './Modal';
+import { getShortcutCount } from '@/utils/getShortcutCount';
+import { writeToLocalStorage } from '@/utils/writeToLocalStorage';
 
 type ImportDataModalProps = {
 	setImportDataModal: (importDataModal: boolean) => void;
@@ -11,16 +11,7 @@ type ImportDataModalProps = {
 const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 	const [dataToImport, setDataToImport] = useState('');
 
-	let shortcutCount;
-
-	try {
-		shortcutCount = Object.keys(JSON.parse(dataToImport)).reduce((acc: string[], cur: string) => {
-			const shortcut = cur.slice(0, cur.lastIndexOf('-'));
-			return shortcut && acc.find((item) => item === shortcut) ? acc : [...acc, shortcut];
-		}, []).length;
-	} catch {
-		shortcutCount = 0;
-	}
+	const shortcutCount = getShortcutCount(dataToImport);
 
 	const currentShortcutCount = Object.keys(getNestedShortcuts()).length;
 
@@ -36,17 +27,7 @@ const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 				<button
 					className='px-2 bg-blue-500 active:bg-blue-600 rounded-bl-lg w-1/2 py-1'
 					onClick={() => {
-						try {
-							const data = JSON.parse(dataToImport);
-							deleteShortcutStorage();
-							Object.keys(data).forEach((key) => {
-								localStorage.setItem(key.startsWith('shortcut-') ? key : 'shortcut-' + key, data[key]);
-							});
-							refreshStorage();
-							window.location.reload();
-						} catch {
-							alert('Invalid JSON data');
-						}
+						writeToLocalStorage(dataToImport);
 					}}
 				>
 					Import {shortcutCount} shortcuts (current: {currentShortcutCount})
