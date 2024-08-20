@@ -5,7 +5,7 @@ type ModalBackgroundFrameProps = {
 };
 
 const ModalBackgroundFrame = ({ action }: ModalBackgroundFrameProps) => {
-	return <div className='fixed inset-0 w-full h-full bg-black opacity-25' onClick={action} />;
+	return <div className='fixed inset-0 z-10 h-full w-full bg-black opacity-25' onClick={action} />;
 };
 
 export default ModalBackgroundFrame;
