@@ -1,25 +1,26 @@
+import { DataContext } from '@/context/DataContext';
+import { useContext } from 'react';
+
 type DeleteButtonProps = {
-	groupPrefix: string;
-	shortcutId: number | null;
-	setShortcutId: (id: number | null) => void;
+  prefix: string;
+  closeModal: () => void;
 };
 
-const DeleteButton = ({ groupPrefix, setShortcutId, shortcutId }: DeleteButtonProps) => {
-	return (
-		<button
-			type='button'
-			className='text-red-500 underline'
-			onClick={() => {
-				localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-name`);
-				localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-group`);
-				localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-href`);
-				localStorage.removeItem(`shortcut-${groupPrefix}${shortcutId}-img`);
-				setShortcutId(null);
-			}}
-		>
-			Delete
-		</button>
-	);
+const DeleteButton = ({ prefix, closeModal }: DeleteButtonProps) => {
+  const { updateShortcuts } = useContext(DataContext);
+
+  return (
+    <button
+      type='button'
+      className='text-red-500 underline'
+      onClick={() => {
+        updateShortcuts(prefix, null);
+        closeModal();
+      }}
+    >
+      Delete
+    </button>
+  );
 };
 
 export default DeleteButton;
