@@ -1,4 +1,3 @@
-import ModalBackgroundFrame from './ModalBackgroundFrame';
 import SubmitButton from '@/components/SubmitButton';
 import DeleteButton from '@/components/DeleteButton';
 import NameInput from '@/components/NameInput';
@@ -6,48 +5,43 @@ import UrlInput from '@/components/UrlInput';
 import GroupCheckbox from '@/components/GroupCheckbox';
 import ImageUrlInput from './ImageUrlInput';
 import { ShortcutType } from '@/app/page';
-import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
+import Modal from './Modal';
+import { DataContext } from '@/context/DataContext';
+import { useContext } from 'react';
 
 type ShortcutEditorProps = {
-	setShortcutId: (id: number | null) => void;
-	groupPrefix: string;
-	shortcutId: number;
-	shortcut: ShortcutType;
-	setShortcut: (shortcut: ShortcutType) => void;
-	setShortcuts: (shortcuts: { [key: string]: ShortcutType }) => void;
+  setShortcutId: (id: number | null) => void;
+  groupPrefix: string;
+  shortcutId: number;
+  shortcut: ShortcutType;
+  setShortcut: (shortcut: ShortcutType) => void;
 };
 
-const ShortcutEditor = ({
-	setShortcutId,
-	groupPrefix,
-	shortcutId,
-	shortcut,
-	setShortcut,
-	setShortcuts
-}: ShortcutEditorProps) => {
-	const onSubmit = () => {
-		setShortcuts(getNestedShortcuts());
-		setShortcutId(null);
-	};
+const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setShortcut }: ShortcutEditorProps) => {
+  const { updateShortcuts } = useContext(DataContext);
 
-	return (
-		<>
-			<ModalBackgroundFrame action={onSubmit} />
-			<div className='fixed bg-gray-700 shadow-lg rounded-xl inset-0 mx-auto my-auto w-[700px] h-fit px-5 py-4'>
-				<form className='space-y-5' onSubmit={onSubmit}>
-					<div className='float-end space-x-3'>
-						<SubmitButton />
-						<DeleteButton groupPrefix={groupPrefix} setShortcutId={setShortcutId} shortcutId={shortcutId} />
-					</div>
-					<b>Edit Shortcut {shortcutId}</b>
-					<NameInput setShortcut={setShortcut} shortcut={shortcut} />
-					<UrlInput setShortcut={setShortcut} shortcut={shortcut} />
-					<ImageUrlInput setShortcut={setShortcut} shortcut={shortcut} />
-					<GroupCheckbox setShortcut={setShortcut} shortcut={shortcut} />
-				</form>
-			</div>
-		</>
-	);
+  const prefix = groupPrefix + shortcutId;
+
+  const onSubmit = () => {
+    updateShortcuts(prefix, shortcut);
+    setShortcutId(null);
+  };
+
+  return (
+    <Modal action={onSubmit} padding>
+      <form className='space-y-5' onSubmit={onSubmit}>
+        <div className='float-end space-x-3'>
+          <SubmitButton />
+          <DeleteButton prefix={prefix} closeModal={() => setShortcutId(null)} />
+        </div>
+        <b>Edit Shortcut {shortcutId}</b>
+        <NameInput setShortcut={setShortcut} shortcut={shortcut} />
+        <UrlInput setShortcut={setShortcut} shortcut={shortcut} />
+        <ImageUrlInput setShortcut={setShortcut} shortcut={shortcut} />
+        <GroupCheckbox setShortcut={setShortcut} shortcut={shortcut} />
+      </form>
+    </Modal>
+  );
 };
 
 export default ShortcutEditor;
