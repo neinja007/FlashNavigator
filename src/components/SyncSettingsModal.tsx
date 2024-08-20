@@ -21,7 +21,8 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 
 	useEffect(() => {
 		if (uploadState !== 'loading') {
-			fetch('/download')
+			setDownloadState('loading');
+			fetch('/download', { cache: 'no-store' })
 				.then((res) => {
 					if (res.ok) {
 						return res.json();
@@ -67,6 +68,9 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						<span>
 							<b>Server</b> ({downloadState === 'success' ? getShortcutCount(uploadedShortcuts) : '??'} shortcuts)
 						</span>
+						{downloadState === 'loading' && <p className='animate-pulse text-yellow-600'>Loading server data...</p>}
+						{downloadState === 'error' && <p className='text-red-400'>Failed to load server data.</p>}
+						{downloadState === 'success' && <p className='text-green-400'>Server data loaded.</p>}
 					</div>
 					<div className='flex flex-col justify-between px-3'>
 						<button
@@ -92,15 +96,10 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						<span>
 							<b>You</b> ({getShortcutCount(shortcuts)} shortcuts)
 						</span>
+						{uploadState === 'loading' && <p className='animate-pulse text-yellow-600'>Uploading...</p>}
+						{uploadState === 'error' && <p className='text-red-400'>Upload failed.</p>}
+						{uploadState === 'success' && <p className='text-green-400'>Upload successful.</p>}
 					</div>
-				</div>
-				<div className='mt-5 text-center'>
-					{uploadState === 'loading' && <p className='animate-pulse text-yellow-600'>Uploading...</p>}
-					{uploadState === 'error' && <p className='text-red-400'>Upload failed.</p>}
-					{uploadState === 'success' && <p className='text-green-400'>Upload successful.</p>}
-					{downloadState === 'loading' && <p className='animate-pulse text-yellow-600'>Loading server data...</p>}
-					{downloadState === 'error' && <p className='text-red-400'>Failed to load server data.</p>}
-					{downloadState === 'success' && <p className='text-green-400'>Server data loaded.</p>}
 				</div>
 			</SignedIn>
 		</Modal>
