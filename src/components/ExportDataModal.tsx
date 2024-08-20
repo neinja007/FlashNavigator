@@ -1,5 +1,6 @@
-import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 import Modal from './Modal';
+import { getShortcutCount } from '@/utils/getShortcutCount';
+import { getShortcutsObject } from '@/utils/getShortcutsObject';
 
 type ExportDataModalProps = {
 	data: string;
@@ -7,7 +8,7 @@ type ExportDataModalProps = {
 };
 
 const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
-	const shortcutCount = Object.keys(getNestedShortcuts()).length;
+	const shortcutCount = getShortcutCount(getShortcutsObject());
 
 	return (
 		<Modal action={() => setData('')}>
