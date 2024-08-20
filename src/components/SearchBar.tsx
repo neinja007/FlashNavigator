@@ -11,7 +11,7 @@ const SearchBar = ({ searchBarQuery, setSearchBarQuery, onSubmit, nextResult }: 
 			<input
 				type='text'
 				placeholder='FlashSearch'
-				className='mt-4 w-full max-w-[500px] rounded-full border bg-transparent p-3 px-5 text-xl'
+				className='mt-4 w-full max-w-[500px] rounded-full border bg-transparent p-3 px-5 text-xl shadow-md shadow-gray-600 transition-all hover:shadow-gray-400 focus:shadow-white focus:outline-none'
 				autoFocus
 				value={searchBarQuery}
 				onChange={(e) => {
