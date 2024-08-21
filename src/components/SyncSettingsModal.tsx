@@ -107,35 +107,45 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 									Uploaded {lastServerChangeToday ? 'at' : 'on'} {lastServerChangeToday ? time : date}
 								</p>
 							)}
-							{downloadState !== 'loading' && (
-								<button className='text-blue-500 hover:underline' onClick={download}>
-									Refresh server data
-								</button>
-							)}
 						</div>
 						<div className='flex justify-between gap-3 sm:flex-col'>
-							<button
-								className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
-								disabled={uploadState === 'loading'}
-								onClick={upload}
-							>
-								<ChevronsLeft className='hidden sm:inline' />
-								<ChevronsUp className='sm:hidden' />
-								Upload
-								<ChevronsLeft className='hidden sm:inline' />
-								<ChevronsUp className='sm:hidden' />
-							</button>
-							<button
-								className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
-								disabled={uploadState === 'loading' || !uploadedShortcuts || downloadState === 'loading'}
-								onClick={() => overwriteShortcuts(uploadedShortcuts)}
-							>
-								<ChevronsRight className='hidden sm:inline' />
-								<ChevronsDown className='sm:hidden' />
-								Download
-								<ChevronsRight className='hidden sm:inline' />
-								<ChevronsDown className='sm:hidden' />
-							</button>
+							{!inSync && downloadState !== 'loading' ? (
+								<>
+									<button
+										className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
+										disabled={uploadState === 'loading'}
+										onClick={upload}
+									>
+										<ChevronsLeft className='hidden sm:inline' />
+										<ChevronsUp className='sm:hidden' />
+										Upload
+										<ChevronsLeft className='hidden sm:inline' />
+										<ChevronsUp className='sm:hidden' />
+									</button>
+									<button
+										className='flex w-full justify-between gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
+										disabled={uploadState === 'loading' || !uploadedShortcuts || downloadState !== 'success'}
+										onClick={() => overwriteShortcuts(uploadedShortcuts)}
+									>
+										<ChevronsRight className='hidden sm:inline' />
+										<ChevronsDown className='sm:hidden' />
+										Download
+										<ChevronsRight className='hidden sm:inline' />
+										<ChevronsDown className='sm:hidden' />
+									</button>
+								</>
+							) : (
+								<button
+									disabled={downloadState === 'loading' || uploadState === 'loading'}
+									className='flex h-full w-full items-center justify-center gap-x-2 rounded bg-blue-700 px-2 disabled:opacity-50'
+									onClick={download}
+								>
+									<RefreshCw
+										className={uploadState === 'loading' || downloadState === 'loading' ? 'animate-spin' : ''}
+									/>
+									{uploadState === 'loading' || downloadState === 'loading' ? 'Fetching...' : 'Refresh'}
+								</button>
+							)}
 						</div>
 						<div className='flex h-full flex-col justify-center border-t p-2 text-center sm:border-l sm:border-t-0'>
 							<span>
