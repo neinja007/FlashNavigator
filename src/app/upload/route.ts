@@ -11,7 +11,7 @@ export async function PUT(request: Request) {
 	const data = JSON.stringify(body['data']);
 
 	if (data.length > 50000) {
-		return Response.json('Data too large', { status: 400 });
+		return Response.json({ status: 500 });
 	} else {
 		const blob = await put(user.id, data, { access: 'public', addRandomSuffix: false });
 
