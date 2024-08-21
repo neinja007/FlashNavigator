@@ -8,7 +8,10 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
-			width: { '1/8': '12.5%' }
+			width: { '1/8': '12.5%' },
+			backdropBrightness: {
+				25: '.25'
+			}
 		}
 	},
 	plugins: []
