@@ -7,7 +7,7 @@ const ExtensionPromptModal = () => {
 
 	return (
 		extensionPropmt === 'false' && (
-			<Modal>
+			<Modal padding>
 				<p>
 					Please install an extension <b>to redirect new tabs to this page</b>:{' '}
 				</p>
