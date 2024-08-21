@@ -63,7 +63,8 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 	const serverEntries = downloadState === 'success' && JSON.parse(uploadedShortcuts);
 
 	const inSync =
-		localEntries.every(([key, value]) => serverEntries[key] === value) && localEntries.length === serverEntries.length;
+		localEntries.every(([key, value]) => serverEntries[key] === value) &&
+		localEntries.length === Object.keys(serverEntries).length;
 
 	const lastServerChangeDayjs = lastServerChange && dayjs(lastServerChange);
 
