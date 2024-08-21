@@ -100,11 +100,15 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 							{downloadState === 'loading' && <p className='animate-pulse text-yellow-600'>Loading server data...</p>}
 							{downloadState === 'error' && <p className='text-red-400'>Failed to load server data.</p>}
 							{lastServerChange && downloadState === 'success' && (
-								<p>Last updated: {lastServerChangeToday ? time : date}</p>
+								<p>
+									Uploaded {lastServerChangeToday ? 'at' : 'on'} {lastServerChangeToday ? time : date}
+								</p>
 							)}
-							<button className='text-blue-500 hover:underline' onClick={download}>
-								Refresh server data
-							</button>
+							{downloadState !== 'loading' && (
+								<button className='text-blue-500 hover:underline' onClick={download}>
+									Refresh server data
+								</button>
+							)}
 						</div>
 						<div className='flex justify-between gap-3 sm:flex-col'>
 							<button
