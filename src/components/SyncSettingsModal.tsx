@@ -8,6 +8,7 @@ import { ChevronsDown, ChevronsLeft, ChevronsRight, ChevronsUp, RefreshCw, Trian
 import { DataContext } from '@/context/DataContext';
 import { ListBlobResultBlob } from '@vercel/blob';
 import dayjs from 'dayjs';
+import { useStorageState } from '@/hooks/useStorageState';
 
 type SyncSettingsModalProps = {
 	setSyncSettingsModal: (syncSettingsModal: boolean) => void;
@@ -61,6 +62,14 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 
 	const inSync = localEntries.every(([key, value]) => serverEntries[key] === value);
 
+	const lastServerChangeDayjs = lastServerChange && dayjs(lastServerChange);
+
+	const date = lastServerChange && dayjs(lastServerChange).format('DD/MM/YYYY');
+	const time = lastServerChange && dayjs(lastServerChange).format('HH:MM');
+	const lastServerChangeToday = lastServerChangeDayjs && lastServerChangeDayjs.isSame(dayjs(), 'day');
+
+	const [hideNoticeInFuture, setHideNoticeInFuture] = useStorageState('hideNoticeInFuture', 'true', 'false');
+
 	return (
 		<Modal action={() => setSyncSettingsModal(false)} padding>
 			<SignedOut>
@@ -90,13 +99,11 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 							{downloadState === 'loading' && <p className='animate-pulse text-yellow-600'>Loading server data...</p>}
 							{downloadState === 'error' && <p className='text-red-400'>Failed to load server data.</p>}
 							{lastServerChange && downloadState === 'success' && (
-								<p>
-									Last updated:{' '}
-									{dayjs(lastServerChange).isSame(dayjs(), 'day')
-										? 'today'
-										: dayjs(lastServerChange).diff(dayjs(), 'day') + ' days ago'}
-								</p>
+								<p>Last updated: {lastServerChangeToday ? time : date}</p>
 							)}
+							<button className='text-blue-500 hover:underline' onClick={download}>
+								Refresh server data
+							</button>
 						</div>
 						<div className='flex justify-between gap-3 sm:flex-col'>
 							<button
@@ -144,14 +151,19 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						<b className='animate-pulse text-gray-500'>Hold on tight...</b>
 					)}
 				</div>
-				{lastServerChange && downloadState === 'success' && !inSync && (
+				{lastServerChange && hideNoticeInFuture === 'true' && (
 					<div className='mt-2 rounded-lg border border-yellow-700 bg-yellow-900 p-3'>
 						<TriangleAlertIcon className='float-end' />
 						<b>Attention</b>
 						<p className='mt-2'>
-							The latest server data was uploaded at <b>{dayjs(lastServerChange).format('HH:MM')}</b> on{' '}
-							<b>{dayjs(lastServerChange).format('DD/MM/YYYY')}</b>. <br /> If you have uploaded data since then, it may
-							take a few minutes for the server to update. Thank you for your patience.
+							The latest server data was uploaded at <b>{time}</b> on <b>{date}</b>. <br /> If you have uploaded data
+							since then, it may take a few minutes for the server to update. Thank you for your patience.
+							<button
+								className='float-end rounded-lg px-2 text-sky-500 backdrop-brightness-50 hover:underline'
+								onClick={() => setHideNoticeInFuture('false')}
+							>
+								hide this notice in future
+							</button>
 						</p>
 					</div>
 				)}
