@@ -163,7 +163,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						<b className='animate-pulse text-gray-500'>Hold on tight...</b>
 					)}
 				</div>
-				{lastServerChange && hideNoticeInFuture === 'true' && (
+				{lastServerChange && hideNoticeInFuture === 'false' && (
 					<div className='mt-2 rounded-lg border border-yellow-700 bg-yellow-900 p-3'>
 						<TriangleAlertIcon className='float-end' />
 						<b>Attention</b>
@@ -171,8 +171,8 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 							The latest server data was uploaded at <b>{time}</b> on <b>{date}</b>. <br /> If you have uploaded data
 							since then, it may take a few minutes for the server to update. Thank you for your patience.
 							<button
-								className='float-end rounded-lg px-2 text-sky-500 backdrop-brightness-50 hover:underline'
-								onClick={() => setHideNoticeInFuture('false')}
+								className='float-end rounded-lg px-2 text-blue-500 backdrop-brightness-50 hover:underline'
+								onClick={() => setHideNoticeInFuture('true')}
 							>
 								hide this notice in future
 							</button>
