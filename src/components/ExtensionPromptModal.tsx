@@ -31,8 +31,11 @@ const ExtensionPromptModal = () => {
 				<br />
 				<p>
 					<b>Step 1</b>: use this URL as the new tab URL: <br />
-					<b className='text-blue-400 underline'>flash-navigator.vercel.app</b>{' '}
-					<button onClick={() => navigator.clipboard.writeText('https://flash-navigator.vercel.app')}>
+					<b className='select-all text-yellow-300 underline'>flash-navigator.vercel.app</b>{' '}
+					<button
+						className='text-blue-500 hover:underline'
+						onClick={() => navigator.clipboard.writeText('https://flash-navigator.vercel.app')}
+					>
 						[copy link]
 					</button>
 				</p>
