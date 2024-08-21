@@ -27,6 +27,8 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 		download();
 	}, []);
 
+	const shortcutData = JSON.stringify({ data: getShortcutsObject(true) });
+
 	const download = () => {
 		setDownloadState('loading');
 		fetch('/download', { cache: 'no-store' })
@@ -49,7 +51,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 		setUploadState('loading');
 		fetch('/upload', {
 			method: 'PUT',
-			body: JSON.stringify({ data: getShortcutsObject(true) }),
+			body: shortcutData,
 			cache: 'no-store'
 		}).then((res) => {
 			setUploadState(res.ok ? 'success' : 'error');
@@ -140,7 +142,14 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 							</span>
 							{uploadState === 'pending' && <p className='text-green-400'>Client data loaded.</p>}
 							{uploadState === 'loading' && <p className='animate-pulse text-yellow-600'>Uploading...</p>}
-							{uploadState === 'error' && <p className='text-red-400'>Upload failed.</p>}
+							{uploadState === 'error' && (
+								<p className='text-red-400'>
+									Upload failed:{' '}
+									{shortcutData.length > 50000
+										? `Data too large (${shortcutData.length} > 50000)`
+										: 'Unknown error, please report.'}
+								</p>
+							)}
 							{uploadState === 'success' && <p className='text-green-400'>Upload successful.</p>}
 						</div>
 					</div>
