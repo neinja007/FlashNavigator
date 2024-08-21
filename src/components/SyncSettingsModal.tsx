@@ -4,8 +4,10 @@ import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { getShortcutsObject } from '@/utils/getShortcutsObject';
 import { getShortcutCount } from '@/utils/getShortcutCount';
 import { useContext, useEffect, useState } from 'react';
-import { ChevronsDown, ChevronsLeft, ChevronsRight, ChevronsUp } from 'lucide-react';
+import { ChevronsDown, ChevronsLeft, ChevronsRight, ChevronsUp, RefreshCw, TriangleAlertIcon } from 'lucide-react';
 import { DataContext } from '@/context/DataContext';
+import { ListBlobResultBlob } from '@vercel/blob';
+import dayjs from 'dayjs';
 
 type SyncSettingsModalProps = {
 	setSyncSettingsModal: (syncSettingsModal: boolean) => void;
@@ -16,27 +18,31 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 	const [uploadState, setUploadState] = useState<'error' | 'success' | 'loading' | 'pending'>('pending');
 	const [uploadedShortcuts, setUploadedShortcuts] = useState<string>('');
 	const [downloadState, setDownloadState] = useState<'error' | 'success' | 'loading'>('loading');
+	const [lastServerChange, setLastServerChange] = useState<Date>();
 
 	const { overwriteShortcuts } = useContext(DataContext);
 
 	useEffect(() => {
-		if (uploadState !== 'loading') {
-			setDownloadState('loading');
-			fetch('/download', { cache: 'no-store' })
-				.then((res) => {
-					if (res.ok) {
-						return res.json();
-					} else {
-						setDownloadState('error');
-					}
-				})
-				.then((data) => {
-					setUploadedShortcuts(data.data);
-					setDownloadState('success');
-				})
-				.catch(() => setDownloadState('error'));
-		}
-	}, [uploadState]);
+		download();
+	}, []);
+
+	const download = () => {
+		setDownloadState('loading');
+		fetch('/download', { cache: 'no-store' })
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				} else {
+					setDownloadState('error');
+				}
+			})
+			.then((data: ListBlobResultBlob & { data: string }) => {
+				setUploadedShortcuts(data.data);
+				setLastServerChange(data.uploadedAt);
+				setDownloadState('success');
+			})
+			.catch(() => setDownloadState('error'));
+	};
 
 	const upload = () => {
 		setUploadState('loading');
@@ -46,6 +52,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 			cache: 'no-store'
 		}).then((res) => {
 			setUploadState(res.ok ? 'success' : 'error');
+			download();
 		});
 	};
 
@@ -70,16 +77,26 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 				</b>
 			</SignedOut>
 			<SignedIn>
-				<p className='text-center text-xl font-bold'>Sync Shortcuts</p>
-				<div className='mt-2 flex justify-center'>
+				<p className='flex items-center justify-center gap-x-2 text-center text-xl font-bold'>
+					<RefreshCw className={uploadState === 'loading' || downloadState === 'loading' ? 'animate-spin' : ''} /> Sync
+					Shortcuts
+				</p>
+				<div className='mt-4 flex justify-center'>
 					<div className='grid h-fit min-h-16 gap-3 rounded-xl border p-3 sm:w-full sm:grid-cols-3'>
-						<div className='flex h-full flex-col justify-center border-b p-2 text-center sm:border-b-0 sm:border-r'>
+						<div className='flex h-full flex-col justify-center border-b text-center sm:border-b-0 sm:border-r'>
 							<span>
 								<b>Server</b> ({downloadState === 'success' ? getShortcutCount(uploadedShortcuts) : '??'} shortcuts)
 							</span>
 							{downloadState === 'loading' && <p className='animate-pulse text-yellow-600'>Loading server data...</p>}
 							{downloadState === 'error' && <p className='text-red-400'>Failed to load server data.</p>}
-							{downloadState === 'success' && <p className='text-green-400'>Server data loaded.</p>}
+							{lastServerChange && downloadState === 'success' && (
+								<p>
+									Last updated:{' '}
+									{dayjs(lastServerChange).isSame(dayjs(), 'day')
+										? 'today'
+										: dayjs(lastServerChange).diff(dayjs(), 'day') + ' days ago'}
+								</p>
+							)}
 						</div>
 						<div className='flex justify-between gap-3 sm:flex-col'>
 							<button
@@ -127,6 +144,17 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						<b className='animate-pulse text-gray-500'>Hold on tight...</b>
 					)}
 				</div>
+				{lastServerChange && downloadState === 'success' && !inSync && (
+					<div className='mt-2 rounded-lg border border-yellow-700 bg-yellow-900 p-3'>
+						<TriangleAlertIcon className='float-end' />
+						<b>Attention</b>
+						<p className='mt-2'>
+							The latest server data was uploaded at <b>{dayjs(lastServerChange).format('HH:MM')}</b> on{' '}
+							<b>{dayjs(lastServerChange).format('DD/MM/YYYY')}</b>. <br /> If you have uploaded data since then, it may
+							take a few minutes for the server to update. Thank you for your patience.
+						</p>
+					</div>
+				)}
 			</SignedIn>
 		</Modal>
 	);
