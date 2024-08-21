@@ -3,6 +3,7 @@ import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
 import Modal from './Modal';
 import { getShortcutCount } from '@/utils/getShortcutCount';
 import { DataContext } from '@/context/DataContext';
+import { ImportIcon, X } from 'lucide-react';
 
 type ImportDataModalProps = {
 	setImportDataModal: (importDataModal: boolean) => void;
@@ -26,19 +27,19 @@ const ImportDataModal = ({ setImportDataModal }: ImportDataModalProps) => {
 			/>
 			<div className='-mt-1 flex'>
 				<button
-					className='w-1/2 rounded-bl-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
+					className='flex w-1/2 justify-center gap-x-1 rounded-bl-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
 					onClick={() => {
 						overwriteShortcuts(dataToImport);
 						setImportDataModal(false);
 					}}
 				>
-					Import {shortcutCount} shortcuts (current: {currentShortcutCount})
+					<ImportIcon /> Import {shortcutCount} shortcuts (current: {currentShortcutCount})
 				</button>
 				<button
-					className='w-1/2 rounded-br-lg bg-red-500 px-2 py-1 active:bg-red-600'
+					className='flex w-1/2 justify-center gap-x-1 rounded-br-lg bg-red-500 px-2 py-1 active:bg-red-600'
 					onClick={() => setImportDataModal(false)}
 				>
-					Cancel
+					<X /> Cancel
 				</button>
 			</div>
 		</Modal>

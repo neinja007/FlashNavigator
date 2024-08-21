@@ -1,6 +1,7 @@
 import Modal from './Modal';
 import { getShortcutCount } from '@/utils/getShortcutCount';
 import { getShortcutsObject } from '@/utils/getShortcutsObject';
+import { Copy, X } from 'lucide-react';
 
 type ExportDataModalProps = {
 	data: string;
@@ -20,13 +21,16 @@ const ExportDataModal = ({ data, setData }: ExportDataModalProps) => {
 			/>
 			<div className='-mt-1 flex'>
 				<button
-					className='w-full rounded-bl-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
+					className='flex w-1/2 justify-center gap-x-1 rounded-bl-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
 					onClick={() => navigator.clipboard.writeText(data)}
 				>
-					Copy {shortcutCount} shortcuts
+					<Copy /> Copy {shortcutCount} shortcuts
 				</button>
-				<button className='w-full rounded-br-lg bg-red-500 px-2 py-1 active:bg-red-600' onClick={() => setData('')}>
-					Close
+				<button
+					className='flex w-1/2 justify-center gap-x-1 rounded-br-lg bg-red-500 px-2 py-1 active:bg-red-600'
+					onClick={() => setData('')}
+				>
+					<X /> Cancel
 				</button>
 			</div>
 		</Modal>
