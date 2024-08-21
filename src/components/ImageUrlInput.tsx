@@ -10,13 +10,16 @@ const ImageUrlInput = ({ setShortcut, shortcut }: ImageUrlInputProps) => {
 	return (
 		<div className='space-y-2'>
 			<input
-				className={'w-full rounded-lg border border-black bg-transparent px-2 py-1'}
+				className={
+					'w-full rounded-lg border bg-transparent px-2 py-1 ' +
+					(shortcut.img.length >= 500 ? 'border-red-500' : 'border-black')
+				}
 				placeholder='Image URL'
 				value={shortcut.img}
 				onChange={(e) => {
 					setShortcut({
 						...shortcut,
-						img: e.target.value
+						img: e.target.value.slice(0, 500)
 					});
 				}}
 			/>

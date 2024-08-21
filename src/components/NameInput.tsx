@@ -9,11 +9,14 @@ const NameInput = ({ setShortcut, shortcut }: NameInputProps) => {
 	return (
 		<input
 			autoFocus
-			className='w-full rounded-lg border border-black bg-transparent px-2 py-1'
+			className={
+				'w-full rounded-lg border bg-transparent px-2 py-1 ' +
+				(shortcut.name.length >= 50 ? 'border-red-500' : 'border-black')
+			}
 			placeholder='Name'
 			value={shortcut.name}
 			onChange={(e) => {
-				setShortcut({ ...shortcut, name: e.target.value.replaceAll('_', ' ') });
+				setShortcut({ ...shortcut, name: e.target.value.replaceAll('_', ' ').slice(0, 50) });
 			}}
 		/>
 	);
