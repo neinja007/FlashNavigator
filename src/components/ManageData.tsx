@@ -7,6 +7,7 @@ import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import SyncSettingsModal from './SyncSettingsModal';
 import { useStorageState } from '@/hooks/useStorageState';
+import { FileDown, FileUp, LogIn, LogOut, Menu, RefreshCcw, Settings } from 'lucide-react';
 
 const ManageData = () => {
 	const [dataToExport, setDataToExport] = useState('');
@@ -17,40 +18,53 @@ const ManageData = () => {
 
 	return (
 		<>
-			<div className='block space-x-3 sm:text-right'>
+			<div className='flex items-baseline space-x-3 sm:text-right'>
 				{showDataControls === 'true' && (
 					<>
 						<button
-							className='text-yellow-400 transition-all hover:text-xl'
+							className='flex items-center gap-x-1 text-yellow-400 transition-all hover:text-xl'
 							onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
 						>
-							Export Shortcuts
+							<FileUp /> Export Shortcuts
 						</button>
-						<button className='text-white transition-all hover:text-xl' onClick={() => setImportDataModal(true)}>
-							Import Shortcuts
+						<button
+							className='flex items-center gap-x-1 text-white transition-all hover:text-xl'
+							onClick={() => setImportDataModal(true)}
+						>
+							<FileDown /> Import Shortcuts
 						</button>
-						<button className='text-blue-500 transition-all hover:text-xl' onClick={() => setSyncSettingsModal(true)}>
-							Sync Shortcuts
+						<button
+							className='flex items-center gap-x-1 text-blue-500 transition-all hover:text-xl'
+							onClick={() => setSyncSettingsModal(true)}
+						>
+							<RefreshCcw /> Sync Shortcuts
 						</button>
-						<button className='text-neutral-400 transition-all hover:text-xl' onClick={() => setSettings(true)}>
-							Settings
+						<button
+							className='flex items-center gap-x-1 text-neutral-400 transition-all hover:text-xl'
+							onClick={() => setSettings(true)}
+						>
+							<Settings /> Settings
 						</button>
 					</>
 				)}
 				<button
-					className='text-purple-500 transition-all hover:text-xl'
+					className='flex items-center gap-x-1 text-purple-500 transition-all hover:text-xl'
 					onClick={() => setShowDataControls(showDataControls === 'false' ? 'true' : 'false')}
 				>
-					{showDataControls === 'true' ? 'Collapse' : 'Expand'} Menu
+					<Menu /> {showDataControls === 'true' ? 'Collapse' : 'Expand'} Menu
 				</button>
 				<SignedIn>
-					<div className='*: inline text-red-500 transition-all hover:text-xl'>
-						<SignOutButton>Sign out</SignOutButton>
-					</div>
+					<button className='text-red-500 transition-all hover:text-xl'>
+						<SignOutButton>
+							<div className='flex items-center gap-x-1'>
+								<LogOut /> Sign out
+							</div>
+						</SignOutButton>
+					</button>
 				</SignedIn>
 				<SignedOut>
-					<Link href={'/sign-in'} className='inline text-green-500 transition-all hover:text-xl'>
-						Sign in
+					<Link href={'/sign-in'} className='flex items-center gap-x-1 text-green-500 transition-all hover:text-xl'>
+						<LogIn /> Sign in
 					</Link>
 				</SignedOut>
 			</div>
