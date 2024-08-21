@@ -6,20 +6,19 @@ import SettingsModal from './SettingsModal';
 import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
 import Link from 'next/link';
 import SyncSettingsModal from './SyncSettingsModal';
-import { useStorageState } from '@/hooks/useStorageState';
 import { FileDown, FileUp, LogIn, LogOut, Menu, RefreshCcw, Settings } from 'lucide-react';
 
 const ManageData = () => {
 	const [dataToExport, setDataToExport] = useState('');
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [settings, setSettings] = useState(false);
-	const [showDataControls, setShowDataControls] = useStorageState('manage-data', 'false');
+	const [showDataControls, setShowDataControls] = useState(false);
 	const [syncSettingsModal, setSyncSettingsModal] = useState(false);
 
 	return (
 		<>
-			<div className='flex items-baseline space-x-3 sm:text-right'>
-				{showDataControls === 'true' && (
+			<div className='flex flex-col items-baseline space-x-3 md:flex-row'>
+				{showDataControls && (
 					<>
 						<button
 							className='flex items-center gap-x-1 text-yellow-400 transition-all hover:text-xl'
@@ -49,9 +48,9 @@ const ManageData = () => {
 				)}
 				<button
 					className='flex items-center gap-x-1 text-purple-500 transition-all hover:text-xl'
-					onClick={() => setShowDataControls(showDataControls === 'false' ? 'true' : 'false')}
+					onClick={() => setShowDataControls(!showDataControls)}
 				>
-					<Menu /> {showDataControls === 'true' ? 'Collapse' : 'Expand'} Menu
+					<Menu /> {showDataControls ? 'Collapse' : 'Expand'} Menu
 				</button>
 				<SignedIn>
 					<button className='text-red-500 transition-all hover:text-xl'>
