@@ -150,7 +150,14 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 						inSync ? (
 							<b className='text-green-500'>Server and client (you) are in sync.</b>
 						) : (
-							<b className='text-orange-500'>Server and client (you) are not in sync.</b>
+							<b className='text-orange-500'>
+								Server and client (you) are not in sync.{' '}
+								{hideNoticeInFuture === 'true' && (
+									<button className='text-blue-500 hover:underline' onClick={() => setHideNoticeInFuture('false')}>
+										Learn why
+									</button>
+								)}
+							</b>
 						)
 					) : (
 						<b className='animate-pulse text-gray-500'>Hold on tight...</b>
