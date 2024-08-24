@@ -45,7 +45,7 @@ const ImageUrlInput = ({ setShortcut, shortcut }: ImageUrlInputProps) => {
 				)}
 				<Link
 					className='text-blue-400 hover:underline'
-					href={`https://duckduckgo.com/?q="${shortcut.name || 'search for something!'}"&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
+					href={`https://duckduckgo.com/?q="${shortcut.name.toLowerCase() || 'search for something!'}"&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
 					target='_blank'
 				>
 					search duckduckgo for &quot;{shortcut.name}&quot; images
