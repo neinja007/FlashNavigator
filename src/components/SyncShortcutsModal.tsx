@@ -68,8 +68,10 @@ const SyncShortcutsModal = ({ setSyncShortcutsModal }: SyncShortcutsModalProps) 
 
 	const lastServerChangeDayjs = lastServerChange && dayjs(lastServerChange);
 
+	console.log(lastServerChange);
+
 	const date = lastServerChange && dayjs(lastServerChange).format('DD/MM/YYYY');
-	const time = lastServerChange && dayjs(lastServerChange).format('HH:MM');
+	const time = lastServerChange && dayjs(lastServerChange).format('HH:mm');
 	const lastServerChangeToday = lastServerChangeDayjs && lastServerChangeDayjs.isSame(dayjs(), 'day');
 
 	const [hideNoticeInFuture, setHideNoticeInFuture] = useStorageState('hideNoticeInFuture', 'true', 'false');
