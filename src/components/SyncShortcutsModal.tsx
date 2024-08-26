@@ -10,11 +10,11 @@ import { ListBlobResultBlob } from '@vercel/blob';
 import dayjs from 'dayjs';
 import { useStorageState } from '@/hooks/useStorageState';
 
-type SyncSettingsModalProps = {
-	setSyncSettingsModal: (syncSettingsModal: boolean) => void;
+type SyncShortcutsModalProps = {
+	setSyncShortcutsModal: (SyncShortcutsModal: boolean) => void;
 };
 
-const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => {
+const SyncShortcutsModal = ({ setSyncShortcutsModal }: SyncShortcutsModalProps) => {
 	const shortcuts = getShortcutsObject(true);
 	const [uploadState, setUploadState] = useState<'error' | 'success' | 'loading' | 'pending'>('pending');
 	const [uploadedShortcuts, setUploadedShortcuts] = useState<string>('');
@@ -75,7 +75,7 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 	const [hideNoticeInFuture, setHideNoticeInFuture] = useStorageState('hideNoticeInFuture', 'true', 'false');
 
 	return (
-		<Modal action={() => setSyncSettingsModal(false)} padding>
+		<Modal action={() => setSyncShortcutsModal(false)} padding>
 			<SignedOut>
 				<b>
 					You have to sign in to use this feature.{' '}
@@ -204,4 +204,4 @@ const SyncSettingsModal = ({ setSyncSettingsModal }: SyncSettingsModalProps) => 
 	);
 };
 
-export default SyncSettingsModal;
+export default SyncShortcutsModal;

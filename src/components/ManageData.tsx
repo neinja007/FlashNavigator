@@ -5,7 +5,6 @@ import ImportDataModal from './ImportDataModal';
 import SettingsModal from './SettingsModal';
 import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
 import Link from 'next/link';
-import SyncSettingsModal from './SyncSettingsModal';
 import { FileDown, FileUp, LogIn, LogOut, Menu, RefreshCcw, Settings } from 'lucide-react';
 
 const ManageData = () => {
@@ -13,7 +12,7 @@ const ManageData = () => {
 	const [importDataModal, setImportDataModal] = useState(false);
 	const [settings, setSettings] = useState(false);
 	const [showDataControls, setShowDataControls] = useState(false);
-	const [syncSettingsModal, setSyncSettingsModal] = useState(false);
+	const [SyncShortcutsModal, setSyncShortcutsModal] = useState(false);
 
 	return (
 		<>
@@ -34,7 +33,7 @@ const ManageData = () => {
 						</button>
 						<button
 							className='flex items-center gap-x-1 text-blue-500 transition-all hover:text-xl'
-							onClick={() => setSyncSettingsModal(true)}
+							onClick={() => setSyncShortcutsModal(true)}
 						>
 							<RefreshCcw /> Sync Shortcuts
 						</button>
@@ -67,7 +66,7 @@ const ManageData = () => {
 					</Link>
 				</SignedOut>
 			</div>
-			{syncSettingsModal && <SyncSettingsModal setSyncSettingsModal={setSyncSettingsModal} />}
+			{SyncShortcutsModal && <SyncShortcutsModal setSyncShortcutsModal={setSyncShortcutsModal} />}
 			{dataToExport && <ExportDataModal data={dataToExport} setData={setDataToExport} />}
 			{importDataModal && <ImportDataModal setImportDataModal={setImportDataModal} />}
 			{settings && <SettingsModal setSettingsModal={setSettings} />}
