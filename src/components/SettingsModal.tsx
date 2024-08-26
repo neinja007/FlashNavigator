@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction, useContext } from 'react';
-import SubmitButton from './SubmitButton';
 import { DataContext } from '@/context/DataContext';
 import Modal from './Modal';
+import SubmitButton from './SubmitButton';
+import { Settings } from 'lucide-react';
 
 type SettingsModalProps = {
 	setSettingsModal: Dispatch<SetStateAction<boolean>>;
@@ -13,10 +14,12 @@ const SettingsModal = ({ setSettingsModal }: SettingsModalProps) => {
 	return (
 		<Modal action={() => setSettingsModal(false)} padding>
 			<form className='space-y-5' onSubmit={() => setSettingsModal(false)}>
-				<div className='float-end space-x-3'>
+				<div className='flex justify-between'>
+					<div className='flex items-center text-xl font-bold'>
+						<Settings className='mr-2' /> Settings
+					</div>
 					<SubmitButton />
 				</div>
-				<b>Settings</b>
 				<div>
 					<input
 						type='checkbox'
