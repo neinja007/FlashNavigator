@@ -9,19 +9,15 @@ type ShortcutQueryResultsProps = {
 };
 
 const ShortcutQueryResults = ({ searchResults, setGroups, searchResultsIndex }: ShortcutQueryResultsProps) => {
-	return searchResults.length > 0 ? (
-		searchResults.map((shortcut, i) => (
-			<Shortcut
-				queryResult
-				key={shortcut.name + i}
-				shortcut={shortcut}
-				setGroups={setGroups}
-				active={searchResultsIndex === i}
-			/>
-		))
-	) : (
-		<span className='text-gray-500'>None of your shortcuts match the search term</span>
-	);
+	return searchResults.map((shortcut, i) => (
+		<Shortcut
+			queryResult
+			key={shortcut.name + i}
+			shortcut={shortcut}
+			setGroups={setGroups}
+			active={searchResultsIndex === i}
+		/>
+	));
 };
 
 export default ShortcutQueryResults;
