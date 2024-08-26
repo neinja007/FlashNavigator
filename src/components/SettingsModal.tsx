@@ -63,16 +63,17 @@ const SettingsModal = ({ setSettingsModal }: SettingsModalProps) => {
 					/>
 				</div>
 				<div>
-					<label htmlFor='image_quality'>Search Engine:</label>
+					<label htmlFor='search_engine'>Search Engine:</label>
 					<select
 						id='search_engine'
 						value={settings.searchEngine}
 						onChange={(e) => updateSettings('searchEngine', e.target.value)}
-						className='ml-2 w-20 rounded-md border bg-transparent px-2'
+						className='ml-2 rounded-md border bg-black px-2'
 					>
 						<option value='duckduckgo'>DuckDuckGo</option>
 						<option value='firefox'>Firefox</option>
 						<option value='google'>Google</option>
+						<option value='other'>Other</option>
 					</select>
 				</div>
 			</form>
