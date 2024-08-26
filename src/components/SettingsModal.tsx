@@ -71,7 +71,7 @@ const SettingsModal = ({ setSettingsModal }: SettingsModalProps) => {
 						className='ml-2 rounded-md border bg-black px-2'
 					>
 						<option value='duckduckgo'>DuckDuckGo</option>
-						<option value='firefox'>Firefox</option>
+						<option value='bing'>Bing</option>
 						<option value='google'>Google</option>
 						<option value='other'>Other</option>
 					</select>

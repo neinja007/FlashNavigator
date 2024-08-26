@@ -21,7 +21,7 @@ type SettingsType = {
 	hideEmptyShortcuts: boolean;
 	imageQuality: number;
 	shortcutTypeColor: boolean;
-	searchEngine: 'google' | 'duckduckgo' | 'firefox' | 'other';
+	searchEngine: 'google' | 'duckduckgo' | 'bing' | 'other';
 };
 
 type DataContextProviderProps = {
@@ -55,8 +55,7 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 			hideEmptyShortcuts: localStorage.getItem('settings-hideEmptyShortcuts') === 'true',
 			imageQuality: parseInt(localStorage.getItem('settings-imageQuality') || '75') || 75,
 			shortcutTypeColor: localStorage.getItem('settings-shortcutTypeColor') === 'true',
-			searchEngine:
-				(localStorage.getItem('settings-searchEngine') as 'google' | 'duckduckgo' | 'firefox') || 'duckduckgo'
+			searchEngine: (localStorage.getItem('settings-searchEngine') as 'google' | 'duckduckgo' | 'bing') || 'duckduckgo'
 		});
 	};
 
