@@ -1,18 +1,51 @@
 import { useStorageState } from '@/hooks/useStorageState';
 import Link from 'next/link';
 import Modal from './Modal';
+import { DataContext } from '@/context/DataContext';
+import { useContext, useEffect } from 'react';
 
 const ExtensionPromptModal = () => {
 	const [extensionPropmt, setExtensionPrompt] = useStorageState('extensionPrompt', 'true', 'false');
+	const { settings, updateSettings } = useContext(DataContext);
+
+	useEffect(() => {
+		const searchEngine =
+			['duckduckgo', 'firefox', 'google', 'other'].find((engine) =>
+				navigator.userAgent.toLowerCase().includes(engine)
+			) || 'other';
+
+		console.log(navigator.userAgent, searchEngine);
+		updateSettings('searchEngine', searchEngine);
+	}, [updateSettings]);
 
 	return (
 		extensionPropmt === 'false' && (
 			<Modal padding>
+				<div className='mb-4 text-center text-2xl'>Welcome to FlashNavigator!</div>
+				<div className='w-full'>
+					<label htmlFor='search_engine'>Please specify your (preferred) search engine: </label>
+					<select
+						id='search_engine'
+						value={settings.searchEngine}
+						onChange={(e) => updateSettings('searchEngine', e.target.value)}
+						className='ml-2 rounded-md border bg-black px-2'
+					>
+						<option value='duckduckgo'>DuckDuckGo</option>
+						<option value='firefox'>Firefox</option>
+						<option value='google'>Google</option>
+						<option value='other'>Other</option>
+					</select>
+					<p className='mt-3'>
+						This will allow us to redirect you to the search engine of your choice when you search with the
+						FlashNavigator search bar.
+					</p>
+				</div>
+				<hr className='my-7 border-gray-600' />
 				<p>
-					Please install an extension <b>to redirect new tabs to this page</b>:{' '}
+					Please install an extension <b>to redirect new tabs to FlashNavigator</b>:{' '}
 				</p>
 				<br />
-				<div className='ml-3 space-y-3 text-blue-400 underline'>
+				<div className='ml-5 text-blue-400 underline'>
 					<Link
 						href={'https://addons.mozilla.org/en-GB/firefox/addon/new-tab-override'}
 						target='_blank'
@@ -41,8 +74,8 @@ const ExtensionPromptModal = () => {
 				</p>
 				<br />
 				<p>
-					<b>Step 2</b>: If possible, activate the &quot;Set focus on the web page instead of the address bar&quot;
-					option in the extension settings.
+					<b>Step 2</b>: If present, activate a setting that sets the focus on the new web page instead of the address
+					bar.
 				</p>
 				<br />
 				<button
