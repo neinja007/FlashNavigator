@@ -105,7 +105,7 @@ export default function Root() {
 							<ManageData />
 						</div>
 					)}
-					<div className='group flex flex-wrap justify-center gap-3 rounded-lg text-xs sm:text-base'>
+					<div className='group/shortcuts flex flex-wrap justify-center gap-3 rounded-lg text-xs sm:text-base'>
 						{searchBarQuery && shortcuts ? (
 							<ShortcutQueryResults
 								searchResults={searchResults}
@@ -130,7 +130,7 @@ export default function Root() {
 								/>
 							))
 						)}
-						<span className='text-gray-300 group-has-[div]:hidden'>
+						<span className='text-gray-300 group-has-[div]/shortcuts:hidden'>
 							{searchBarQuery
 								? `Search for "${searchBarQuery}" with ${settings.searchEngine}`
 								: 'This folder does not contain any shortcuts.'}
