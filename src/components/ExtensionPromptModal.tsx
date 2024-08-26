@@ -60,30 +60,33 @@ const ExtensionPromptModal = () => {
 						Extension For Google
 					</Link>
 				</div>
-				<br />
-				<p>
-					<b>Step 1</b>: use this URL as the new tab URL: <br />
-					<b className='select-all text-yellow-300 underline'>flash-navigator.vercel.app</b>{' '}
-					<button
-						className='text-blue-500 hover:underline'
-						onClick={() => navigator.clipboard.writeText('https://flash-navigator.vercel.app')}
-					>
-						[copy link]
-					</button>
-				</p>
-				<br />
-				<p>
-					<b>Step 2</b>: If present, activate a setting that sets the focus on the new web page instead of the address
-					bar.
-				</p>
-				<br />
+				<div className='my-5 space-y-4'>
+					<p>
+						<b>Step 1</b>: use this URL as the new tab URL: <br />
+						<b className='select-all text-yellow-300 underline'>flash-navigator.vercel.app</b>{' '}
+						<button
+							className='text-blue-500 hover:underline'
+							onClick={() => navigator.clipboard.writeText('https://flash-navigator.vercel.app')}
+						>
+							[copy link]
+						</button>
+					</p>
+					<p>
+						<b>Step 2</b>: If present, activate a setting that sets the focus on the new web page instead of the address
+						bar.
+					</p>
+					<p>
+						<b>Step 3</b>: Some browsers (like firefox) require you to also set the home page to{' '}
+						<b className='select-all text-yellow-300 underline'>flash-navigator.vercel.app</b>.
+					</p>
+				</div>
 				<button
 					className='w-full rounded-lg bg-blue-500 px-2 py-1 active:bg-blue-600'
 					onClick={() => {
 						setExtensionPrompt('true');
 					}}
 				>
-					{'Done'}
+					{'Close this window'}
 				</button>
 			</Modal>
 		)
