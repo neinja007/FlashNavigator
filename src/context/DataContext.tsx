@@ -2,7 +2,7 @@
 import { ShortcutType } from '@/app/page';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
-import { useState, createContext, useEffect } from 'react';
+import { useState, createContext, useEffect, useCallback } from 'react';
 
 type DataContextType = {
 	shortcuts: ShortcutsType;
@@ -60,12 +60,12 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		});
 	};
 
-	const updateSettings = (key: keyof SettingsType, value: any) => {
+	const updateSettings = useCallback((key: keyof SettingsType, value: any) => {
 		localStorage.setItem('settings-' + key, value.toString());
 		refreshSettings();
-	};
+	}, []);
 
-	const updateShortcuts = (key: string, shortcut: ShortcutType | null) => {
+	const updateShortcuts = useCallback((key: string, shortcut: ShortcutType | null) => {
 		if (!shortcut) {
 			localStorage.removeItem(`shortcut-${key}-name`);
 			localStorage.removeItem(`shortcut-${key}-group`);
@@ -78,9 +78,9 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 			localStorage.setItem(`shortcut-${key}-img`, shortcut.img);
 		}
 		refreshShortcuts();
-	};
+	}, []);
 
-	const overwriteShortcuts = (shortcuts: { [key: string]: string } | string) => {
+	const overwriteShortcuts = useCallback((shortcuts: { [key: string]: string } | string) => {
 		try {
 			let newData: { [key: string]: string } = {};
 			if (typeof shortcuts === 'string') {
@@ -96,7 +96,7 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 			alert('Invalid JSON data');
 		}
 		refreshShortcuts();
-	};
+	}, []);
 
 	return (
 		<DataContext.Provider
