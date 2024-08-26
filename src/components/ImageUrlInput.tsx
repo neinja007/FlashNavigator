@@ -48,7 +48,7 @@ const ImageUrlInput = ({ setShortcut, shortcut }: ImageUrlInputProps) => {
 					href={`https://duckduckgo.com/?q="${shortcut.name.toLowerCase() || 'search for something!'}"&iar=images&iax=images&ia=images&iaf=type%3Atransparent%2Csize%3ASmall`}
 					target='_blank'
 				>
-					search duckduckgo for &quot;{shortcut.name}&quot; images
+					search DuckDuckGo for &quot;{shortcut.name}&quot; images
 				</Link>
 				.
 			</div>

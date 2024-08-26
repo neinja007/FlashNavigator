@@ -5,7 +5,7 @@ import { DataContext } from '@/context/DataContext';
 import { useContext, useEffect } from 'react';
 
 const ExtensionPromptModal = () => {
-	const [extensionPropmt, setExtensionPrompt] = useStorageState('extensionPrompt', 'true', 'false');
+	const [extensionPrompt, setExtensionPrompt] = useStorageState('extensionPrompt', 'true', 'false');
 	const { settings, updateSettings } = useContext(DataContext);
 
 	useEffect(() => {
@@ -18,7 +18,7 @@ const ExtensionPromptModal = () => {
 	}, [updateSettings]);
 
 	return (
-		extensionPropmt === 'false' && (
+		extensionPrompt === 'false' && (
 			<Modal padding>
 				<div className='mb-4 text-center text-2xl'>Welcome to FlashNavigator!</div>
 				<div className='w-full'>
@@ -76,7 +76,7 @@ const ExtensionPromptModal = () => {
 						bar.
 					</p>
 					<p>
-						<b>Step 3</b>: Some browsers (like firefox) require you to also set the home page to{' '}
+						<b>Step 3</b>: Some browsers (like Firefox) require you to also set the home page to{' '}
 						<b className='select-all text-yellow-300 underline'>flash-navigator.vercel.app</b>.
 					</p>
 				</div>
