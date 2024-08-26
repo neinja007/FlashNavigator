@@ -21,7 +21,7 @@ type SettingsType = {
 	hideEmptyShortcuts: boolean;
 	imageQuality: number;
 	shortcutTypeColor: boolean;
-	searchEngine: 'google' | 'duckduckgo' | 'firefox';
+	searchEngine: 'google' | 'duckduckgo' | 'firefox' | 'other';
 };
 
 type DataContextProviderProps = {
