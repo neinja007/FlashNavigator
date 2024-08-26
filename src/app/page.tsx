@@ -25,7 +25,7 @@ export default function Root() {
 
 	const [searchBarQuery, setSearchBarQuery] = useState('');
 
-	const { shortcuts } = useContext(DataContext);
+	const { shortcuts, settings } = useContext(DataContext);
 
 	const [activeShortcutId, setActiveShortcutId] = useState<number | null>(null);
 	const [activeShortcut, setActiveShortcut] = useState<ShortcutType | null>();
@@ -130,7 +130,11 @@ export default function Root() {
 								/>
 							))
 						)}
-						<span className='text-gray-500 group-has-[div]:hidden'>This folder does not contain any shortcuts.</span>
+						<span className='text-gray-300 group-has-[div]:hidden'>
+							{searchBarQuery
+								? `Search for "${searchBarQuery}" with ${settings.searchEngine}`
+								: 'This folder does not contain any shortcuts.'}
+						</span>
 					</div>
 				</div>
 			</div>
