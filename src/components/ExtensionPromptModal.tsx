@@ -13,7 +13,6 @@ const ExtensionPromptModal = () => {
 			['duckduckgo', 'bing', 'google', 'other'].find((engine) => navigator.userAgent.toLowerCase().includes(engine)) ||
 			'other';
 
-		console.log(navigator.userAgent, searchEngine);
 		updateSettings('searchEngine', searchEngine);
 	}, [updateSettings]);
 
