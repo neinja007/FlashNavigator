@@ -10,7 +10,13 @@ type ShortcutQueryResultsProps = {
 
 const ShortcutQueryResults = ({ searchResults, setGroups, searchResultsIndex }: ShortcutQueryResultsProps) => {
 	return searchResults.map((shortcut, i) => (
-		<Shortcut queryResult key={i} shortcut={shortcut} setGroups={setGroups} active={searchResultsIndex === i} />
+		<Shortcut
+			queryResult
+			key={shortcut.name + i}
+			shortcut={shortcut}
+			setGroups={setGroups}
+			active={searchResultsIndex === i}
+		/>
 	));
 };
 
