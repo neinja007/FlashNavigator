@@ -144,7 +144,7 @@ export default function Root() {
 						)}
 						<span className='text-gray-300 group-has-[div]/shortcuts:hidden'>
 							{searchBarQuery
-								? `Search for "${searchBarQuery}" with ${settings.searchEngine}`
+								? `Search for "${searchBarQuery}" with ${settings.searchEngine === 'other' ? 'duckduckgo' : settings.searchEngine}`
 								: 'This folder does not contain any shortcuts.'}
 						</span>
 					</div>
