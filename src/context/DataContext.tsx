@@ -21,6 +21,7 @@ type SettingsType = {
 	hideEmptyShortcuts: boolean;
 	imageQuality: number;
 	shortcutTypeColor: boolean;
+	searchEngine: 'google' | 'duckduckgo' | 'firefox';
 };
 
 type DataContextProviderProps = {
@@ -35,7 +36,8 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		hideShortcutIcons: false,
 		hideEmptyShortcuts: false,
 		imageQuality: 75,
-		shortcutTypeColor: false
+		shortcutTypeColor: false,
+		searchEngine: 'duckduckgo'
 	});
 
 	useEffect(() => {
@@ -52,7 +54,9 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 			hideShortcutIcons: localStorage.getItem('settings-hideShortcutIcons') === 'true',
 			hideEmptyShortcuts: localStorage.getItem('settings-hideEmptyShortcuts') === 'true',
 			imageQuality: parseInt(localStorage.getItem('settings-imageQuality') || '75') || 75,
-			shortcutTypeColor: localStorage.getItem('settings-shortcutTypeColor') === 'true'
+			shortcutTypeColor: localStorage.getItem('settings-shortcutTypeColor') === 'true',
+			searchEngine:
+				(localStorage.getItem('settings-searchEngine') as 'google' | 'duckduckgo' | 'firefox') || 'duckduckgo'
 		});
 	};
 
