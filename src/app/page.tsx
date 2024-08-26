@@ -62,7 +62,19 @@ export default function Root() {
 			if (searchBarQuery.includes('http') || (searchBarQuery.includes('.') && !searchBarQuery.includes(' '))) {
 				router.push(addHTTPProtocolToUrl(searchBarQuery));
 			} else {
-				router.push(`https://duckduckgo.com/?t=ffab&q=${searchBarQuery}&atb=v376-1&ia=web`);
+				switch (settings.searchEngine) {
+					case 'google':
+						router.push(`https://www.google.com/search?q=${searchBarQuery}`);
+						break;
+					case 'bing':
+						router.push(`https://www.bing.com/search?q=${searchBarQuery}`);
+						break;
+					case 'duckduckgo':
+						router.push(`https://duckduckgo.com/?q=${searchBarQuery}`);
+						break;
+					default:
+						router.push(`https://duckduckgo.com/?q=${searchBarQuery}`);
+				}
 			}
 		}
 	};
