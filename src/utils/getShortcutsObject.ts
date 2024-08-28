@@ -1,7 +1,19 @@
-export const getShortcutsObject = (stripShortcutPrefix?: boolean): { [key: string]: string } => {
+export const getShortcutsObject = (
+	stripShortcutPrefix?: boolean,
+	filterUnusedData?: boolean
+): { [key: string]: string } => {
 	const newGroups: string[] = [];
-	const rawShortcuts = JSON.parse(JSON.stringify(localStorage));
+	const rawShortcuts: { [key: string]: string } = JSON.parse(JSON.stringify(localStorage));
 	const shortcuts: { [key: string]: string } = {};
+
+	if (filterUnusedData) {
+		return Object.entries(rawShortcuts).reduce((acc: { [key: string]: string }, [key, value]) => {
+			if (key.startsWith('shortcut-')) {
+				acc[key] = value;
+			}
+			return acc;
+		}, {});
+	}
 
 	for (let i = 1; i < 17; i++) {
 		const prefix = `shortcut-${i}`;
