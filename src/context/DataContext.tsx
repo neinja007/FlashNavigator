@@ -97,9 +97,10 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 				localStorage.setItem(`shortcut-${key}-group`, shortcut.group.toString());
 				localStorage.setItem(`shortcut-${key}-href`, shortcut.href);
 				localStorage.setItem(`shortcut-${key}-img`, shortcut.img);
-				if (shortcut.group) {
-					if (!oldName) throw new Error('Old name not found');
-					overwriteShortcuts(updateShortcutGroupChildNames(oldName, shortcut.name, key));
+				if (shortcut.group && oldName && shortcut.name) {
+					overwriteShortcuts(
+						updateShortcutGroupChildNames(oldName.replaceAll(' ', '_'), shortcut.name.replaceAll(' ', '_'), key)
+					);
 				}
 			}
 			overwriteShortcuts(getShortcutsObject());
