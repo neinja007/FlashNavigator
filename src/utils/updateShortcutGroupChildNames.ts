@@ -8,8 +8,8 @@ export const updateShortcutGroupChildNames = (oldName: string, newName: string, 
 		.slice(0, pathToGroup.split('-').length - 1)
 		.join('-');
 
-	const oldNameChildPath = (pathPrefix ? pathPrefix + '-' + oldName : oldName).replaceAll(' ', '_');
-	const newNameChildPath = (pathPrefix ? pathPrefix + '-' + newName : newName).replaceAll(' ', '_');
+	const oldNameChildPath = pathPrefix ? pathPrefix + '-' + oldName : oldName;
+	const newNameChildPath = pathPrefix ? pathPrefix + '-' + newName : newName;
 
 	const newShortcuts = Object.entries(shortcuts).reduce((acc: { [key: string]: string }, [key, value]) => {
 		const shortenedKey = key.startsWith('shortcut-') ? key.replace('shortcut-', '') : key;
