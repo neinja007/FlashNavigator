@@ -32,8 +32,8 @@ export const updateShortcutPath = (oldPath: string, newPath: string, customData?
 			.join('-');
 
 		newGroupAdjustedShortcuts = updateShortcutPath(
-			oldPathWithoutId + '-' + name,
-			newPathWithoutId + '-' + name,
+			oldPathWithoutId ? oldPathWithoutId + '-' + name : name || '',
+			newPathWithoutId ? newPathWithoutId + '-' + name : name || '',
 			newShortcuts
 		);
 	}
