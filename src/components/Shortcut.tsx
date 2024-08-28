@@ -69,7 +69,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 				</div>
 				<div className={'flex h-12 flex-col justify-center overflow-visible transition-all group-hover:-translate-y-2'}>
 					{shortcut.name ? (
-						<b className={'line-clamp-2'}>
+						<b className={'mx-2 line-clamp-2'}>
 							{!settings.hideShortcutIcons && (shortcut.group ? '📁' : '🔗')} {shortcut.name}
 						</b>
 					) : (
