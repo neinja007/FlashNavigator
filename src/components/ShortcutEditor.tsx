@@ -24,7 +24,7 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 
 	const [shortcutPathValid, setShortcutPathValid] = useState(false);
 	const [shortcutPath, setShortcutPath] = useState<string>(
-		(shortcut.path.join('/') + '/' + shortcutId).replace('_', ' ')
+		(shortcut.path.join('/') ? shortcut.path.join('/') + '/' + shortcutId : shortcutId.toString()).replace('_', ' ')
 	);
 
 	const prefix = groupPrefix + shortcutId;
@@ -36,9 +36,10 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 
 	const onMove = () => {
 		if (shortcutPathValid) {
+			const path = shortcut.path.join('-');
 			overwriteShortcuts(
 				updateShortcutPath(
-					shortcut.path.join('-') + '-' + shortcutId,
+					path ? path + '-' + shortcutId : shortcutId.toString(),
 					shortcutPath.split('/').join('-').replace(' ', '_')
 				)
 			);
