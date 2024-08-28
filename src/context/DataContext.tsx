@@ -2,6 +2,8 @@
 import { ShortcutType } from '@/app/page';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
+import { getShortcutsObject } from '@/utils/getShortcutsObject';
+import { updateShortcutGroupChildNames } from '@/utils/updateShortcutGroupChildNames';
 import { useState, createContext, useEffect, useCallback } from 'react';
 
 type DataContextType = {
@@ -64,21 +66,6 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		refreshSettings();
 	}, []);
 
-	const updateShortcuts = useCallback((key: string, shortcut: ShortcutType | null) => {
-		if (!shortcut) {
-			localStorage.removeItem(`shortcut-${key}-name`);
-			localStorage.removeItem(`shortcut-${key}-group`);
-			localStorage.removeItem(`shortcut-${key}-href`);
-			localStorage.removeItem(`shortcut-${key}-img`);
-		} else {
-			localStorage.setItem(`shortcut-${key}-name`, shortcut.name);
-			localStorage.setItem(`shortcut-${key}-group`, shortcut.group.toString());
-			localStorage.setItem(`shortcut-${key}-href`, shortcut.href);
-			localStorage.setItem(`shortcut-${key}-img`, shortcut.img);
-		}
-		refreshShortcuts();
-	}, []);
-
 	const overwriteShortcuts = useCallback((shortcuts: { [key: string]: string } | string) => {
 		try {
 			let newData: { [key: string]: string } = {};
@@ -96,6 +83,29 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		}
 		refreshShortcuts();
 	}, []);
+
+	const updateShortcuts = useCallback(
+		(key: string, shortcut: ShortcutType | null) => {
+			if (!shortcut) {
+				localStorage.removeItem(`shortcut-${key}-name`);
+				localStorage.removeItem(`shortcut-${key}-group`);
+				localStorage.removeItem(`shortcut-${key}-href`);
+				localStorage.removeItem(`shortcut-${key}-img`);
+			} else {
+				const oldName = localStorage.getItem(`shortcut-${key}-name`);
+				localStorage.setItem(`shortcut-${key}-name`, shortcut.name);
+				localStorage.setItem(`shortcut-${key}-group`, shortcut.group.toString());
+				localStorage.setItem(`shortcut-${key}-href`, shortcut.href);
+				localStorage.setItem(`shortcut-${key}-img`, shortcut.img);
+				if (shortcut.group) {
+					if (!oldName) throw new Error('Old name not found');
+					overwriteShortcuts(updateShortcutGroupChildNames(oldName, shortcut.name, key));
+				}
+			}
+			overwriteShortcuts(getShortcutsObject());
+		},
+		[overwriteShortcuts]
+	);
 
 	return (
 		<DataContext.Provider
