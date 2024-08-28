@@ -16,7 +16,7 @@ const NameInput = ({ setShortcut, shortcut }: NameInputProps) => {
 			placeholder='Name'
 			value={shortcut.name}
 			onChange={(e) => {
-				setShortcut({ ...shortcut, name: e.target.value.replaceAll('_', ' ').slice(0, 50) });
+				setShortcut({ ...shortcut, name: e.target.value.replaceAll('_', '').replaceAll('-', '').slice(0, 50) });
 			}}
 		/>
 	);
