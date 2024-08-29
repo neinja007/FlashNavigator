@@ -1,4 +1,5 @@
 import { getShortcutsObject } from './getShortcutsObject';
+import { stripLastItem } from './stripLastItem';
 
 export const updateShortcutPath = (oldPath: string, newPath: string, customData?: { [key: string]: string }) => {
 	const shortcuts = customData ? customData : getShortcutsObject(false, true);
@@ -21,15 +22,9 @@ export const updateShortcutPath = (oldPath: string, newPath: string, customData?
 	if (localStorage.getItem('shortcut-' + oldPath + '-group') === 'true') {
 		const name = localStorage.getItem('shortcut-' + oldPath + '-name')?.replace(' ', '_');
 
-		const oldPathWithoutId = oldPath
-			.split('-')
-			.slice(0, oldPath.split('-').length - 1)
-			.join('-');
+		const oldPathWithoutId = stripLastItem(oldPath, '-');
 
-		const newPathWithoutId = newPath
-			.split('-')
-			.slice(0, newPath.split('-').length - 1)
-			.join('-');
+		const newPathWithoutId = stripLastItem(newPath, '-');
 
 		newGroupAdjustedShortcuts = updateShortcutPath(
 			oldPathWithoutId ? oldPathWithoutId + '-' + name : name || '',
