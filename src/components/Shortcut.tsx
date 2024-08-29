@@ -64,7 +64,7 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 							quality={settings.imageQuality}
 						/>
 					) : (
-						<span className='select-none text-6xl sm:text-9xl'>?</span>
+						<span className='select-none text-6xl sm:text-9xl'>+</span>
 					)}
 				</div>
 				<div className={'flex h-12 flex-col justify-center overflow-visible transition-all group-hover:-translate-y-2'}>
