@@ -14,6 +14,8 @@ const DeleteButton = ({ prefix, closeModal }: DeleteButtonProps) => {
 			type='button'
 			className='text-red-500 underline'
 			onClick={() => {
+				const userIsSureThatHeWantsToDeleteThisShortcut = confirm('Are you sure you want to delete this shortcut?');
+				if (!userIsSureThatHeWantsToDeleteThisShortcut) return;
 				updateShortcuts(prefix, null);
 				closeModal();
 			}}
