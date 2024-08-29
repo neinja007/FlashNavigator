@@ -121,7 +121,7 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 										: false
 									: false;
 
-								const value = group || segment;
+								const value = segment.toString() === shortcutId.toString() ? shortcutId.toString() : group || segment;
 
 								return (
 									<option
