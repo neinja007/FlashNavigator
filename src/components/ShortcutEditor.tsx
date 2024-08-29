@@ -8,11 +8,10 @@ import { ShortcutType } from '@/app/page';
 import Modal from './Modal';
 import { DataContext } from '@/context/DataContext';
 import { useContext, useEffect, useState } from 'react';
-import clsx from 'clsx';
 import { updateShortcutPath } from '@/utils/updateShortcutPath';
 import { dynamicJoin } from '@/utils/dynamicJoin';
 import { stripLastItem } from '@/utils/stripLastItem';
-import { getShortcutGroupsFromPath } from '@/utils/getShortcutGroupsFromPath';
+import clsx from 'clsx';
 
 type ShortcutEditorProps = {
 	setShortcutId: (id: number | null) => void;
@@ -61,20 +60,30 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 
 		const allSegmentsValid = shortcutPath.split('/').every((segment) => segment.length > 0);
 
-		const allSegmentsExist = stripLastItem(shortcutPath, '/')
-			.split('/')
-			.every(
-				(_, i) =>
-					getShortcutGroupsFromPath(
-						shortcutPath
-							.split('/')
-							.slice(0, i + 1)
-							.join('/')
-					).length > 0
-			);
-
-		setShortcutPathValid(doesntExist && newPathEndsWithValidId && allSegmentsValid && allSegmentsExist);
+		setShortcutPathValid(doesntExist && newPathEndsWithValidId && allSegmentsValid);
 	}, [shortcut.path, shortcutId, shortcutPath]);
+
+	const onPathChange = (value: string, index: number, path?: string) => {
+		const newPath = dynamicJoin([(path || shortcutPath).split('/').slice(0, index).join('/'), value], '/');
+
+		const lastSegment = parseInt(newPath.split('/').at(-1) || '0');
+		const newPathEndsWithValidId = lastSegment > 0 && lastSegment < 17;
+
+		const prefix = dynamicJoin(['shortcut-' + [newPath.split('/')].join('-').replace(' ', '_'), '1'], '-');
+
+		const occupied = localStorage.getItem(prefix + '-name');
+
+		const group = occupied ? (localStorage.getItem(prefix + '-group') === 'true' ? occupied : false) : false;
+
+		if (group && !occupied) {
+			throw new Error('occupied is not defined');
+		} else if (group && occupied) {
+			onPathChange(occupied, index + 1, newPath);
+			return;
+		}
+
+		setShortcutPath(dynamicJoin(newPathEndsWithValidId ? newPath : [newPath, '1'], '/').replace('_', ' '));
+	};
 
 	return (
 		<Modal action={onSubmit} padding>
@@ -87,16 +96,47 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 					<DeleteButton prefix={prefix} closeModal={() => setShortcutId(null)} />
 				</div>
 				<b>Edit Shortcut {shortcutId}</b>
-				<input
-					type='text'
-					placeholder='Path'
-					className={clsx(
-						'w-full rounded-lg border bg-transparent px-2 py-1',
-						!shortcutPathValid ? 'border-red-500' : 'border-black'
-					)}
-					value={shortcutPath}
-					onChange={(e) => setShortcutPath(e.target.value.replace('_', ' '))}
-				/>
+				<div className='space-x-4'>
+					<span>Location: {shortcutPath} </span>
+					{shortcutPath.split('/').map((segment, i) => (
+						<select
+							onChange={(e) => onPathChange(e.target.value, i)}
+							key={i}
+							value={segment}
+							className={clsx('rounded-lg border px-2 py-1', shortcutPathValid ? 'bg-black' : 'bg-red-500')}
+						>
+							{[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16].map((segment) => {
+								const prefix =
+									'shortcut-' +
+									dynamicJoin(
+										[stripLastItem(shortcutPath, '/').split('/').slice(0, i).join('-'), segment.toString()],
+										'-'
+									).replace(' ', '_');
+
+								const occupied = localStorage.getItem(prefix + '-name');
+
+								const group = occupied
+									? localStorage.getItem(prefix + '-group') === 'true'
+										? occupied
+										: false
+									: false;
+
+								const value = group || segment;
+
+								return (
+									<option
+										key={segment.toString()}
+										value={value.toString()}
+										disabled={!!occupied && !group}
+										className={clsx(!!occupied && !group && 'bg-red-900')}
+									>
+										{value}
+									</option>
+								);
+							})}
+						</select>
+					))}
+				</div>
 				<NameInput setShortcut={setShortcut} shortcut={shortcut} />
 				<UrlInput setShortcut={setShortcut} shortcut={shortcut} />
 				<ImageUrlInput setShortcut={setShortcut} shortcut={shortcut} />
