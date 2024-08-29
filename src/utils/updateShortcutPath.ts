@@ -5,8 +5,6 @@ import { dynamicJoin } from './dynamicJoin';
 export const updateShortcutPath = (oldPath: string, newPath: string, customData?: { [key: string]: string }) => {
 	const shortcuts = customData ? customData : getShortcutsObject(false, true);
 
-	console.log('path', oldPath, newPath);
-
 	const newShortcuts = Object.entries(shortcuts).reduce((acc: { [key: string]: string }, [key, value]) => {
 		const shortenedKey = key.startsWith('shortcut-') ? key.replace('shortcut-', '') : key;
 
@@ -30,8 +28,6 @@ export const updateShortcutPath = (oldPath: string, newPath: string, customData?
 		if (!name) {
 			throw new Error('name is not defined');
 		}
-
-		console.log('name', dynamicJoin([oldPathWithoutId, name], '-'), oldPathWithoutId, name, newPathWithoutId);
 
 		newGroupAdjustedShortcuts = updateShortcutPath(
 			dynamicJoin([oldPathWithoutId, name], '-'),
