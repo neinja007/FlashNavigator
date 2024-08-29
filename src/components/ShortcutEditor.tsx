@@ -36,8 +36,10 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 		setShortcutId(null);
 	};
 
+	const pathIsTheSame = shortcutPath === dynamicJoin([...shortcut.path, shortcutId.toString()], '/').replace('_', ' ');
+
 	const onMove = () => {
-		if (shortcutPathValid) {
+		if (shortcutPathValid && !pathIsTheSame) {
 			const path = shortcut.path.join('-');
 			overwriteShortcuts(
 				updateShortcutPath(
@@ -60,8 +62,8 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 
 		const allSegmentsValid = shortcutPath.split('/').every((segment) => segment.length > 0);
 
-		setShortcutPathValid(doesntExist && newPathEndsWithValidId && allSegmentsValid);
-	}, [shortcut.path, shortcutId, shortcutPath]);
+		setShortcutPathValid((doesntExist && newPathEndsWithValidId && allSegmentsValid) || pathIsTheSame);
+	}, [pathIsTheSame, shortcut.path, shortcutId, shortcutPath]);
 
 	const onPathChange = (value: string, index: number, path?: string) => {
 		const newPath = dynamicJoin([(path || shortcutPath).split('/').slice(0, index).join('/'), value], '/');
