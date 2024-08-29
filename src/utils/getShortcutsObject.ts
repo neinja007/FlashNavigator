@@ -9,7 +9,7 @@ export const getShortcutsObject = (
 	if (filterUnusedData) {
 		return Object.entries(rawShortcuts).reduce((acc: { [key: string]: string }, [key, value]) => {
 			if (key.startsWith('shortcut-')) {
-				acc[key] = value;
+				acc[stripShortcutPrefix ? key.replace('shortcut-', '') : key] = value;
 			}
 			return acc;
 		}, {});
