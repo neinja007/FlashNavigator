@@ -10,6 +10,9 @@ import { DataContext } from '@/context/DataContext';
 import { useContext, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { updateShortcutPath } from '@/utils/updateShortcutPath';
+import { dynamicJoin } from '@/utils/dynamicJoin';
+import { stripLastItem } from '@/utils/stripLastItem';
+import { getShortcutGroupsFromPath } from '@/utils/getShortcutGroupsFromPath';
 
 type ShortcutEditorProps = {
 	setShortcutId: (id: number | null) => void;
@@ -24,7 +27,7 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 
 	const [shortcutPathValid, setShortcutPathValid] = useState(false);
 	const [shortcutPath, setShortcutPath] = useState<string>(
-		(shortcut.path.join('/') ? shortcut.path.join('/') + '/' + shortcutId : shortcutId.toString()).replace('_', ' ')
+		dynamicJoin([...shortcut.path, shortcutId.toString()], '/').replace('_', ' ')
 	);
 
 	const prefix = groupPrefix + shortcutId;
@@ -39,7 +42,7 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 			const path = shortcut.path.join('-');
 			overwriteShortcuts(
 				updateShortcutPath(
-					path ? path + '-' + shortcutId : shortcutId.toString(),
+					dynamicJoin([path, shortcutId.toString()], '-'),
 					shortcutPath.split('/').join('-').replace(' ', '_')
 				)
 			);
@@ -56,7 +59,21 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 		const pathId = parseInt(transformedPath.split('-').at(-1) || '0');
 		const newPathEndsWithValidId = pathId > 0 && pathId < 17;
 
-		setShortcutPathValid(doesntExist && newPathEndsWithValidId);
+		const allSegmentsValid = shortcutPath.split('/').every((segment) => segment.length > 0);
+
+		const allSegmentsExist = stripLastItem(shortcutPath, '/')
+			.split('/')
+			.every(
+				(_, i) =>
+					getShortcutGroupsFromPath(
+						shortcutPath
+							.split('/')
+							.slice(0, i + 1)
+							.join('/')
+					).length > 0
+			);
+
+		setShortcutPathValid(doesntExist && newPathEndsWithValidId && allSegmentsValid && allSegmentsExist);
 	}, [shortcut.path, shortcutId, shortcutPath]);
 
 	return (
