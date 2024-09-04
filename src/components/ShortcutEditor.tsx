@@ -123,14 +123,18 @@ const ShortcutEditor = ({ setShortcutId, groupPrefix, shortcutId, shortcut, setS
 										: false
 									: false;
 
-								const value = segment.toString() === shortcutId.toString() ? shortcutId.toString() : group || segment;
+								const isCurrentSegment = segment.toString() === shortcutId.toString();
+
+								const value = isCurrentSegment ? shortcutId.toString() : group || segment;
+
+								const disabled = !!occupied && !group && !isCurrentSegment;
 
 								return (
 									<option
 										key={segment.toString()}
 										value={value.toString()}
-										disabled={!!occupied && !group}
-										className={clsx(!!occupied && !group && 'bg-red-900')}
+										disabled={disabled}
+										className={clsx(disabled && 'bg-red-900')}
 									>
 										{value}
 									</option>
