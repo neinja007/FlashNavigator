@@ -21,7 +21,6 @@ type ShortcutsType = { [key: string]: ShortcutType };
 type SettingsType = {
 	hideShortcutIcons: boolean;
 	hideEmptyShortcuts: boolean;
-	imageQuality: number;
 	shortcutTypeColor: boolean;
 	searchEngine: 'google' | 'duckduckgo' | 'bing' | 'other';
 };
@@ -37,7 +36,6 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 	const [settings, setSettings] = useState<SettingsType>({
 		hideShortcutIcons: false,
 		hideEmptyShortcuts: false,
-		imageQuality: 75,
 		shortcutTypeColor: false,
 		searchEngine: 'duckduckgo'
 	});
@@ -55,7 +53,6 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		setSettings({
 			hideShortcutIcons: localStorage.getItem('settings-hideShortcutIcons') === 'true',
 			hideEmptyShortcuts: localStorage.getItem('settings-hideEmptyShortcuts') === 'true',
-			imageQuality: parseInt(localStorage.getItem('settings-imageQuality') || '75') || 75,
 			shortcutTypeColor: localStorage.getItem('settings-shortcutTypeColor') === 'true',
 			searchEngine: (localStorage.getItem('settings-searchEngine') as 'google' | 'duckduckgo' | 'bing') || 'duckduckgo'
 		});

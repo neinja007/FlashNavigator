@@ -51,18 +51,6 @@ const SettingsModal = ({ setSettingsModal }: SettingsModalProps) => {
 					<label htmlFor='shortcut_type_color'>Different colors for Folders and Links</label>
 				</div>
 				<div>
-					<label htmlFor='image_quality'>Image Quality (the higher, the slower the images load):</label>
-					<input
-						type='number'
-						id='image_quality'
-						value={settings.imageQuality}
-						onChange={(e) => updateSettings('imageQuality', e.target.value)}
-						className='ml-2 w-20 rounded-md border bg-transparent px-2'
-						min={10}
-						max={100}
-					/>
-				</div>
-				<div>
 					<label htmlFor='search_engine'>Search Engine:</label>
 					<select
 						id='search_engine'

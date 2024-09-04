@@ -60,8 +60,8 @@ const Shortcut = ({ setShortcutId, setGroups, queryResult, shortcut, resetSearch
 							className='m-auto h-full max-h-20 w-full max-w-20 transition-all group-hover:saturate-200 sm:max-h-24 sm:max-w-24 lg:max-h-28 lg:max-w-28'
 							src={convertUrlToExternalImageUrl(shortcut.img)}
 							fill
-							sizes={(settings.imageQuality * 3).toString() + 'px'}
-							quality={settings.imageQuality}
+							sizes={'300px'}
+							quality={100}
 						/>
 					) : (
 						<span className='select-none text-6xl sm:text-9xl'>+</span>
