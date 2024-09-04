@@ -70,6 +70,7 @@ const SyncShortcutsModal = ({ setSyncShortcutsModal }: SyncShortcutsModalProps) 
 
 	const date = lastServerChange && dayjs(lastServerChange).format('DD/MM/YYYY');
 	const time = lastServerChange && dayjs(lastServerChange).format('HH:mm');
+	const differenceInMinutes = lastServerChange && dayjs().diff(lastServerChangeDayjs, 'minutes');
 	const lastServerChangeToday = lastServerChangeDayjs && lastServerChangeDayjs.isSame(dayjs(), 'day');
 
 	const [hideNoticeInFuture, setHideNoticeInFuture] = useStorageState('hideNoticeInFuture', 'true', 'false');
@@ -169,6 +170,8 @@ const SyncShortcutsModal = ({ setSyncShortcutsModal }: SyncShortcutsModalProps) 
 					{downloadState === 'success' && uploadState !== 'loading' ? (
 						inSync ? (
 							<b className='text-green-500'>Server and client (you) are in sync.</b>
+						) : differenceInMinutes !== undefined && differenceInMinutes < 10 ? (
+							<b className='text-purple-500'>Please wait as the server is syncing. This may take a few minutes.</b>
 						) : (
 							<b className='text-orange-500'>
 								Server and client (you) are not in sync.{' '}
