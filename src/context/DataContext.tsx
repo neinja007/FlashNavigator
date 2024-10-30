@@ -95,14 +95,8 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 				const serverEntries = JSON.parse(blobData);
 
 				const inSync =
-					localEntries.every(([key, value]) =>
-						serverEntries[key] === value
-							? true
-							: () => {
-									console.log(serverEntries[key], value);
-									return false;
-								}
-					) && localEntries.length === Object.keys(serverEntries).length;
+					localEntries.every(([key, value]) => serverEntries[key] === value) &&
+					localEntries.length === Object.keys(serverEntries).length;
 
 				if (!inSync) {
 					confirm(
@@ -111,10 +105,10 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 							' shortcuts, you have ' +
 							getShortcutCount(getShortcutsObject(true)) +
 							'. Would you like to override your state with the server state?'
-					) && overwriteShortcuts(data);
+					) && overwriteShortcuts(blobData);
 				}
 			});
-	}, [overwriteShortcuts, shortcuts]);
+	}, [overwriteShortcuts]);
 
 	const updateShortcuts = useCallback(
 		(key: string, shortcut: ShortcutType | null) => {
