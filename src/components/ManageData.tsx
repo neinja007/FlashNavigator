@@ -26,19 +26,19 @@ const ManageData = () => {
 							className='flex items-center gap-x-1 text-yellow-400 transition-all hover:text-xl'
 							onClick={() => setDataToExport(JSON.stringify(getShortcutsObject(true)))}
 						>
-							<FileUp /> Export Shortcuts
+							<FileUp /> Export
 						</button>
 						<button
 							className='flex items-center gap-x-1 text-white transition-all hover:text-xl'
 							onClick={() => setImportDataModal(true)}
 						>
-							<FileDown /> Import Shortcuts
+							<FileDown /> Import
 						</button>
 						<button
 							className='flex items-center gap-x-1 text-blue-500 transition-all hover:text-xl'
 							onClick={() => setSyncShortcutsModal(true)}
 						>
-							<RefreshCcw /> Sync Shortcuts
+							<RefreshCcw /> Sync
 						</button>
 						<button
 							className='flex items-center gap-x-1 text-neutral-400 transition-all hover:text-xl'
@@ -52,13 +52,13 @@ const ManageData = () => {
 					className='flex items-center gap-x-1 text-purple-500 transition-all hover:text-xl'
 					onClick={() => setShowDataControls(!showDataControls)}
 				>
-					<Menu /> {showDataControls ? 'Collapse' : 'Expand'} Menu
+					<Menu /> {showDataControls ? 'Collapse' : 'Expand'}
 				</button>
 				<SignedIn>
 					<button className='text-red-500 transition-all hover:text-xl'>
 						<SignOutButton>
 							<div className='flex items-center gap-x-1'>
-								<LogOut /> Sign out (as {user.user?.primaryEmailAddress?.emailAddress})
+								<LogOut /> {user.user?.primaryEmailAddress?.emailAddress}
 							</div>
 						</SignOutButton>
 					</button>
