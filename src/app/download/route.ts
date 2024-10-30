@@ -1,5 +1,6 @@
 import { currentUser } from '@clerk/nextjs/server';
 import { list } from '@vercel/blob';
+import { NextResponse } from 'next/server';
 
 export async function GET() {
 	const user = await currentUser();
@@ -7,10 +8,10 @@ export async function GET() {
 		return Response.redirect('/sign-in');
 	}
 
-	const blob = (await list()).blobs.find((blob) => (blob.pathname = user.id));
+	const blob = (await list()).blobs.find((blob) => blob.pathname === user.id);
 
 	if (!blob) {
-		return Response.error();
+		return NextResponse.json('error', { status: 404 });
 	}
 
 	const blobData = await fetch(blob.url, { cache: 'no-store' })
