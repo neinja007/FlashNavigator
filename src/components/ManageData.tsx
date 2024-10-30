@@ -3,7 +3,7 @@ import { useState } from 'react';
 import ExportDataModal from './ExportDataModal';
 import ImportDataModal from './ImportDataModal';
 import SettingsModal from './SettingsModal';
-import { SignedIn, SignedOut, SignOutButton } from '@clerk/nextjs';
+import { SignedIn, SignedOut, SignOutButton, useUser } from '@clerk/nextjs';
 import Link from 'next/link';
 import { FileDown, FileUp, LogIn, LogOut, Menu, RefreshCcw, Settings } from 'lucide-react';
 import SyncShortcutsModal from './SyncShortcutsModal';
@@ -14,6 +14,8 @@ const ManageData = () => {
 	const [settings, setSettings] = useState(false);
 	const [showDataControls, setShowDataControls] = useState(false);
 	const [syncShortcutsModal, setSyncShortcutsModal] = useState(false);
+
+	const user = useUser();
 
 	return (
 		<>
@@ -56,7 +58,7 @@ const ManageData = () => {
 					<button className='text-red-500 transition-all hover:text-xl'>
 						<SignOutButton>
 							<div className='flex items-center gap-x-1'>
-								<LogOut /> Sign out
+								<LogOut /> Sign out (as {user.user?.primaryEmailAddress?.emailAddress})
 							</div>
 						</SignOutButton>
 					</button>
