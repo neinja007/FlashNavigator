@@ -2,6 +2,7 @@
 import { ShortcutType } from '@/app/page';
 import { deleteShortcutStorage } from '@/utils/deleteShortcutStorage';
 import { getNestedShortcuts } from '@/utils/getNestedShortcuts';
+import { getShortcutCount } from '@/utils/getShortcutCount';
 import { getShortcutsObject } from '@/utils/getShortcutsObject';
 import { updateShortcutGroupChildNames } from '@/utils/updateShortcutGroupChildNames';
 import { useState, createContext, useEffect, useCallback } from 'react';
@@ -80,6 +81,40 @@ export function DataContextProvider({ children }: DataContextProviderProps) {
 		}
 		refreshShortcuts();
 	}, []);
+
+	useEffect(() => {
+		fetch('/download', { cache: 'no-store' })
+			.then((res) => {
+				if (res.ok) {
+					return res.json();
+				}
+			})
+			.then((data) => {
+				const localEntries = Object.entries(getShortcutsObject(true));
+				const blobData = data.data;
+				const serverEntries = JSON.parse(blobData);
+
+				const inSync =
+					localEntries.every(([key, value]) =>
+						serverEntries[key] === value
+							? true
+							: () => {
+									console.log(serverEntries[key], value);
+									return false;
+								}
+					) && localEntries.length === Object.keys(serverEntries).length;
+
+				if (!inSync) {
+					confirm(
+						'The server has ' +
+							getShortcutCount(blobData) +
+							' shortcuts, you have ' +
+							getShortcutCount(getShortcutsObject(true)) +
+							'. Would you like to override your state with the server state?'
+					) && overwriteShortcuts(data);
+				}
+			});
+	}, [overwriteShortcuts, shortcuts]);
 
 	const updateShortcuts = useCallback(
 		(key: string, shortcut: ShortcutType | null) => {
