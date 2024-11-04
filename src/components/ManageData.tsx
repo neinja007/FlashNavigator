@@ -35,8 +35,6 @@ const ManageData = () => {
 					localEntries.every(([key, value]) => serverEntries[key] === value) &&
 					localEntries.length === Object.keys(serverEntries).length;
 
-				console.log('here', inSync);
-
 				setOutOfSync(!inSync);
 			});
 	}, [shortcuts]);
